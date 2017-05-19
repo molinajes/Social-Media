@@ -1,0 +1,23 @@
+
+
+<div ng-init="getDownloadTrack()" style="text-align:center">
+
+	<h3>Download Audio</h3>
+
+ 	<div style="width: 80%; position:relative; margin: 0 auto; height: auto" ng-show="embedTrack">
+		<div id="scPlayer"></div>
+		<button class="btn btn-default pull-right" type="button" ng-click="downloadTrack()" style="background-color: #d3d3d3; font-size:1.4em; margin:5px 5px;">Download</button>
+		<div class="clear"></div>
+	</div>
+
+	<div ng-show="!embedTrack && !processing">
+		<p>Error! Could not fetch track data.</p>
+	</div>
+
+</div>
+
+<ng-include src="'js/home/views/loader.html'"></ng-include>
+
+<div style="text-align:center">
+	<p>{{errorText}}</p>
+</div>

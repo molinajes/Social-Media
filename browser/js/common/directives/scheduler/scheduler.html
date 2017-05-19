@@ -1,0 +1,579 @@
+<style type="text/css">
+.disabled {
+  opacity: 1.5;
+  pointer-events: none;
+}
+</style>
+<div class=" ">
+  <!--page-contant Start-->
+  <div class="scheduler-tabs">
+    <!-- Nav tabs :Start-->
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active" style="border-radius:10px 0 0 0;">
+        <a href="#myschedule" aria-controls="myschedule" role="tab" data-toggle="tab" ng-click="showTab();" style="border-radius:10px 0 0 0;">
+          <img src="assets/images/myschedule.svg" />MY SCHEDULE</a>
+      </li>
+      <li role="presentation">
+        <a href="#organizeschedule" aria-controls="organizeschedule" role="tab" data-toggle="tab" ng-click="showTab();"> <img src="assets/images/organizeschedule.svg" /> ORGANIZE SCHEDULE</a>
+      </li>
+      <li role="presentation" style="border-radius:0 10px 0 0;">
+        <a style="border-radius:0 10px 0 0;" href="#managereposts" aria-controls="managereposts" role="tab" data-toggle="tab" ng-click="showTab();"> <img src="assets/images/managereposts.svg" /> MANAGE REPOSTS</a>
+      </li>
+    </ul>
+    <!-- Nav tabs :End-->
+    <!-- Tab panes :: Start-->
+    <div class="tab-content" ng-show="tabSelected" ng-init="getListEvents()">
+      <!-- MY SCHEDULE : Start-->
+      <div role="tabpanel" class="tab-pane fade in active" id="myschedule">
+        <div class="container-90">
+          <!-- <div class="col-md-4 col-xs-12">
+            <div class="btn-group view-padding-left" role="group" aria-label="...">
+              <a class="btn btn-default b-radius-10" ng-class="{active : itemview == 'calender'}" href="javascript:void(0)" ng-click="setView('calender')"><img src="assets/images/box-view.svg" /></a>
+              <a class="btn btn-default b-radius-10" ng-class="{active : itemview == 'list'}" href="javascript:void(0)" ng-click="setView('list')"><img src="assets/images/list-view.svg" /></a>
+            </div>
+          </div>
+          <div class="col-md-3 col-xs-12 text-center">
+            <div class="btn-group" role="group" aria-label="..." ng-show="itemview == 'list'">
+              <a class="btn btn-default b-radius-10" href="javascript:void(0)" ng-click="getPreviousEvents()"><img src="assets/images/dropup-arrow.svg" /></a>
+              <a class="btn btn-default b-radius-10" href="javascript:void(0)" ng-click="getNextEvents()"><img src="assets/images/dropdown-arrow.svg" /></a>
+            </div>
+          </div> -->
+          <!-- <div class="col-md-4 col-xs-12  pull-right padding-right-0">
+            <form >
+              <div class="schedule-newsong">
+                <button type="button" class="form-control" ng-click="addNewSong();">SCHEDULE NEW REPOST</button>  
+              </div>
+            </form>
+          </div> -->
+        </div>
+        <div class="">
+          <h3 style="text-align:center;">{{user.displayName}}</h3>
+          <div id="scheduler-container" ng-show="itemview == 'calender'">
+            <div class="calendar-day-date">
+              <div class="date-top-strip">
+                <button class="btn btn-default btn-scheduler" ng-click="decrDay()"><img src="/assets/images/left-arrow.svg" /></button>
+                <div class="bold cell-date" ng-repeat="t in [0,1,2,3,4,5,6]">{{dayOfWeekAsString(calendar[t+dayIncr].day).substring(0,3)}} {{calendar[t+dayIncr].day.getMonth()+1}}/{{calendar[t+dayIncr].day.getDate()}}
+                </div>
+                <button class="btn btn-default btn-scheduler" ng-click="incrDay()"><img id="scheduler-btn-back" src="/assets/images/right-arrow.svg" /></button>
+              </div>
+            </div>
+            <div style="width:100%; display:flex; flex-direction:row;">
+              <div class="column-time">
+                <div ng-repeat="i in ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16', '17', '18', '19', '20', '21', '22', '23']" class="cell-time bold">{{i}}</div>
+              </div>
+              <div ng-repeat="l in [0,1,2,3,4,5,6]" class="column-day">
+                <div ng-repeat="p in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]" ng-style="getStyle(calendar[l+dayIncr].events[p], calendar[l+dayIncr].day, l, p)" class="row-scheduler" ng-click="clickedSlot(calendar[l+dayIncr].day, p,calendar[l+dayIncr].events[p])" style="position:relative; border-width:1px 1px 1px 1px;">
+                  <div ng-style="getEventStyle(calendar[l+dayIncr].events[p])" class="text-left scheduler-yellow calendar-grid">{{calendar[l+dayIncr].events[p].title}}</div>
+                  <!--  <img ng-show="unrepostSymbol(calendar[l+dayIncr].events[p])" class='unrepost-symbol-scheduler' src="assets/images/unrepost_symbol.png"></img> -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="scheduler-container" ng-show="itemview == 'list'">
+            <div class="m-table-responsive">
+              <table class="table scheduler-song-tab">
+                <thead>
+                  <tr>
+                    <th width="8%" class="text-center">Status</th>
+                    <th width="50%" class="text-center">Track Name</th>
+                    <th width="15%" class="text-center">Account</th>
+                    <th width="17%" class="text-center">Date</th>
+                    <th width="10%" class="text-center">Type</th>
+                    <th width="10%" class="text-center">&nbsp;</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="item in listevents" ng-class='{grey : item.event.day < currentDate}'>
+                    <td class="text-center">
+                      <div class="div-dot scheduler-status" style="background: {{item.event.completed ? 'green':'red'}};">&nbsp;
+                      </div>
+                    </td>
+                    <td class="text-center">{{item.event.title}}</td>
+                    <td class="text-center">{{user.soundcloud.username}}</td>
+                    <td class="text-center">{{item.date | date:'EEE MM/dd ha'}}</td>
+                    <td><span ng-if="item.event" style="color:{{item.event.type == 'track'? '#FF0000' : (item.event.type == 'traded'?'#FFD450':'#FFBBDD')}}">{{item.event.type}}</span></td>
+                    <td class="text-center">
+                      <a class="btn btn-pink btn-block btn-sm margin-0" href="javascript:void(0)" ng-if="item.event" ng-click="EditNewSong(item, 'editable');">Edit</a>
+                      <a class="btn btn-pink btn-block btn-sm margin-0" href="javascript:void(0)" ng-if="!item.event" ng-click="scheduleSong(item.date)">Schedule</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="row" style="padding-bottom:20px">
+            <div class="col-md-8 col-md-offset-2" style="text-align: center;">
+              <autofill></autofill>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- MY SCHEDULE : End-->
+      <!-- ORGANIZE SCHEDULE :Start -->
+      <div role="tabpanel" class="tab-pane fade" id="organizeschedule">
+        <div class="">
+          <h3 style="text-align:center;">{{user.displayName}}</h3>
+          <div id="scheduler-container">
+            <div class="date-top-strip">
+              <div style="width:28%"></div>
+              <div class="bold cell-date" ng-repeat="t in ['Sunday','Monday','Tuesday','Wednesday','Thusday','Friday','Saturday']">{{t}}
+              </div>
+            </div>
+            <div style="width:100%; display:flex; flex-direction:row;">
+              <div class="column-time">
+                <div ng-repeat="i in ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16', '17', '18', '19', '20', '21', '22', '23']" class="cell-time bold">{{i}}</div>
+              </div>
+              <div ng-repeat="l in [0,1,2,3,4,5,6]" class="column-day">
+                <div ng-repeat="p in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]" ng-style="setSlotStyle(l,p)" class="row-scheduler" ng-click="toggleAvailableSlot(l, p)" style="position:relative; border-width:1px 1px 1px 1px;">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="space-20"></div>
+        </div>
+      </div>
+      <!-- ORGANIZE SCHEDULE :End -->
+      <!-- MANAGE REPOSTS : Start -->
+      <div role="tabpanel" class="tab-pane fade" id="managereposts">
+        <div class="container-90">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-12">
+                  <br>
+                  <h1 class="au-title-head text-center">SCHEDULE SETTINGS</h1>
+                  <br>
+                </div>
+              </div>
+              <!--row ::end-->
+              <div class="row">
+                <div class="col-md-4 border-right text-right">
+                  <div class="payed-reposts">
+                    <ul class="repot-left-list">
+                      <span style="margin: 0 0 17px 0;display: block;"></span>
+                      <!--  <li><a href="#">Repost Limit per Day</a></li> -->
+                      <li><a href="#">Default Like Repost</a></li>
+                      <li><a href="#">Default Comment on Repost</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-4 border-right text-center">
+                  <div class="payed-reposts">
+                    <p>Schedule Reposts</p>
+                    <li class="switch-btn">
+                      <label class="switch">
+                        <input checked="" type="checkbox" ng-model="user.repostSettings.schedule.like" ng-change="saveRepostSettings()">
+                        <div class="slider round"></div>
+                      </label>
+                    </li>
+                    <li class="switch-btn">
+                      <label class="switch">
+                        <input checked="" type="checkbox" ng-model="user.repostSettings.schedule.comment" ng-click="saveRepostSettings()">
+                        <div class="slider round"></div>
+                      </label>
+                    </li>
+                    <div class="payed-reposts-list" ng-if="user.repostSettings.schedule.comments.length">
+                      <ul>
+                        <li class="text-left" ng-repeat="comment in user.repostSettings.schedule.comments track by $index">
+                          <span class="comment-view">{{comment}}</span>
+                          <span class="pull-right" style="cursor:pointer" ng-click="editComments(comment,'schedule',$index)">Edit</span></li>
+                      </ul>
+                    </div>
+                    <br>
+                    <button type="button" class="btn payed-reposts-btn" data-toggle="modal" data-target="#scheduleCommentModal" ng-click="scheduleCommentIndex=undefined; scheduleComment=undefined">Add Comment</button>
+                  </div>
+                </div>
+                <div class="col-md-4 text-center">
+                  <div class="payed-reposts">
+                    <p>Trade Reposts</p>
+                    <li class="switch-btn">
+                      <label class="switch">
+                        <input checked="" type="checkbox" ng-model="user.repostSettings.trade.like" ng-change="saveRepostSettings()">
+                        <div class="slider round"></div>
+                      </label>
+                    </li>
+                    <li class="switch-btn">
+                      <label class="switch">
+                        <input checked="" type="checkbox" ng-model="user.repostSettings.trade.comment" ng-click="saveRepostSettings()">
+                        <div class="slider round"></div>
+                      </label>
+                    </li>
+                    <div class="payed-reposts-list" ng-if="user.repostSettings.trade.comments.length">
+                      <ul>
+                        <li class="text-left" ng-repeat="comment in user.repostSettings.trade.comments track by $index">
+                          <span class="comment-view">{{comment}}</span>
+                          <span class="pull-right" style="cursor:pointer" ng-click="editComments(comment, 'trade',$index)">Edit</span>
+                        </li>
+                      </ul>
+                    </div>
+                    <br>
+                    <button type="button" class="btn payed-reposts-btn" data-toggle="modal" data-target="#tradeCommentModal" ng-click="scheduleCommentIndex=undefined;
+                      tradeComment=undefined;">Add Comment</button>
+                  </div>
+                </div>
+              </div>
+              <!--row ::end-->
+              <div class="row">
+                <div class="col-md-12 col-xs-12 text-center">
+                  <div class="border-top text-center">
+                    <div class="payed-reposts-bottom">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--row ::end-->
+          </div>
+        </div>
+        <!--row ::end-->
+        <div class="row" style="padding-bottom:20px">
+          <div class="col-md-8 col-md-offset-2" style="text-align: center;">
+            <autofill></autofill>
+          </div>
+        </div>
+      </div>
+      <!-- MANAGE REPOSTS : End -->
+    </div>
+    <!-- Tab panes :: End-->
+    <div class="col-md-12" ng-show="!tabSelected">
+      <div class="songScheduler">
+        <div class="row extrapadding">
+          <div class="col-md-12">
+            <div ng-class="{'disabled': isView}">
+              <div class="row">
+                <span class="au-title-head text-center" ng-if="(makeEvent.type == 'traded')">Owned by {{makeEvent.owner.soundcloud.username}}</span>
+                <div class="col-md-6 col-xs-12 search search-big">
+                  <scsearch kind='track' returnitem='choseTrack(item)' ng-if="!isTraded"></scsearch>
+                  <div class="space-10"></div>
+                  <button class="form-control" ng-click="getAutoFillTracks()" ng-if="!isTraded" ng-bind-html="afcount > 0?'NEXT AUTOFILL':'AUTOFILL'"></button>
+                  <div class="space-10"></div>
+                  <label class="text-block">Repost Time</label>
+                  <div class="form-group">
+                    <select class="form-control" ng-if="!isEdit && !isSchedule" ng-disabled="isTraded" ng-model="selectedSlot" ng-change="clickAvailableSlots(selectedSlot);">
+                      <option style="color:black; text-align:center;" value="{{firstSlot}}">Next Available Slot</option>
+                      <option style="color:black; text-align:center;" ng-repeat="slot in listAvailableSlots track by $index" ng-if="$index!=0" value="{{slot}}"> {{slot.slotdate.toString().split(' ')[1] + ' ' +slot.slotdate.toString().split(' ')[2]}}, {{slot.slottime}}</option>
+                    </select>
+                    <select ng-if="isEdit  && !isSchedule" ng-disabled="true" class="form-control">
+                      <option>{{selectedSlot | date:'EEE MM/dd, ha'}}</option>
+                    </select>
+                    <select ng-if="!isEdit && isSchedule" class="form-control">
+                      <option>{{selectedSlot | date:'EEE MM/dd, ha'}}</option>
+                    </select>
+                  </div>
+                  <ul>
+                    <li class="switch-btn">
+                      <label class="switch">
+                        <input checked="" type="checkbox" ng-disabled="isTraded" ng-model="unrepostEnable" ng-click="setRepostHours()">
+                        <div class="slider round"></div>
+                      </label>
+                      <label>Unrepost after
+                        <input class="form-control input-hour text-center" placeholder="24" ng-model="unrepostHours" ng-disabled="isTraded">hours</label>
+                    </li>
+                  </ul>
+                  <br/>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                  <div class="btn-group channel-group" ng-if="user.role == 'admin'" role="group" aria-label="...">
+                    <a class="btn btn-default b-radius-10 active" ng-model="displayType" ng-value="'channels'" ng-class="{active : itemview == 'calender'}" href="javascript:void(0)" ng-click="setView('calender');setActive('channel')">Channels</a>
+                    <a class="btn btn-default b-radius-10" ng-class="{active : itemview == 'list'}" href="javascript:void(0)" ng-click="setView('list');setActive('group')">Groups</a>
+                  </div>
+                  <div class="channel-check" ng-if="uniqueGroup.length > 0 || linkedAccounts.length > 0 && !isEdit">
+                    <div class="channel-masege">
+                      <ul>
+                        <li class="" ng-show="channelArr.length > 0" ng-repeat="chan in channelArr">{{chan}}<span></span></li>
+                        <li class="" ng-show="groupArr.length > 0" ng-repeat="group in groupArr">{{group}}<span></span></li>
+                      </ul>
+                    </div>
+                    <div class="check-list">
+                      <div class="checkbox demo-radio-btn" ng-show="displayType == 'group'" ng-repeat="group in uniqueGroup">
+                        <p>
+                          <label class="with-square-checkbox">
+                            <input style="" id="{{group}}" ng-click="setGroup(group);" class="ng-untouched ng-valid ng-dirty ng-valid-parse ng-pristine ng-empty" type="checkbox">
+                            <span>{{group}}</span>
+                          </label>
+                        </p>
+                      </div>
+                      <div class="checkbox demo-radio-btn" ng-repeat="u in linkedAccounts">
+                        <p>
+                          <label class="with-square-checkbox">
+                            <input style="" id="{{u.soundcloud.username}}" class="ng-untouched ng-valid ng-dirty ng-valid-parse ng-pristine ng-empty" ng-click="setChannel(u.soundcloud.username);" type="checkbox" ng-checked="channelArr.indexOf(u.soundcloud.username) >-1">
+                            <span>{{u.soundcloud.username}}</span>
+                          </label>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-xs-12">
+                      <h5 class="text-pink text-center" ng-if="(makeEvent.type!='traded')">Total Reach: {{followCounts}} followers</h5>
+                      <h5 class="text-pink text-center" ng-if="(makeEvent.type=='traded') && !makeEvent.trackID">Waiting for {{makeEvent.owner.soundcloud.username}} to select a track.</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12">
+                <iframe id="scPlayer" ng-show="showPlayer" width="100%" height="160" src="https://w.soundcloud.com/player/?url=&auto_play=false&show_artwork=true" style="margin:10px 0; position:relative; z-index:1; border:none;"></iframe>
+              </div>
+            </div>
+            <!--row end-->
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="pull-right">
+                  <ul class="like-comment">
+                    <li>
+                      <a href="javascript:void(0);" ng-click="changeLikeCommentIcons('like');">Like: <img src="{{likeSrc}}" class="img-responsive"></a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0);" ng-click="changeLikeCommentIcons('comment');">Comment: <img src="{{commentSrc}}" class="img-responsive"></a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!--row end-->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <textarea class="form-control" ng-disabled="disable" ng-model="eventComment">{{comment}}</textarea>
+                    </div>
+                    <div class="next-previous">
+                      <button class="btn btn-border b-radius-10 pull-left" ng-disabled="disable" ng-click="getPrevNextComment('previous')">PREVIOUS</button>
+                      <button class="btn btn-border b-radius-10 pull-right" ng-disabled="disable" ng-click="getPrevNextComment('next')">NEXT</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--row end-->
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="next-previous text-center">
+                    <button class="btn btn-border b-radius-10" ng-class="{'disabled': isView}" ng-if="isEdit && !isTraded && makeEvent.day > now" ng-click="deleteEvent();">DELETE</button>
+                    <button class="btn btn-border b-radius-10" ng-click="addNewSongCancel()">CANCEL</button>
+                    <button class="btn btn-border b-radius-10" ng-if="isEdit && !isTraded" ng-click="shareEvent()">SHARE</button>
+                    <button class="btn btn-pink b-radius-10 save-share" ng-click="saveEvent();" ng-show="!!makeEvent.day && makeEvent.day>now">SAVE</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--row end-->
+          </div>
+          <!--row end-->
+        </div>
+      </div>
+      <!--row end-->
+    </div>
+  </div>
+  <div class="space-10"></div>
+</div>
+<!-- overlay -->
+<div class="overlay" ng-show="showOverlay" ng-click="backEvent()" style="z-index: 999;">
+  <div class="available-popup-box">
+    <div class="label-scheduler label-smaller slot-box" ng-click="$event.stopPropagation();">
+      <div class="">
+        <div ng-class="{'disabled': isView}">
+          <span class="au-title-head text-center" ng-if="(makeEvent.type == 'traded')">Owned by {{makeEvent.owner.soundcloud.username}}</span>
+          <div class="row">
+            <div class="col-md-12 search">
+              <scsearch kind='track' returnitem='choseTrack1(item)' ng-if="!isTraded"></scsearch>
+            </div>
+          </div>
+          <div class="space-10"></div>
+          <div class="row">
+            <div class="col-md-12">
+              <button class="btn btn-border b-radius-10 btn-block margin-0" ng-if="!isTraded" ng-click="getAutoFillTracks()" ng-bind-html="afcount > 0?'NEXT AUTOFILL':'AUTOFILL'"></button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <iframe id="scPopupPlayer" ng-show="showPlayer" width="300" height="120" src="https://w.soundcloud.com/player/?url=&auto_play=false&show_artwork=true" style="margin:10px 0; position:relative; z-index:1; border:none;"></iframe>
+            </div>
+          </div>
+          <!--row end-->
+          <div class="space-10"></div>
+          <div class="row">
+            <div class="col-md-12 col-xs-12">
+              <!--   <h4>{{makeEvent.day | date:'EEE MM/dd h:mma'}}</h4> -->
+              <select class="form-control" ng-model="makeEventDay" ng-change="makeEventDayChange()">
+                <option ng-repeat="day in openSlots" ng-if="!(day.getHours() == makeEvent.day.getHours() && day.toLocaleDateString() == makeEvent.day.toLocaleDateString()) && day.getTime() < makeEvent.day.getTime()" value="{{day.getTime()}}">{{day | date:'EEE MM/dd ha'}}</option>
+                <option value="{{makeEvent.day.getTime()}}">{{makeEvent.day | date:'EEE MM/dd ha'}}</option>
+                <option ng-repeat="day in openSlots" ng-if="!(day.getHours() == makeEvent.day.getHours() && day.toLocaleDateString() == makeEvent.day.toLocaleDateString()) && day.getTime() > makeEvent.day.getTime()" value="{{day.getTime()}}">{{day | date:'EEE MM/dd ha'}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="space-10"></div>
+          <div class="row">
+            <div class="col-md-12" ng-if="!isEdit">
+              <div class="btn-group channel-group" ng-if="user.role == 'admin'" role="group" aria-label="...">
+                <a class="btn btn-default b-radius-10 active" ng-model="displayType" ng-value="'channels'" ng-class="{active : itemview == 'calender'}" href="javascript:void(0)" ng-click="setView('calender');setActive('channel')">Channels</a>
+                <a class="btn btn-default b-radius-10" ng-class="{active : itemview == 'list'}" href="javascript:void(0)" ng-click="setView('list');setActive('group')">Groups</a>
+              </div>
+              <div class="channel-check" style="font-size: 11px;" ng-if="uniqueGroup.length > 0 || linkedAccounts.length > 0">
+                <div class="channel-masege">
+                  <ul>
+                    <li class="" ng-show="channelArr.length > 0" ng-repeat="chan in channelArr">{{chan}}<span></span></li>
+                    <li class="" ng-show="groupArr.length > 0" ng-repeat="group in groupArr">{{group}}<span></span></li>
+                  </ul>
+                </div>
+                <div class="check-list text-left">
+                  <div class="checkbox demo-radio-btn" ng-show="displayType == 'group'" ng-repeat="group in uniqueGroup">
+                    <p>
+                      <label class="with-square-checkbox">
+                        <input style="" id="{{group}}" ng-click="setGroup(group);" class="ng-untouched ng-valid ng-dirty ng-valid-parse ng-pristine ng-empty" type="checkbox">
+                        <span>{{group}}</span> </label>
+                    </p>
+                  </div>
+                  <div class="checkbox demo-radio-btn" ng-repeat="u in linkedAccounts">
+                    <p>
+                      <label class="with-square-checkbox">
+                        <input style="" id="{{u.soundcloud.username}}" class="ng-untouched ng-valid ng-dirty ng-valid-parse ng-pristine ng-empty" ng-click="setChannel(u.soundcloud.username);" type="checkbox" ng-checked="channelArr.indexOf(u.soundcloud.username) >-1">
+                        <span>{{u.soundcloud.username}}</span>
+                      </label>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="row" ng-if="channelArr.length > 0">
+  <div class="col-md-12 col-xs-12" style="font-size: 12px;">
+    <label>Between reposts:
+      <input type="number" class="form-control input-hour" style="color: #868686;" placeholder="24" min="0" ng-model="makeEvent.hoursBetween">hours
+    </label>
+  </div>
+</div>
+-->
+          <h5 class="text-pink" ng-if="(makeEvent.type!='traded')">Total Reach: {{followCounts}} followers</h5>
+          <h5 class="text-pink" ng-if="(makeEvent.type=='traded') && !makeEvent.trackID">Waiting for {{makeEvent.owner.soundcloud.username}} to select a track.</h5>
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <li class="switch-btn" style="font-size: 12px;vertical-align: middle;
+    list-style: outside none none;">
+                <label class="switch" style="vertical-align: middle;">
+                  <input checked="" type="checkbox" ng-model="unrepostEnable" ng-click="setRepostHours()" ng-disabled="isTraded">
+                  <div class="slider round"></div>
+                </label>
+                <label>Unrepost after
+                  <input type="number" class="form-control input-hour" style="color: #868686;" min="0" placeholder="24" ng-model="unrepostHours" ng-disabled="isTraded">hours</label>
+              </li>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="pull-right">
+              <ul class="like-comment">
+                <li>
+                  Like:
+                  <a href="javascript:void(0);" ng-click="changeLikeCommentIcons('like');"><img src="{{likeSrc}}"></a>
+                </li>
+                <li>
+                  Comment:
+                  <a href="javascript:void(0);" ng-click="changeLikeCommentIcons('comment');"><img src="{{commentSrc}}"></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="acceptance">
+              <div class="channel-check">
+                <textarea class="form-control" ng-disabled="disable" ng-model="eventComment">{{comment}}</textarea>
+              </div>
+              <div class="next-previous">
+                <button class="btn btn-border b-radius-10 pull-left" ng-disabled="disable" ng-click="getPrevNextComment('previous')">Previous</button>
+                <button class="btn btn-border b-radius-10 pull-right" ng-disabled="disable" ng-click="getPrevNextComment('next')">Next</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="space-10"></div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <button class="btn btn-border b-radius-10" ng-class="{'disabled': isView}" ng-if="isEdit && !isTraded && makeEvent.day > now" ng-click="deleteEvent();">DELETE</button>
+            <button class="btn btn-border b-radius-10 " ng-click="backEvent();">CANCEL</button>
+            <button class="btn btn-border b-radius-10" ng-if="isEdit && !isTraded" ng-click="shareEvent()">SHARE</button>
+            <button class="btn btn-pink b-radius-10" ng-click="saveEvent();" ng-if="!makeEvent.day || makeEvent.day > now">SAVE</button>
+          </div>
+        </div>
+        <!--row end-->
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<div style="position:absolute; top:0; left:0; right:0; height:5000px; background-color: rgba(0,0,0,1); z-index: 1000;" ng-show="hideall">
+</div>
+</div>
+<!-- ManageRepost paidComment overlay start -->
+<div class="modal fade" id="scheduleCommentModal" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Schedule Comment</h4>
+      </div>
+      <div class="modal-body">
+        <textarea class="form-control" type="text" ng-model="scheduleComment" rows="4" placeholder="Enter new comment"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-default" ng-if="scheduleCommentIndex!=undefined" data-dismiss="modal" ng-click="deleteComment(scheduleCommentIndex,'schedule')">Delete</button>
+        <button type="button" class="btn btn-pink" data-dismiss="modal" ng-click="saveComments(scheduleComment,'schedule',scheduleCommentIndex)">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ManageRepost paidComment overlay end -->
+<!-- ManageRepost tradeComment overlay start -->
+<div class="modal fade" id="tradeCommentModal" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Trade Comment</h4>
+      </div>
+      <div class="modal-body">
+        <textarea class="form-control" type="text" ng-model="tradeComment" rows="4" placeholder="Enter new comment"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-default" ng-if="scheduleCommentIndex!=undefined" data-dismiss="modal" ng-click="deleteComment(scheduleCommentIndex,'trade')">Delete</button>
+        <button type="button" class="btn btn-pink" data-dismiss="modal" ng-click="saveComments(tradeComment,'trade',scheduleCommentIndex)">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- test modal -->
+<slmodal lolo="modal1" modal-body="body" modal-footer="footer" modal-header="header" event-id="repostResponse._id" open="open" event-type="type" event="repostResponse"></slmodal>
+<youtube-modal you-tube="youtubeModalId" modal-body="body" modal-footer="footer" modal-header="header" event-id="repostResponse" event-type="type"></youtube-modal>
+</div>
+<script>
+setTimeout(function() {
+  $(document).ready(function() {
+    FB.init({
+      appId: '1771378846475599',
+      xfbml: true,
+      version: 'v2.7'
+    });
+
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {
+        return;
+      }
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  })
+}, 200);
+</script>

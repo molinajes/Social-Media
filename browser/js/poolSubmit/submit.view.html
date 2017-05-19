@@ -1,0 +1,158 @@
+<style>
+  .grey {
+   background-color:#EEEEEE;
+   color:#000000 !important;
+ }
+ #backgroundImage1 {
+  background-size: cover;
+  display: block;
+  float: right;
+  height:102%;
+  left: 0;
+  position: absolute;
+  right: 0;
+  width: 100%;
+  z-index: 1;
+}
+#rightpremierTemplate{
+  position: relative;
+  margin: 20px;  
+  z-index: 2;
+  padding: 0 10px;
+}
+.submi-section{
+ padding-bottom:60px;
+}
+.custom-settings {
+ position: absolute;
+ top: 0px;
+ left: 0px;
+ right: 0;
+ height: 100%;
+ bottom: 0;
+ width: 100%;
+}
+</style>
+<ng-include src="'js/artistTools/ArtistTools/header-navigation.html'" ng-if="!customizeSettings"></ng-include>
+<!-- Content Start  -->
+<div class="container" style='background-color: white; border-radius: 20px; text-align:center;'>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="content-area" ng-class="{bgwhite: !customizeSettings}">
+        <div class="row">
+          <div class="col-md-12 text-center" >
+            <br>
+            <h3 class="bold text-center">Artists Unlimited</h3>
+            <h4 class="bold text-center">Power Your Music</h4>
+            <div class="internal-content">
+              <br>
+              <div class="row">
+                <div class="row">
+                  <div class="col-md-12">
+                    <p><span>At Artists Unlimited our mission is simple: Connect music listeners with music curators and their audiences. By submitting your music to us, we will ensure that every major music curator, label & blog partnered with Artists Unlimited will get a chance to review your song. There is no submission fee, simply submit and get a chance to be heard.</span></p>
+                    <p><span>After giving all our vendors 48 hours to listen to your track, we will send you an email notifying if & where you have been accepted for a repost. From there you are simply a few clicks of a button away from getting your music promoted, and you will be able to track all your reposts in real time. Submit your music and find out who out there believes in your art!</span></p>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <form role="form" ng-submit="submit()">
+                    <br>
+                    <div class="row">
+                      <div class="col-sm-6 col-sm-offset-3 search">
+                        <scsearch kind='track' returnitem='choseTrack(item)'></scsearch>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12 text-center">
+                        <iframe ng-show="showPlayer" id="scPlayerCustom" width="500" height="160" src="https://w.soundcloud.com/player/?url=&auto_play=false&show_artwork=true" style="margin:10px 0; position:relative; z-index:1; border:none;"></iframe>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-6 col-sm-offset-3">
+                        <input class="form-control" type="text" placeholder="Name"ng-model="submission.name" required/>
+                      </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                      <div class="col-sm-6 col-sm-offset-3">
+                        <input class="form-control" type="email" placeholder="Email" ng-model="submission.email" required/>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="text-center">
+                      <button class="btn btn-pink btn-lg btn-enter">Submit</button>
+                      <br/><br />
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="custom-settings" style="background-color:transparent !important;"  ng-show="customizeSettings" style='background-color: white;'>
+        <div id="backgroundImage1" style="background-size:cover;background-image:url( {{customizeSettings.background.images}}); filter: blur({{customizeSettings.background.blur}}px);-webkit-filter: blur({{customizeSettings.background.blur}}px);">
+        </div>
+        <div id="rightpremierTemplate" class="col-md-8">
+          <p class="text-center" style="color:{{customizeSettings.heading.style.fontColor}};
+          font-weight:{{customizeSettings.heading.style.fontWeight}};
+          font-size:{{customizeSettings.heading.style.fontSize}}px">{{customizeSettings.heading.text}}</p>
+          <div class="internal-content">
+            <br>
+            <div class="row">
+              <div class="col-md-12">
+                <p class="text-center" style="color:{{customizeSettings.subHeading.style.fontColor}};font-size:{{customizeSettings.subHeading.style.fontSize}}px;font-weight:{{customizeSettings.subHeading.style.fontWeight}}" ng-bind-html="customizeSettings.subHeading.text"></p>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <img class="text-center" style="width:150px;height:150px;" ng-if="customizeSettings.logo.images" id="templatepremierLogo" src="{{customizeSettings.logo.images}}">
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-md-12">
+                <form role="form" ng-submit="submit()">
+                  <br>
+                  <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3 search">
+                      <scsearch kind='track' returnitem='choseTrack1(item)' customstyle="width:100%; height:34px; padding:5px; border:solid {{customizeSettings.inputFields.style.border}}px; border-radius:{{customizeSettings.inputFields.style.borderRadius}}px; border-color:{{customizeSettings.inputFields.style.borderColor}}"></scsearch>
+                    </div>
+                  </div>
+            <!-- <br>
+            <div class="row">
+              <div class="col-sm-6 col-sm-offset-3">
+                <select ng-options="item for item in genreArray" ng-model="submission.genre" style="width:100%; height:34px; padding:5px; border:solid {{customizeSettings.inputFields.style.border}}px; border-radius:{{customizeSettings.inputFields.style.borderRadius}}px; border-color:{{customizeSettings.inputFields.style.borderColor}}" ng-init="submission.genre = null" required>
+                  <option value="" ng-disabled="!!submission.genre">--Select Genre--</option>
+                </select>
+              </div>
+            </div> -->
+            <br>
+            <div class="row">
+              <div class="col-sm-6 col-sm-offset-3">
+                <input type="text" placeholder="Name" ng-model="submission.name" style="width:100%; height:34px; padding:5px; border:solid {{customizeSettings.inputFields.style.border}}px; border-radius:{{customizeSettings.inputFields.style.borderRadius}}px; border-color:{{customizeSettings.inputFields.style.borderColor}}" required/>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-sm-6 col-sm-offset-3">
+                <input type="email" placeholder="Email" ng-model="submission.email" style="width:100%; height:34px; padding:5px; border:solid {{customizeSettings.inputFields.style.border}}px; border-radius:{{customizeSettings.inputFields.style.borderRadius}}px;border-color:{{customizeSettings.inputFields.style.borderColor}}" required/>
+              </div>
+            </div>
+            <br>
+            <div class="text-center">
+              <button class="btn btn-default" style="color:{{customizeSettings.button.style.fontColor}}; font-size:{{customizeSettings.button.style.fontSize}}px; background-color:{{customizeSettings.button.style.bgColor}};">{{customizeSettings.button.text}}</button>
+              <br>
+              <br>
+            </div>
+            <div class="text-center">
+              <div class="col-md-12 text-center">
+                <div id="scPlayerCustom" style="width:97%; position:relative; z-index:1;"></div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <ng-include src="'js/home/views/loader.html'"></ng-include>

@@ -1,0 +1,124 @@
+<div>
+  <br>
+  <div style="text-align: center">
+    <h2 style="display:inline;text-align:center">Download Gate</h2>
+    <div style="clear:both"></div>
+  </div>
+  <br>
+  <div style="text-align: center">
+    <ng-include src="'js/home/views/_adminNavigations.html'"></ng-include>
+  </div>
+  <br>
+  <div class="content-area bg-white" ng-init="checkIfEdit()">
+    <div class="row">
+      <!-- Download Section Start -->
+      <div class="col-md-4" ng-if="isTrackAvailable">
+        <div class="track-section text-center">
+          <img class="img-responsive" ng-src="{{track.trackArtworkURL}}" />
+          <div class="track-bottom">
+            <h4>{{track.trackTitle}}</h4>
+            <a href="#"><img class="avatar" ng-src="{{track.trackArtworkURL}}">{{track.artistUsername}}</a>
+            <p class="text-justify pad-download-agreement">By downloading this song you agree to: Like the track compilation, Repost the track compilation, Follow {{track.artistUsername}} and our network</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4" ng-if="!isTrackAvailable">
+      </div>
+      <form role="form" ng-submit="saveDownloadGate()">
+        <div class="col-md-4">
+          <div class="song-container">
+            <h4>Song</h4>
+            <div class="song-url">
+              <input class="form-control" placeholder="Enter Song URL" ng-model="track.trackURL" ng-change="trackURLChange()" required/>
+              <!-- <a class="close-ic" href="#"><img src="assets/images/close.png"></a> -->
+            </div>
+          </div>
+          <div class="social-container">
+            <h4>Social Media Linksasdfa</h4>
+            <div class="song-url" ng-repeat="item in track.SMLinks">
+              <input class="form-control" type="text" placeholder="Link" ng-model="item.value" ng-change="SMLinkChange($index)" />
+              <span class="{{item.key}}"></span>
+              <a class="close-ic" href="#" ng-click="removeSMLink($index)"><img src="assets/images/close.png"></a>
+            </div>
+            <!-- <div class="song-url">
+              <input class="form-control" placeholder="Links" ng-model="track.SMLinks.twitter" />
+              <span class="twitter"></span>
+              <a class="close-ic" href="#"><img src="assets/images/close.png"></a>
+            </div> -->
+            <a href="#" ng-click="addSMLink()" style="font-size:1.5em">+</a>
+          </div>
+          <div class="social-container">
+            <h4>Download URL</h4>
+            <div>
+              <input class="form-control" type="text" placeholder="Link" ng-model="track.downloadURL" />
+              <div class="text-center">Or</div>
+              <input class="form-control" type="file" accept=".mp3" fileread="track.file" message="message"  />
+            </div>
+          </div>
+
+        </div>
+        <div class="col-md-4">
+          <div class="artist-follow">
+            <h4>Artists to Follow</h4>
+            <div class="input-box" ng-repeat="artist in track.artists" ng-show="!artist.permanentLink">
+              <input class="form-control" placeholder="URL" ng-model="artist.url" ng-change="artistURLChange($index)"/>
+              <a class="pro-icon" href="#"><img class="profile-icon" ng-src="{{artist.avatar}}"></a>
+              <a class="close-ic" href="#"><img src="assets/images/close.png" ng-click="removeArtist($index)"></a>
+            </div>
+            <a href="#" ng-click="addArtist()" ng-hide="track.artists.length > 2" style="font-size:1.5em">+</a>
+          </div>
+          <div class="artist-follow">
+            <h4>Playlist URLs</h4>
+            <div class="input-box" ng-repeat="playlist in track.playlists">
+              <input class="form-control" placeholder="URL" ng-model="playlist.url" ng-change="playlistURLChange($index)"/>
+              <a class="pro-icon" href="#"><img class="profile-icon" ng-src="{{playlist.avatar}}"></a>
+              <a class="close-ic" href="#"><img src="assets/images/close.png" ng-click="removePlaylist($index)"></a>
+            </div>
+            <a href="#" ng-click="addPlaylist()" style="font-size:1.5em">+</a>
+          </div>
+          <div class="social-container">
+            <h4>Actions</h4>
+            <small class="orange-text">To Download:</small>
+            <div class="checkbox-container">
+              <ul>
+                <li>
+                  <label class="with-square-checkbox">
+                    <input type="checkbox" ng-model="track.like">
+                    <span>Like</span>
+                  </label>
+                </li>
+                <li>
+                  <label class="with-square-checkbox">
+                    <input type="checkbox" ng-model="track.repost">
+                    <span>Repost</span>
+                  </label>
+                </li>
+                <li>
+                  <label class="with-square-checkbox">
+                    <input type="checkbox" ng-model="track.comment">
+                    <span>Comment</span>
+                  </label>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 text-center">
+          <button href="#" type="submit" class="btn btn-enter">Accept</button>
+        </div>
+        <!-- Download Section End -->
+
+      </form>
+    </div>
+  </div>
+</div>
+<ng-include src="'js/home/views/loader.html'"></ng-include>
+<script type="text/ng-template" id="downloadURL.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Your Download URL - </h3>
+    {{$parent.modal.downloadURL}}
+  </div>
+  <div class="modal-body">
+    <button class="btn btn-warning" type="button" ng-click="$parent.closeModal()">Close</button>
+  </div>
+</script>

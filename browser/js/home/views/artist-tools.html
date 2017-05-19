@@ -1,0 +1,52 @@
+<ng-include src="'js/home/views/_navigations.html'"></ng-include>
+<!-- Content Start  -->
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="content-area bg-white">
+        <div class="row">
+         <div class="col-md-12">
+           <h1 class="bold">Artist Tools</h1>
+           <div class="internal-content">
+            <div class="row text-center" ng-if="!sent.artistEmail">
+             <div class="col-md-6 col-md-offset-3">
+              <h3 class="bold text-justify">
+                Coming Soon. Write in your e-mail
+                to be the first one to hear about it.
+              </h3>
+              <form role="form" ng-submit="saveArtistEmail()">
+                <div class="internal-content">
+                  <div class="form-group margin-top-5">
+                    <input class="form-control" type="email" placeholder="Email" ng-model="artist.email"required />
+                  </div>
+                  <div class="form-group margin-top-5">
+                   <p ng-show="message.artistEmail.visible" class="text-center">
+                    {{message.artistEmail.val}}
+                    <br>
+                    <br>
+                  </p>
+                  <button class="btn btn-pink btn-lg btn-enter" type="submit">Enter</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="row text-center" ng-if="sent.artistEmail">
+          <div class="col-md-6 col-md-offset-3">
+           <h3 class="bold">We will contact you soon.</h3>
+           <div class="margin-top-20">
+            <img class="img-responsive center-block" src="/assets/images/check.png" align="middle"/>
+          </div>
+          <div class="margin-top-20">
+            <button class="btn btn-pink btn-lg btn-enter" type="button" ng-click="toggleArtistEmail()">Resubmit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>	
+</div>
+</div>
+<!-- Content End  -->

@@ -1,0 +1,87 @@
+<ng-include src="'js/artistTools/ArtistTools/header-navigation.html'"></ng-include>
+<!-- Sidebar Start -->
+<div class="sidebar-tracks" ng-show="recentTracks.length > 0">
+ <div class="songs-list text-right" ng-repeat="item in recentTracks">
+   <a href="{{item.trackDownloadUrl}}" target="_blank">
+    <span ng-show="!!showTitle[item]">{{item.trackTitle}}</span>
+    <img class="avatar" ng-src="{{item.trackArtworkURL}}" ng-mouseleave="showTitle[item] = !showTitle[item]" ng-mouseover="showTitle[item] = !showTitle[item]"/>
+  </a>
+</div>
+</div>
+<!-- Sidebar End -->
+<!-- Content Start  -->
+<div class="container" ng-init="getDownloadTrack()">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="content-area follow-area">
+        <div class="row">
+          <div class="col-md-12">
+            <!-- <div class="follow-container blur-container" ng-style="backgroundStyle()"></div> -->
+            <div class="col-md-4 col-md-offset-4 text-center follow-box-container">
+              <div class="follow-box">
+                <div class="custom-sc-player" ng-style="backgroundStyle()">
+                  <div class="custom-sc-player-overlay" ng-click="togglePlay()">
+                    <span class="glyphicon glyphicon-pause control-icon" ng-if="!toggle"></span>
+                    <span class="glyphicon glyphicon-play control-icon" ng-if="toggle"></span>
+                  </div>
+                </div>
+                <div class="follow-bottom">
+                 <h4>{{track.trackTitle}}</h4>
+                 <a ng-href="{{track.artistURL}}" target="_blank"><img class="avatar" ng-src="{{track.artistArtworkURL}}"/> {{track.artistUsername}}</a>
+                 <p class="text-justify pad-download-agreement" ng-if="track.socialPlatform == 'actionsOnSoundcloud'">
+                  By downloading this song you agree to: <img src="assets/images/favorite_icon.png" style="width:14px; height:12px;"> the track, <img src="assets/images/repost_icon.png" style="width:16px; height:12px;"> the track, and follow {{track.artistUsername}}<span ng-repeat="artist in track.artists" ng-if="user.admin == true">, {{artist.username}}</span><span> and our network</span>.
+                </p>
+                <p class="text-justify pad-download-agreement" ng-if="track.socialPlatform == 'youtubeSubscribe'" style="word-break: break-all;">For downloading this song you need to subscribe to {{ track.socialPlatformValue }} on youtube.
+                </p>
+                <p class="text-justify pad-download-agreement" ng-if="track.socialPlatform == 'twitterFollow'" style="word-break: break-all;">For downloading this song you need to follow {{ track.socialPlatformValue }} on twitter.
+                </p>
+                <p class="text-justify pad-download-agreement" ng-if="track.socialPlatform == 'twitterPost'">For downloading this song you need to tweet &quot{{ track.socialPlatformValue }}&quot on twitter.
+                </p>
+                <p class="text-justify pad-download-agreement" ng-if="track.socialPlatform == 'facebookLike'" style="word-break: break-all;">For downloading this song you need to like {{ track.socialPlatformValue }} Facebook page/link.
+                </p>
+                <p class="text-justify pad-download-agreement" ng-if="track.socialPlatform == 'facebookShare'">For downloading this song you need to share {{ track.socialPlatformValue }} on Facebook.
+                </p>
+                <p class="text-justify pad-download-agreement" ng-if="track.socialPlatform == 'instagramFollow'">For downloading this song you need to follow {{ track.socialPlatformValue }} on instagram.
+                </p>
+              </div>  
+            </div>
+            <div ng-if="track.socialPlatform == 'actionsOnSoundcloud'">
+              <input type="text" ng-model="track.commentText" placeholder="Comment" ng-if="track.comment" style="width:360px; height:30px; margin-bottom:5px">
+              <a class="btn btn-default btn-lg no-border" style="width:360px; font-weight: bold; font-size:1.1em;" href="javascript:void(0)" ng-click="authenticateSoundcloud()">CONNECT & DOWNLOAD</a>
+            </div>
+            <div ng-if="track.socialPlatform == 'youtubeSubscribe'">
+              <a class="btn btn-default btn-lg no-border" style="width:360px; font-weight: bold; font-size:1.1em; color: #425F9C;" ng-click="authenticateYoutube(track)" >CONNECT & DOWNLOAD</a>
+            </div>
+            <div ng-if="track.socialPlatform == 'twitterFollow'">
+              <a class="btn btn-default btn-lg no-border" style="width:360px; font-weight: bold; font-size:1.1em; color: #425F9C;" ng-click="authenticateTwitter(track)" >CONNECT & DOWNLOAD</a>
+            </div>
+            <div ng-if="track.socialPlatform == 'twitterPost'">
+              <a class="btn btn-default btn-lg no-border" style="width:360px; font-weight: bold; font-size:1.1em; color: #425F9C;" ng-click="authenticateTwitter(track)" >CONNECT & DOWNLOAD</a>
+            </div>
+            <div ng-if="track.socialPlatform == 'facebookLike'">
+              <a class="btn btn-default btn-lg no-border" style="width:360px; font-weight: bold; font-size:1.1em; color: #425F9C;" ng-click="downloadTrackFacebookLike(track)" >CONNECT & DOWNLOAD</a>
+              <div class="fb-like" data-href="{{ track.socialPlatformValue }}" data-layout="standard" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+            <div id="container"></div>
+            <div ng-if="track.socialPlatform == 'facebookShare'">
+              <a class="btn btn-default btn-lg no-border" style="width:360px; font-weight: bold; font-size:1.1em; color: #425F9C;" ng-click="downloadTrackFacebookShare(track.socialPlatformValue)" >CONNECT & DOWNLOAD</a>
+            </div>
+            <div ng-if="track.socialPlatform == 'instagramFollow'">
+              <a class="btn btn-default btn-lg no-border" style="width:360px; font-weight: bold; font-size:1.1em; color: #a77658;" ng-click="authenticateInstagram(track)">               CONNECT & DOWNLOAD</a>
+            </div>
+            <br>
+            <br>
+            <div>
+              <div ng-repeat="(name, url) in track.SMLinks" style="display:inline-block; margin:5px 10px;">
+                <a href="{{url}}" target="_blank">
+                  <img src="assets/images/{{name}}_icon.png" style="width:40px; height:40px;">
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  
+</div>
+<ng-include src="'js/home/views/loader.html'"></ng-include>

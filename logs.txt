@@ -1,0 +1,13 @@
+Secure server started on port 1443
+------------------------------------------------
+REQUEST "/admin"
+QUERY   {}
+BODY    {}
+------------------------------------------------
+REQUEST "/api/submissions/unaccepted"
+QUERY   {}
+BODY    {}
+------------------------------------------------
+REQUEST "/api/channels"
+QUERY   {}
+BODY    {}

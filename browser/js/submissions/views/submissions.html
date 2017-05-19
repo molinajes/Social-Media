@@ -1,0 +1,487 @@
+<style>
+.grey {
+  background-color: #EEEEEE;
+  color: #000000 !important;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #dcdcdc;
+}
+</style>
+<ng-include src="'js/home/views/_adminHeaderNavigation.html'"></ng-include>
+<!-- Content Start  -->
+<div id="wrapper">
+  <ng-include src="'js/home/views/_adminNavigations.html'"></ng-include>
+  <div class="container-fluid height-100pr">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="page-content right-side">
+          <!--page-contant Start-->
+          <div class="tabs-5">
+            <!-- Nav tabs :Start-->
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active" style="border-radius: 10px 0 0 0;">
+                <a style="border-radius:10px 0 0 0;" href="#mysubmissions" aria-controls="mysubmissions" role="tab" data-toggle="tab"><img src="assets/images/music-icon-big.svg" />SUBMISSIONS
+                  <div class="badge notification-bubble-submission-count" ng-show="counts.regularCount > 0">{{counts.regularCount}}</div>
+                </a>
+              </li>
+              <li role="presentation">
+                <a href="#marketplace" aria-controls="marketplace" role="tab" data-toggle="tab"><img src="assets/images/mysubmissions-cart.svg" />MARKETPLACE
+                  <div class="badge notification-bubble-submission-count" ng-show="counts.marketCount > 0">{{counts.marketCount}}</div>
+                </a>
+                </a>
+              </li>
+              <li role="presentation">
+                <a href="#managesubmissions" aria-controls="managesubmissions" role="tab" data-toggle="tab"> <img src="assets/images/managereposts.svg" />CUSTOM EMAILS</a>
+              </li>
+              <li role="presentation" style="border-radius:0 10px 0 0;">
+                <a style="border-radius:0 10px 0 0;" href="#soldReposts" aria-controls="soldReposts" role="tab" data-toggle="tab"> <img src="assets/images/managereposts.svg" />REPOSTS SOLD</a>
+              </li>
+            </ul>
+            <!-- Nav tabs :End-->
+            <!-- Tab panes :: Start-->
+            <div class="tab-content">
+              <!-- MY SCHEDULE : Start-->
+              <div role="tabpanel" class="tab-pane fade in active" id="mysubmissions">
+                <div class="container-90">
+                  <!--                   <row class="col-md-6">
+                    <label class="switch">
+                      <input type="checkbox" checked="" ng-model="user.repostSettings.poolOn" ng-change="togglePoolOn()">
+                      <div class="slider round"></div>
+                    </label>
+                    <span style='font-size:1.2em; vertical-align:middle;'>AU Marketplace <a href="" ng-click="whatIsPool()">?</a></span>
+                  </row> -->
+                  <!--                   <row class="col-md-12">
+                    <h4 style="text-align:right;">{{counts.regularCount}} submissions</h4>
+                  </row>    -->
+                  <span>Account: </span>
+                  <select id="paidUsers" class="form-control" ng-model="channelSelect" ng-change="changeChannelSelect()" style="max-width:200px; display:inline-block;">
+                    <option value="all" default>All</option>
+                    <option ng-repeat="chan in paidRepostAccounts" value="{{chan.userID}}">{{chan.user.username}}</option>
+                  </select>
+                  <span style="margin-left:20px;">Genre: </span>
+                  <select id="paidUsers" class="form-control" ng-model="genre" ng-change="changeChannelSelect()" style="max-width:200px; display:inline-block;">
+                    <option value="all" default>All</option>
+                    <option ng-repeat="g in genres" value="{{g}}">{{g}}</option>
+                  </select>
+                  <div class="submi-section" ng-repeat="sub in showingElements" ng-if="channelSelect == 'all' || channelSelect == sub.userID._id" ng-class="{'border-bottom':!$last}">
+                    <div class="">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <ul class="submissions-tab-list">
+                            <li><strong>{{sub.name}} </strong>submitted a track <strong>{{sub.datedata}}</strong> to <strong>{{sub.userID.name}}</strong></li>
+                            <a href="{{sub.trackURL}}" target="_blank">Listen on Soundcloud</a>
+                          </ul>
+                        </div>
+                      </div>
+                      <!--row ::end-->
+                      <div class="row">
+                        <div class="col-md-10">
+                          <div>
+                            <iframe id="{{sub.trackID}}player" width="100%" height="160" src="{{sub.playerURL}}" style="margin:10px 0; position:relative; z-index:1; border:none;"></iframe>
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div style="padding-top: 20px;">
+                            <ul class="submissions-tab-list">
+                              <div class="dropdown sort-btn">
+                                <button class="btn btn-sm dropdown-toggle sort-select descending" type="button" data-toggle="dropdown">CUSTOM EMAIL</button>
+                                <ul class="dropdown-menu">
+                                  <li><a href="#" ng-click="openEmailClient(sub, button)" ng-repeat="button in user.submissionsCustomEmailButtons">{{button.buttonText}}</a></li>
+                                </ul>
+                              </div>
+                              <button class="btn btn-border b-radius-10 btn-sm btn-block " ng-click="ignore(sub)">IGNORE</button>
+                              <button class="btn btn-border b-radius-10 btn-sm btn-block" ng-click="decline(sub)">DECLINE</button>
+                              <button class="btn btn-pink btn-sm  b-radius-10 btn-block" ng-click="save(sub)">ACCEPT</button>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <!--row ::end-->
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="channel-check">
+                            <div class="channel-masege">
+                              <ul style="height: 20px;">
+                                <li ng-repeat="chans in sub.selectedChannelName">{{chans}}</li>
+                              </ul>
+                            </div>
+                            <div class="check-list">
+                              <form action="#">
+                                <div class="pull-left" style="width:50%;" ng-repeat="chan in paidRepostAccounts">
+                                  <p>
+                                    <label class="with-square-checkbox" ng-style="checkboxStyle(sub, chan)">
+                                      <input style="" class="ng-untouched ng-valid ng-dirty ng-valid-parse ng-pristine ng-empty" type="checkbox" ng-model="sub[chan.user.username]" ng-change="changeBox(sub, chan)">
+                                      <span>{{chan.user.username}}</span> </label>
+                                  </p>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="channel-check" ng-if="uniqueGroup.length!= 0">
+                            <div class="channel-masege">
+                              <ul style="height: 20px;">
+                                <li class="" ng-repeat="groups in sub.selectedGroups">{{groups}}</li>
+                              </ul>
+                            </div>
+                            <div class="check-list">
+                              <form action="#">
+                                <div class="pull-left" style="width:50%;" ng-repeat="group in uniqueGroup">
+                                  <p>
+                                    <label class="with-square-checkbox">
+                                      <input style="" class="ng-untouched ng-valid ng-dirty ng-valid-parse ng-pristine ng-empty" type="checkbox" ng-model="sub[group]" ng-change="changeBoxGroup(sub, group)">
+                                      <span>{{group}}</span></label>
+                                  </p>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--row ::end-->
+                    </div>
+                  </div>
+                  <br/>
+                  <div class="col-md-12 text-center margin-20">
+                    <button class="btn btn-pink" ng-click="loadMore()">LOAD MORE</button>
+                  </div>
+                  <div class="space-10"></div>
+                </div>
+              </div>
+              <!-- MY SCHEDULE : End-->
+              <!-- ORGANIZE SCHEDULE :Start -->
+              <div role="tabpanel" class="tab-pane fade" id="marketplace">
+                <div class="container-90">
+                  <!-- <row class="col-md-6">
+                    <label class="switch">
+                      <input type="checkbox" checked="" ng-model="user.repostSettings.poolOn" ng-change="togglePoolOn()">
+                      <div class="slider round"></div>
+                    </label>
+                    <span style='font-size:1.2em; vertical-align:middle'>AU Marketplace<a href="" ng-click="whatIsPool()">?</a></span>
+                  </row> -->
+                  <!--                   <row class="col-md-6">
+                    <h4 style="text-align:left;">Credits: {{allowance}}</h4>
+                  </row> -->
+                  <span style="margin-left:20px;">Genre: </span>
+                  <select id="paidUsers" class="form-control" ng-model="genre" ng-change="changeChannelSelect()" style="max-width:200px; display:inline-block;">
+                    <option value="all" default>All</option>
+                    <option ng-repeat="g in genres" value="{{g}}">{{g}}</option>
+                  </select>
+                  <div class="submi-section" ng-repeat="sub in marketSubmissions" ng-if=" user.repostSettings.poolOn" ng-class="{'border-bottom':!$last}">
+                    <div class="">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <ul class="submissions-tab-list">
+                            <li>Submitted by <strong>{{sub.name}} </strong></li>
+                            <a href="{{sub.trackURL}}" target="_blank">Listen on Soundcloud</a>
+                          </ul>
+                        </div>
+                      </div>
+                      <!--row ::end-->
+                      <div class="row">
+                        <div class="col-md-10">
+                          <div style="height: 160px; width: 100%;">
+                            <iframe id="{{sub.trackID}}player" width="100%" height="160" src="{{sub.playerURL}}" style="margin:10px 0; position:relative; z-index:1; border:none;"></iframe>
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="">
+                            <div class="submitted-time">
+                              <span ng-bind-html="getDiffTimeText(sub.pooledSendDate)"></span>
+                            </div>
+                            <ul class="submissions-tab-list ">
+                              <button class="btn btn-border btn-sm b-radius-10 btn-block" ng-click="marketIgnore(sub)">IGNORE</button>
+                              <button class="btn btn-pink btn-sm b-radius-10 btn-block" ng-click="marketSave(sub)">ACCEPT</button>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <!--row ::end-->
+                      <div class="row">
+                        <div class="col-md-6" style="padding-top: 20px;">
+                          <div class="channel-check" ng-if="paidRepostAccounts.length > 0">
+                            <div class="channel-masege">
+                              <ul style="height: 20px;">
+                                <li class="" ng-repeat="chans in sub.selectedChannelName">{{chans}}</li>
+                              </ul>
+                            </div>
+                            <div class="check-list">
+                              <form action="#">
+                                <div class="pull-left" style="width:50%;" ng-repeat="chan in paidRepostAccounts">
+                                  <p>
+                                    <label class="with-square-checkbox" ng-style="checkboxStyle(sub, chan)">
+                                      <input style="" class="ng-untouched ng-valid ng-dirty ng-valid-parse ng-pristine ng-empty" type="checkbox" ng-model="sub[chan.user.username]" ng-change="changeBox(sub, chan)">
+                                      <span>{{chan.user.username}}</span> </label>
+                                  </p>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6" style="padding-top: 20px;">
+                          <div class="channel-check" ng-if="uniqueGroup.length!= 0">
+                            <div class="channel-masege">
+                              <ul style="height: 20px;">
+                                <li class="" ng-repeat="groups in sub.selectedGroups">{{groups}}</li>
+                              </ul>
+                            </div>
+                            <div class="check-list">
+                              <form action="#">
+                                <div class="pull-left" style="width:50%;" ng-repeat="group in uniqueGroup">
+                                  <p>
+                                    <label class="with-square-checkbox">
+                                      <input style="" class="ng-untouched ng-valid ng-dirty ng-valid-parse ng-pristine ng-empty" type="checkbox" ng-model="sub[group]" ng-change="changeBoxGroup(sub, group)">
+                                      <span>{{group}}</span></label>
+                                  </p>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--row ::end-->
+                    </div>
+                  </div>
+                  <br/>
+                  <div class="col-md-12 text-center margin-20">
+                    <button class="btn btn-pink" ng-if="user.repostSettings.poolOn" ng-click="loadMoreMarket()">LOAD MORE</button>
+                  </div>
+                </div>
+                <div class="space-10"></div>
+              </div>
+              <!-- ORGANIZE SCHEDULE :End -->
+              <!-- MANAGE REPOSTS : Start -->
+              <div role="tabpanel" class="tab-pane fade" id="managesubmissions">
+                <div class="managesubmissions">
+                  <h4>Here you can create custom buttons which will trigger an email draft to launch in your mail client. We do this to make it easier for you to organize your submissions according to how you want to move forward with them. Examples of custom buttons can be "More" which could be a template email you send if you want to hear more music from the artist submitting for repost consideration.</h4>
+                </div>
+                <div class="managesubmissions">
+                  <div class="row">
+                    <div class="row nav-tabs margin0">
+                      <div class="col-md-12 bg-white">
+                        <form ng-submit="saveSettings()">
+                          <br />
+                          <div class="row margin-bottom-10" ng-repeat="item in customEmailButtons track by $index" style="border-bottom: solid 1px #dcdcdc;">
+                            <div class="col-md-12">
+                              <div class="col-md-8 margin-bottom-10">
+                                <input type="text" ng-model="item.buttonText" class="form-control" placeholder="Button Title" index="{{$index}}">
+                                <br/>
+                                <input type="text" ng-model="item.toEmail" class="form-control toEmailArea{{$index}}" placeholder="To Email" index="{{$index}}" ng-click="addEventClass($index,'toEmailArea');">
+                                <br/>
+                                <input type="text" ng-model="item.subject" class="form-control subjectArea{{$index}}" placeholder="Subject" index="{{$index}}" ng-click="addEventClass($index,'subjectArea');">
+                                <br/>
+                                <textarea ng-model="item.emailBody" class="form-control emailBodyArea{{$index}}" rows="15" placeholder="Email body" index="{{$index}}" ng-click="addEventClass($index,'emailBodyArea');"></textarea>
+                                <br/>
+                                <div class="col-md-12 text-center">
+                                  <button class="btn btn-default" ng-click="sendTestMail($index)">TEST EMAIL</button>
+                                  <button class="btn btn-default" ng-click="removeItem($index)">DELETE</button>
+                                </div>
+                              </div>
+                              <div class="col-md-4 margin-bottom-10">
+                                <input ng-repeat="btn in dynamicButton " type="button" name="{{btn.name}}" class="btn btn-border organize-btn" style="margin-left:20px; display:block;" value="{{btn.name}}" ng-click="appendBody(btn)">
+                              </div>
+                            </div>
+                            <div class="space-10">&nbsp;</div>
+                          </div>
+                          <br/>
+                          <div class="text-center margin-bottom-10">
+                            <a href="#" class="btn btn-default" ng-click="addItem()">ADD CUSTOM EMAIL</a>
+                          </div>
+                          <br/>
+                          <div class="">
+                            <div class="col-md-12 text-center" style="padding-top:20px;">
+                              <button type="submit" class="btn btn-pink b-radius-10 btn-enter">SAVE SETTINGS</button>
+                            </div>
+                          </div>
+                          <br>
+                          <br>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="space-20"></div>
+              </div>
+              <!-- MANAGE REPOSTS : End -->
+              <!-- SOLD REPOSTS START -->
+              <div role="tabpanel" class="tab-pane fade" id="soldReposts">
+                <div class="managesubmissions" style="border:none;">
+                  <!-- OVERALL TOTALS -->
+                  <div class="row">
+                    <div class="col-md-4" style="width:33%; min-width:250px; text-align:center; vertical-align: middle; float:none; display:inline-block;">
+                      <label class='radio-inline'>
+                        <input type="radio" name="scaleopt" ng-model="scale" value="7" ng-change="changeScale()" />Week</label>
+                      <label class='radio-inline'>
+                        <input type="radio" name="scaleopt" ng-model="scale" value="31" ng-change="changeScale()" />Month</label>
+                      <label class='radio-inline'>
+                        <input type="radio" name="scaleopt" ng-model="scale" value="365" ng-change="changeScale()" />Year</label>
+                    </div>
+                    <div class="col-md-4" style="width:33%; min-width:250px; text-align:center; vertical-align: middle; float:none; display:inline-block;">
+                      <button class="btn btn-default btn-scheduler" ng-click="incrementRange()"><img src="/assets/images/left-arrow.svg" /></button>
+                      <h4 style="display:inline-block; margin:0 10px;"> {{ highDate | date:'M/d/yy'}} - {{ lowDate | date:'M/d/yy'}} </h4>
+                      <button class="btn btn-default btn-scheduler" ng-click="decrementRange()"><img id="scheduler-btn-back" src="/assets/images/right-arrow.svg" /></button>
+                    </div>
+                    <div class="col-md-4" style="width:33%; min-width:250px; vertical-align: middle; float:none; display:inline-block; text-align:center;">
+                      <div class="form-group">
+                        <div class="input-group" style="width:90%; margin:0 auto;">
+                          <div class="input-group-addon"><i class="glyphicon glyphicon-search"></i>
+                          </div>
+                          <input type="text" class="form-control" placeholder="Search" ng-model="searchTerm">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="row margin0">
+                      <div class="col-md-12">
+                        <div class="space-10"></div>
+                        <h4>TOTALS</h4>
+                        <div class="table-responsive">
+                          <table class="table table-bordered table-striped">
+                            <thead>
+                              <tr>
+                                <td>Repost Submissions</td>
+                                <td>Premier Submissions</td>
+                                <td>Reposts Sold</td>
+                                <td>Submissions Earnings</td>
+                                <td>Finders Fee Earnings</td>
+                                <td>Marketplace Earnings</td>
+                                <td>Total Earnings</td>
+                                <td>Refunds</td>
+                                <td>Amount Refunded</td>
+                                <td>Incomplete</td>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>{{ adminStats.repSubCount }}</td>
+                                <td>{{ adminStats.premSubCount }}</td>
+                                <td>{{ adminStats.soldReposts }}</td>
+                                <td>{{ adminStats.subEarnings | currency:"$"}}</td>
+                                <td>{{ adminStats.ffEarnings | currency:"$"}}</td>
+                                <td>{{ adminStats.mpEarnings | currency:"$"}}</td>
+                                <td>{{ adminStats.earnings | currency:"$"}}</td>
+                                <td>{{ adminStats.refunds }}</td>
+                                <td>{{ adminStats.refundAmount | currency:"$" }}</td>
+                                <td>{{ adminStats.future }}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="space-10"></div>
+                  <!-- ACCOUNTS -->
+                  <div class="row">
+                    <div class="row margin0">
+                      <div class="col-md-12">
+                        <h4>ACCOUNTS</h4>
+                        <div class="table-responsive">
+                          <table class="table table-bordered table-striped">
+                            <thead>
+                              <tr>
+                                <td>Name</td>
+                                <td>Earnings</td>
+                                <td>Reposts Sold</td>
+                                <!-- <td>Buy/Acceptance Ratio</td>-->
+                                <td>Repost Submissions</td>
+                                <td>Premiere Submissions</td>
+                                <td>Refunds</td>
+                                <td>Amount Refunded</td>
+                                <td>Incomplete</td>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr ng-repeat="acct in accounts | filter:searchTerm">
+                                <td><a href="{{acct.userID.soundcloud.permalinkURL}}" target="_blank">{{ acct.userID.soundcloud.username }}</a></td>
+                                <td>{{ acct.earnings | currency:"$"}}</td>
+                                <td>{{ acct.repostCount }}</td>
+                                <!-- <td>{{ acct.payAcceptRatio | number:1 }}%</td> -->
+                                <td>{{ acct.repSubCount }}</td>
+                                <td>{{ acct.premSubCount }}</td>
+                                <td>{{ acct.refunds }}</td>
+                                <td>{{ acct.refundAmount | currency:"$" }}</td>
+                                <td>{{ acct.future }}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="space-10"></div>
+                  <!-- SOLD REPOSTS -->
+                  <div class="row">
+                    <div class="row margin0">
+                      <div class="col-md-12">
+                        <h4>REPOSTS SOLD</h4>
+                        <div class="table-responsive">
+                          <table class="table table-bordered table-striped">
+                            <thead>
+                              <tr>
+                                <td>Account</td>
+                                <td>Track</td>
+                                <td>Day</td>
+                                <td>Submitter</td>
+                                <td>Share Link</td>
+                                <td>Price</td>
+                                <td>Earnings/Refund</td>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr ng-repeat="item in soldReposts | filter:searchTerm">
+                                <td>{{ item.user.soundcloud.username }}</td>
+                                <td><a href="{{ item.data.trackURL }}" target="_blank">{{ item.data.title }}</a></td>
+                                <td>{{ item.data.day | date:'M/d'}}
+                                  <br>{{ item.data.day | date:'h a'}}</td>
+                                <td>{{ item.data.name }}
+                                  <br><a href="mailto:{{item.data.email}}" target="_self">{{ item.data.email }}</a></td>
+                                <td><a href="{{item.shareLink}}" target="_blank">Open</a></td>
+                                <td>{{ item.data.price | currency:"$"}}</td>
+                                <td>{{ item.payout }}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="space-20"></div>
+              </div>
+              <!-- SOLD REPOSTS END -->
+            </div>
+            <!-- Tab panes :: End-->
+          </div>
+          <!-- overlay -->
+        </div>
+      </div>
+      <youtube-modal you-tube="youtubeModalId" modal-body="body" modal-footer="footer" modal-header="header" event-id="repostResponse" event-type="type"></youtube-modal>
+      <div style="position:absolute; top:0; left:0; right:0; height:5000px; background-color: rgba(0,0,0,1); z-index: 1000;" ng-show="hideall">
+      </div>
+    </div>
+    <!--overlay-->
+    <!--overlay-->
+    <div style="position:absolute; top:0; left:0; right:0; height:5000px; background-color: rgba(0,0,0,0.85); text-align:center;" ng-show="showTestEmailModal">
+      <div class="modal fade" id="emailModal" data-backdrop="static" role="dialog">
+        <div class="modal-dialog modal-vertical-centered">
+          <div class="modal-content">
+            <div style="text-align:center; padding:10px;">
+              <div style="text-align:center;padding-bottom:10px;">
+                <div class="modal-body">
+                  <input class="form-control form-scheduler" placeholder="Enter email address" style="text-align:center; width:300px; max-width:90%;" type="email" ng-model="email" required/>
+                </div>
+                <button type="button" class="btn btn-pink" data-dismiss="modal" ng-click="testEmail(email)">Send</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-include src="'js/home/views/loader.html'"></ng-include>
+  </div>
+</div>
+</div>

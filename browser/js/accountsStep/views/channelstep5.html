@@ -1,0 +1,116 @@
+  <style>
+    .grey {
+     background-color:#EEEEEE;
+     color:#000000 !important;
+   }
+ </style>
+ <ng-include src="'js/home/views/_adminHeaderNavigation.html'"></ng-include>
+ <!-- Content Start  -->
+ <div id="wrapper">
+  <ng-include src="'js/home/views/_adminNavigations.html'"></ng-include>
+  <div class="container-fluid height-100pr">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="page-content right-side">
+          <!--page-contant Start-->
+          <div class="scheduler-tabs" ng-show="AccountsStepData.formActions=='Add' || AccountsStepData.formActions=='Edit'">
+            <!-- Nav tabs :Start-->
+            <ul class="nav nav-tabs" role="tablist" >
+              <li role="presentation" class="active" style="width:100%"><a href="javascript:void(0)" style=" background: #f5f5f5 none repeat scroll 0 0;opacity:0.6;"><img src="assets/images/managereposts.svg" />MANAGE ACCOUNTS</a></li>
+            </ul>
+          </div>  
+          <!-- Nav tabs :Start-->
+          <div class="space-10"></div>
+          <div ng-hide="AccountsStepData.formActions=='Add' || AccountsStepData.formActions=='Edit'">
+            <div class="text-center au-title-head" style="margin-top:30px;margin-bottom:30px;">SET UP YOUR ADMIN ACCOUNT</div>
+            <ul class="info-ui-tab" role="tablist">
+              <li>
+                <a href="javascript:void(0)">1  Basic Info</a>        
+              </li>
+              <li class="active">
+                <a href="javascript:void(0)"  role="tab" data-toggle="tab">2  Set up your first Channel</a>
+              </li>
+            </ul>
+            <div class="clearfix"></div>
+            <br/>
+          </div>  
+          <!-- Nav tabs :End-->
+
+          <!-- Tab panes :: Start-->
+          <div class="tab-content">
+            <!-- MY SCHEDULE : Start-->
+            <div role="tabpanel" class="tab-pane fade in active" id="step2">
+              <div class="row">
+                <div class="col-xs-12 text-center">
+                  <h5 class="margin-40">ADD NEW CHANNEL</h5>
+                </div>
+              </div>
+              <ul class="admin-ui-tabs" role="tablist">
+               <li>
+                <a href="javascript:void(0)"><span style="color:red;font-size:14px;">1</span>&nbsp;&nbsp;Set Submission URL</a>
+              </li>
+              <li>
+                <a href="javascript:void(0)"><span style="color:red;font-size:14px;">2</span>&nbsp;&nbsp;Set Price</a>
+              </li>
+              <li>
+                <a href="javascript:void(0)"><span style="color:red;font-size:14px;">3</span>&nbsp;&nbsp;  Customize Submission Page</a>
+              </li>
+              <li>
+                <a href="javascript:void(0)"><span style="color:red;font-size:14px;">4</span>&nbsp;&nbsp;Premiere Submission Page</a>
+              </li>
+              <li class="active">
+                <a href="javascript:void(0)"><span style="color:red;font-size:14px;">5</span>&nbsp;&nbsp;Repost Preferences</a>
+              </li>
+              <li>
+                <a href="javascript:void(0)"><span style="color:red;font-size:14px;">6</span>&nbsp;&nbsp;Manage Reposts</a>
+              </li>
+            </ul>
+
+            <div class="tab-content">
+              <!-- MY SCHEDULE : Start-->
+              <div role="tabpanel" class="tab-pane fade in active" id="tab1">
+                <div  class="submi-section">
+                  <div class="tab-content-main"> 
+                    <div class="">
+                      <div id="scheduler-container" >
+                        <div style="width:100%; height:35px; display:flex; flex-direction:row;margin-bottom: 10px; ">                 
+                          <div class="bold cell-date" ng-repeat="t in ['Sunday','Monday','Tuesday','Wednesday','Thusday','Friday','Saturday']">{{t}}
+                          </div>                   
+                        </div>
+                        <div style="width:100%; display:flex; flex-direction:row;">
+                          <div class="column-time">
+                            <div ng-repeat="i in ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16', '17', '18', '19', '20', '21', '22', '23']" class="cell-time bold">{{i}}</div>
+                          </div>   
+                          <div ng-repeat="l in [0,1,2,3,4,5,6]" class="column-day">
+                            <div ng-repeat="p in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]" ng-style="setSlotStyle(l,p)" class="row-scheduler" ng-click="clickedSlotsave(l, p)" style="position:relative;">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>                                     
+                  </div>  
+                  <div class="clearfix"></div>            
+                </div>
+                <div class="clearfix"></div>          
+              </div>                    
+            </div>               
+            <div class="clearfix"></div>   
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <div class="buttons margin-40">
+              <input type="button" name="back" value="Back" ng-click="nextStep(4,AccountsStepData,'channel')" class="btn active border-black-btn">
+              <input type="button" name="back" value="Next"  ng-click="nextStep(6,AccountsStepData,'channel')" class="btn btn-pink b-radius-10 border-orange-btn">                                                    
+            </div>
+          </div>
+        </div>     
+      </div>
+    </div>
+    <div style="position:absolute; top:0; left:0; right:0; height:5000px; background-color: rgba(0,0,0,1); z-index: 1000;" ng-show="hideall">
+    </div>
+  </div>   
+  <ng-include src="'js/home/views/loader.html'"></ng-include>    </div>
+</div>
+</div>

@@ -1,0 +1,285 @@
+<div class="container-fluid height-100pr margin-refor-re">
+  <div class="row">
+    <div class="col-md-2 col-sm-12 col-xs-12 pr-paddin-right-0 pr-margin-right-0">
+      <!--left-side-manu ::start-->
+      <div class="left-side-profile">
+        <div class="left-profile active" style="background-color:white;">
+          <div ng-click="changeActiveUser(user)">
+            <div class="tropical-2" ng-style="(activeUser._id == user._id) ? {'background-color':'white'} : {'background-color':'#EEE'}" style="border-bottom-right-radius:20px"><a href="{{trade.user.user.soundcloud.permalinkURL}}" style="color:#686868;"><span class="ng-binding">{{trade.user.user.soundcloud.username}}</span></a><img class="img-responsive img-circle" ng-src="{{trade.user.user.soundcloud.avatarURL}}" style="height:100px; width:100px;">
+              <p class="ng-binding">{{trade.user.user.soundcloud.followers | number:0}} Followers</p>
+              <p class="ng-binding text-pink" ng-bind-html="totalSlots(trade.user)"></p>
+              <p class="ng-binding text-pink" ng-bind-html="totalReach(trade.user)"></p>
+            </div>
+          </div>
+        </div>
+        <!--left-side-manu ::end-->
+        <div class="left-profile">
+          <div ng-click="changeActiveUser(trade.other.user)">
+            <div class="tropical" ng-style="(activeUser._id == trade.other.user._id) ? {'background-color':'white'} : {'background-color':'#EEE'}" style="border-top-right-radius:20px"><a href="{{trade.other.user.soundcloud.permalinkURL}}" style="color:#686868"><span class="ng-binding">{{trade.other.user.soundcloud.username}}</span></a><img class="img-responsive img-circle" src="{{trade.other.user.soundcloud.avatarURL}}" style="height:100px; width:100px;">
+              <p class="ng-binding">
+                {{trade.other.user.soundcloud.followers | number:0}} Followers</p>
+              <p class="ng-binding text-pink" ng-bind-html="totalSlots(trade.other)"></p>
+              <p class="ng-binding text-pink" ng-bind-html="totalReach(trade.other)"></p>
+            </div>
+          </div>
+          <!--left-side-manu ::end-->
+          <div class="refor-chate-box">
+            <span class="pull-left"><button class="btn btn-pink margin-0" ng-click="remindTrade()">Share</button></span>
+            <span class="pull-right"><button class="btn btn-pink margin-0" ng-click="openChat()" style="position: relative;">Chat <span class="chat-count" ng-if="shownotification">!</span></button>
+            </span>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- calendar side -->
+    <div class="col-md-10 col-sm-12 col-xs-12 pr-margin-left-0 pr-padding-left-0 pr-paddin-right-0" ng-init="getCurrentDate();getCurrentdateEvents();">
+      <div class="page-content right-side left-profile-content margin-0">
+        <!--page-contant Start-->
+        <div class="scheduler-tabs">
+          <div class="space-10"></div>
+          <!-- Nav tabs :Start-->
+          <a class="btn btn-pink b-radius-10 pull-right" ui-sref="{{isAdminRoute ? 'adminRepostTraders' : 'reForReLists'}}" href="javascript:void(0)" style="margin-right:15px; margin-top:0px;"><strong>X</strong></a>
+          <!-- Nav tabs :End-->
+          <!-- Tab panes :: Start-->
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="myschedule">
+              <div class="container-90">
+                <div class="col-md-2 col-xs-12">
+                  <div class="btn-group" role="group" aria-label="..." style="margin-left:25px; min-width:150px;">
+                    <a class="btn btn-default b-radius-10" ng-class="{active : itemview == 'calender'}" href="javascript:void(0)" ng-click="setView('calender')"><img src="assets/images/box-view.svg" /></a>
+                    <a class="btn btn-default b-radius-10" ng-class="{active : itemview == 'list'}" href="javascript:void(0)" ng-click="setView('list')"><img src="assets/images/list-view.svg" /></a>
+                  </div>
+                </div>
+                <div class="col-md-6 col-xs-12 text-center">
+                  <div class="btn-group" role="group" aria-label="..." ng-show="itemview == 'list'">
+                    <a class="btn btn-default b-radius-10" href="javascript:void(0)" ng-click="getPreviousEvents()"><img src="assets/images/dropup-arrow.png" /></a>
+                    <a class="btn btn-default b-radius-10" href="javascript:void(0)" ng-click="getNextEvents()"><img src="assets/images/dropdown-arrow.png" /></a>
+                  </div>
+                  <button class="btn btn-pink" ng-click="saveTrade()" ng-if="(trade.p1.slots.length > 0 || trade.p2.slots.length > 0) && showUndo" style="margin-right:5px;">Request</button>
+                  <button class="btn btn-pink" ng-click="acceptTrade()" ng-if="!showUndo && (trade.p1.slots.length > 0 || trade.p2.slots.length > 0) && !trade.user.accepted">Accept</button>
+                  <button class="btn btn-border" ng-click="undo()" ng-if="showUndo">Undo</button>
+                </div>
+                <div class="col-md-4 col-xs-12">
+                  <div style="min-width:330px">
+                    <label class="switch" style="vertical-align: middle;">
+                      <input type="checkbox" ng-checked="repeatOn" ng-click="changeRepeatOn()">
+                      <div class="slider round"></div>
+                    </label>
+                    <span>Repeat trade for<input class="form-control input-hour" type="tel" ng-model="trade.repeatFor" ng-change="changeRepeatFor()">weeks</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- p1 calendar -->
+            <div ng-show="activeUser._id==trade.p1.user._id">
+              <div id="scheduler-container" ng-show="itemview == 'calender'">
+                <div class="space-10"></div>
+                <div style="width:100%; height:35px; display:flex; flex-direction:row;margin-bottom: 10px; margin-left: 20px;">
+                  <button ng-show="!repeatOn" class="btn btn-default btn-scheduler" ng-click="decrp1()"><img src="/assets/images/left-arrow.png" /></button>
+                  <div ng-show="!repeatOn" class="bold cell-date" ng-repeat="t in [0,1,2,3,4,5,6]">{{dayOfWeekAsString(calendarp1[t+p1dayIncr].day).substring(0,3)}} {{calendarp1[t+p1dayIncr].day.getMonth()+1}}/{{calendarp1[t+p1dayIncr].day.getDate()}}</div>
+                  <button ng-show="!repeatOn" class="btn btn-default btn-scheduler" ng-click="incrp1()"><img id="scheduler-btn-back" src="/assets/images/right-arrow.png" /></button>
+                  <div ng-show="repeatOn" class="bold cell-date" ng-repeat="t in [0,1,2,3,4,5,6]">{{dayOfWeekAsString(calendarp1[t+p1dayIncr].day)}}</div>
+                </div>
+                <div style="width:100%; display:flex; flex-direction:row;">
+                  <div class="column-time">
+                    <div ng-repeat="i in ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16', '17', '18', '19', '20', '21', '22', '23']" class="cell-time bold">{{i}}</div>
+                  </div>
+                  <div ng-repeat="l in [0,1,2,3,4,5,6]" class="column-day">
+                    <div ng-repeat="p in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]" ng-style="getStyle(calendarp1[l+p1dayIncr].events[p], calendarp1[l+p1dayIncr].day, l, p)" class="row-scheduler" ng-click="clickedSlot(calendarp1[l+p1dayIncr].day, l+p1dayIncr, p, calendarp1, trade.p1, calendarp1[l+p1dayIncr].events[p])" style="position:relative;">
+                      <div ng-style="getEventStyle(calendarp1[l+p1dayIncr].events[p])" style="width:100%; height:100%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="scheduler-container" ng-show="itemview == 'list'">
+                <div class="space-10"></div>
+                <div class="m-table-responsive">
+                  <table class="table scheduler-song-tab">
+                    <thead>
+                      <tr>
+                        <th width="20%" class="text-center">Account</th>
+                        <th width="20%" class="text-center">Date</th>
+                        <th width="20%" class="text-center">Unrepost Date</th>
+                        <th width="10%" class="text-center">&nbsp;</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="item in listEvents" ng-hide="!(item.event.type=='trade' || item.event.type=='empty') || (item.event.type=='empty' && item.date < currentDate)" ng-class='{grey : item.date < currentDate}' ng-style="getEventStyle(item.event)">
+                        <td class="text-center">{{trade.p1.user.soundcloud.username}}</td>
+                        <td class="text-center">{{item.date | date: 'EEE MM/dd h:mma'}}</td>
+                        <td class="text-center">{{getUnrepostDate(item) | date: 'EEE MM/dd h:mma'}}</td>
+                        <td class="text-center">
+                          <a href="javascript:void(0)" class="btn btn-pink btn-block btn-sm margin-0" ng-click="toggleSlot(item)" ng-hide="item.date < currentDate">SCHEDULE</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!-- p2 calendar -->
+            <div ng-show="activeUser._id==trade.p2.user._id">
+              <div id="scheduler-container" ng-show="itemview == 'calender'">
+                <div class="space-10"></div>
+                <div style="width: 100%;height: 35px;display: flex; flex-direction: row; margin-bottom: 10px; margin-left: 20px;">
+                  <button ng-show="!repeatOn" class="btn btn-default btn-scheduler" ng-click="decrp2()"><img src="/assets/images/left-arrow.png" /></button>
+                  <div ng-show="!repeatOn" class="bold cell-date" ng-repeat="t in [0,1,2,3,4,5,6]">{{dayOfWeekAsString(calendarp2[t+p2dayIncr].day).substring(0,3)}} {{calendarp2[t+p2dayIncr].day.getMonth()+1}}/{{calendarp2[t+p2dayIncr].day.getDate()}}</div>
+                  <button ng-show="!repeatOn" class="btn btn-default btn-scheduler" ng-click="incrp2()"><img id="scheduler-btn-back" src="/assets/images/right-arrow.png" /></button>
+                  <div ng-show="repeatOn" class="bold cell-date" ng-repeat="t in [0,1,2,3,4,5,6]">{{dayOfWeekAsString(calendarp2[t+p2dayIncr].day)}}</div>
+                </div>
+                <div style="width:100%; display:flex; flex-direction:row;">
+                  <div class="column-time">
+                    <div ng-repeat="i in ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16', '17', '18', '19', '20', '21', '22', '23']" class="cell-time bold">{{i}}</div>
+                  </div>
+                  <div ng-repeat="l in [0,1,2,3,4,5,6]" class="column-day">
+                    <div ng-repeat="p in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]" ng-style="getStyle(calendarp2[l+p2dayIncr].events[p], calendarp2[l+p2dayIncr].day, l, p)" class="row-scheduler" ng-click="clickedSlot(calendarp2[l+p2dayIncr].day, l+p2dayIncr, p, calendarp2, trade.p2, calendarp2[l+p2dayIncr].events[p])" style="position:relative;">
+                      <div ng-style="getEventStyle(calendarp2[l+p2dayIncr].events[p])" style="width:100%; height:100%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="scheduler-container" ng-show="itemview == 'list'">
+                <div class="space-10"></div>
+                <div class="m-table-responsive">
+                  <table class="table scheduler-song-tab">
+                    <thead>
+                      <tr>
+                        <th width="20%" class="text-center">Account</th>
+                        <th width="20%" class="text-center">Date</th>
+                        <th width="20%" class="text-center">Unrepost Date</th>
+                        <th width="10%" class="text-center">&nbsp;</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="item in listEvents" ng-hide="!(item.event.type=='trade' || item.event.type=='empty') || (item.event.type=='empty' && item.date < currentDate)" ng-class='{grey : item.date < currentDate}' ng-style="getEventStyle(item.event)">
+                        <td class="text-center">{{trade.p2.user.soundcloud.username}}</td>
+                        <td class="text-center">{{item.date | date: 'EEE MM/dd h:mma'}}</td>
+                        <td class="text-center">{{getUnrepostDate(item) | date: 'EEE MM/dd h:mma'}}</td>
+                        <td class="text-center">
+                          <a href="javascript:void(0)" class="btn btn-pink btn-block btn-sm margin-0" ng-click="toggleSlot(item)" ng-hide="item.date < currentDate">SCHEDULE</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="space-20"></div>
+      </div>
+      <!-- MY SCHEDULE : End-->
+      <!-- ORGANIZE SCHEDULE :Start -->
+      <div role="tabpanel" class="tab-pane fade" id="organizeschedule">
+      </div>
+      <!-- ORGANIZE SCHEDULE :End -->
+      <!-- MANAGE REPOSTS : Start -->
+      <div role="tabpanel" class="tab-pane fade" id="managereposts">
+      </div>
+      <!-- Tab panes :: End
+            </div>
+            <!-- overlay -->
+      <div class="overlay" ng-show="showOverlay" ng-click="backEvent()">
+        <div class="label-scheduler label-smaller slot-box" ng-click="$event.stopPropagation();">
+          <span style="font-size:1.25em">{{makeEvent.day.toLocaleDateString()}}     {{(makeEvent.day.getHours()%12==0?12:makeEvent.day.getHours()%12)+(makeEvent.day.getHours()<=11?"AM":"PM")}}</span>
+          <br>
+          <br>
+          <div ng-show="!(makeEvent.type=='traded'||makeEvent.type=='paid')">
+            <input type="checkbox" ng-model="makeEvent.type" ng-true-value="'queue'" ng-false-value="'track'" ng-change="changeQueueSlot()" /><span> Autofill Slot</span>
+            <br>
+            <input type="checkbox" ng-model="makeEvent.unrepost" ng-change="changeUnrepost()" /><span> Unrepost after 24h</span>
+            <br>
+            <div ng-hide="(makeEvent.type == 'queue')">
+              <input type="text" class="form-control form-scheduler" style="width:400px; max-width:90%; text-align: center" ng-model="makeEventURL" ng-change="changeURL()" placeholder="Soundcloud Track Url" />
+            </div>
+            <div id='scPlayer' ng-show="makeEvent.trackID"></div>
+            <br>
+            <div ng-show="userlinkedAccounts.length > 0 && newEvent && makeEvent.type != 'queue'" style="flex-flow: row wrap;justify-content: space-around; margin: 0px auto; text-align:center; font-size:11px;">
+              <span>Schedule on other channels:</span>
+              <br>
+              <div ng-if="u._id != user._id" ng-repeat="u in userlinkedAccounts" class="graybox">
+                <input type="checkbox" ng-model="otherChannels[u.soundcloud.id]" ng-change="updateReach()" /><span> {{u.soundcloud.username}}</span>
+              </div>
+              <br>
+              <span>Time between reposts:</span>
+              <select ng-model="timeGap">
+                <option ng-repeat="n in [0,1,2,3,4,5,6,7,8,9,10,11,12]" value="{{n}}">{{n}}</option>
+              </select>
+              hours
+              <br>
+              <span>Total Reach: {{repostReach|number:0}} followers</span>
+              <br>
+              <br>
+            </div>
+            <br>
+            <div>
+              <button class="btn btn-default btn-small btn-overlay" ng-click="backEvent()">Back</button>
+              <button ng-show="!(makeEvent.type=='traded'||makeEvent.type=='paid')" class="btn btn-default btn-small btn-overlay" ng-click="deleteEvent()" style="margin:0 30px 0 30px;">Delete</button>
+              <button ng-show="!(makeEvent.type=='traded'||makeEvent.type=='paid')" class="btn btn-default btn-small btn-overlay" ng-click="saveEvent()">Save</button>
+              <br>
+              <br>
+              <button ng-click="emailSlot()" style="border:none; background-color:rgba(0,0,0,0);"><img src='assets/images/email_icon.png' style="height:30px; width:50px;"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="position:absolute; top:0; left:0; right:0; height:5000px; background-color: rgba(0,0,0,1); z-index: 1000;" ng-show="hideall">
+  </div>
+</div>
+<!--CHAT-->
+<div ng-show="chatOpen" style="position:fixed; top:0; left:0; right:0; height:5000px; background-color: rgba(0,0,0,0.85); text-align:center; z-index: 100; padding: 10% 20%;" ng-click="chatOpen=false">
+  <div class="rfr-chat" ng-click="$event.stopPropagation()">
+    <div class="rfr-chatbox" style="height:390px;">
+      <div class="convo-display" scroll-glue style="height:350px">
+        <div ng-repeat="msg in msgHistory track by $index" class="msg-line">
+          <time-slot start-date="{{msgHistory[0].date}}" each-date="{{msg.date}}" previous-date="{{msgHistory[$index-1].date}}"></time-slot>
+          <div ng-show="msg.type== 'alert'" class="alert-box">
+            {{msg.text}}
+          </div>
+          <div ng-show="msg.type== 'message'" class="msg-box {{msg.senderId==user._id ? 'msg-from' : 'msg-to'}}">
+            {{msg.text}}
+          </div>
+        </div>
+      </div>
+      <div class="chat-input" style="margin-top:0px">
+        <form name="chat" ng-submit="emitMessage(message, 'message')">
+          <input type="text" class="form-control form-message" ng-model="message" id="chatTextfield"></input>
+          <button type="submit" class="btn btn-default btn-chat-send" style="margin-bottom:0px !important;" ng-disabled="!message"><img src="/assets/images/send-plane.png" /></button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<slmodal lolo="modal1" modal-body="body" modal-footer="footer" modal-header="header" event-id="trade._id" event-type="type" trade="trade"></slmodal>
+<youtube-modal you-tube="youtubeModalId" modal-body="body" modal-footer="footer" modal-header="header" event-id="repostResponse" event-type="type"></youtube-modal>
+</div>
+</div>
+</div>
+<script>
+setTimeout(function() {
+  $(document).ready(function() {
+    FB.init({
+      appId: '1771378846475599',
+      xfbml: true,
+      version: 'v2.7'
+    });
+
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {
+        return;
+      }
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  })
+}, 200);
+</script>
+<script>
+$('meta[name=description]').attr('content', 'Repost trade.');
+</script>

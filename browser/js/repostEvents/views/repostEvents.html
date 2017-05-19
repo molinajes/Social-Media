@@ -1,0 +1,244 @@
+<style>
+.grey {
+  background-color: #EEEEEE;
+  color: #000000 !important;
+}
+
+.margin-bottom-20 {
+  margin-bottom: 20px;
+}
+
+.disabled {
+  opacity: 1.5;
+  pointer-events: none;
+}
+</style>
+<ng-include src="'js/artistTools/ArtistTools/header-navigation.html'"></ng-include>
+<!-- Content Start  -->
+<div id="wrapper">
+  <ng-include src="'js/artistTools/ArtistTools/navigation.html'"></ng-include>
+  <div class="container-fluid height-100pr">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="page-content right-side">
+          <!--page-contant Start-->
+          <div class="scheduler-tabs">
+            <div class="container-90 col-md-12" style="margin-bottom:20px;margin-top:20px;" ng-if="itemview != 'detailListView'">
+              <div class="col-md-3" style="margin-left:40px;">
+                <div class="btn-group view-padding-left" role="group" aria-label="...">
+                  <a class="btn btn-default b-radius-10" ng-class="{active : itemview == 'calender'}" href="javascript:void(0)" ng-click="setView('calender')"><img src="assets/images/box-view.svg" /></a>
+                  <a class="btn btn-default b-radius-10" ng-class="{active : itemview == 'list'}" href="javascript:void(0)" ng-click="setView('list')"><img src="assets/images/list-view.svg" /></a>
+                </div>
+              </div>
+              <div class="col-md-6 text-left">
+                <a href="{{listevents[0].trackInfo.trackURL}}" target="_blank">
+                  <div>
+                    <img src="{{trackImage}}" class="img-responsive" style="float: left; margin-right: 10px; border-radius:10px; margin-left: 150px;">
+                    <br>
+                    <h6>{{listevents[0].trackInfo.artistName}}</h6>
+                    <h6>{{listevents[0].trackInfo.title}}</h6>
+                  </div>
+                </a>
+              </div>
+              <h5 class="text-pink text-center">Total Reach: {{followCounts | number:0}} Followers</h5>
+            </div>
+            <div class="">
+              <div id="scheduler-container" ng-show="itemview == 'calender'">
+                <div style="width: 100%; height: 35px; display: flex; flex-direction: row; margin-bottom: 10px; padding-left: 25px;">
+                  <button class="btn btn-default btn-scheduler" ng-click="decrDay()"><img src="/assets/images/left-arrow.png" /></button>
+                  <div class="bold cell-date" ng-repeat="t in [0,1,2,3,4,5,6]">{{dayOfWeekAsString(calendar[t+dayIncr].day).substring(0,3)}} {{calendar[t+dayIncr].day.getMonth()+1}}/{{calendar[t+dayIncr].day.getDate()}}
+                  </div>
+                  <button class="btn btn-default btn-scheduler" ng-click="incrDay()"><img id="scheduler-btn-back" src="/assets/images/right-arrow.png" /></button>
+                </div>
+                <div style="width:100%; display:flex; flex-direction:row;">
+                  <div class="column-time">
+                    <div ng-repeat="i in ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16', '17', '18', '19', '20', '21', '22', '23']" class="cell-time bold">{{i}}</div>
+                  </div>
+                  <div ng-repeat="l in [0,1,2,3,4,5,6]" class="column-day">
+                    <div ng-repeat="p in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]" style="border-radius: 4px; position: relative; border-width:1px 1px 1px 1px;" class="row-scheduler" ng-click="clickedSlot(calendar[l+dayIncr].day, p,calendar[l+dayIncr].events[p])">
+                      <div ng-style="getEventStyle(calendar[l+dayIncr].events[p])" class="text-left scheduler-yellow calendar-grid"><img ng-if="calendar[l+dayIncr].events[p].userInfo" src="{{calendar[l+dayIncr].events[p].userInfo.avatarURL}}" style="height:18px;border-radius:3px; margin-left:-2px">&nbsp;&nbsp;<span style="color:#fff;" ng-bind-html='getEventText(calendar[l+dayIncr].events[p])'></span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="scheduler-container" ng-show="itemview == 'list'">
+                <table class="table scheduler-song-tab">
+                  <thead>
+                    <tr>
+                      <th width="5%" class="text-center">Status</th>
+                      <th width="35%" class="text-center" class="text-center">Track Name</th>
+                      <th width="20%" class="text-center">Account</th>
+                      <th width="10%" class="text-center">Followers</th>
+                      <th width="10%" class="text-center">Date</th>
+                      <th width="10%" class="text-center">Type</th>
+                      <th width="10%" class="text-center">&nbsp;</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="item in listevents">
+                      <td class="text-center">
+                        <div class="div-dot scheduler-status" style="background: {{item.trackInfo.completed ? 'green':'red'}};">&nbsp;</div>
+                        </i>
+                      </td>
+                      <td class="text-center">{{item.trackInfo.title}}</td>
+                      <td class="text-center">{{item.userInfo.username}}</td>
+                      <td class="text-center">{{item.userInfo.followers| number}}</td>
+                      <td class="text-center">{{item.trackInfo.day | date:'EEE MM/dd, ha'}}</td>
+                      <td class="text-center"><span ng-if="item.trackInfo" style="color:{{item.trackInfo.type == 'track'? '#FF0000' : '#FF6347'}}">{{item.trackInfo.type}}</span></td>
+                      <td><a class="btn btn-pink btn-block btn-sm margin-0" href="javascript:void(0)" ng-click="detailView(item)">View</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- list details start -->
+              <div class="col-md-12" ng-show="itemview == 'detailListView'">
+                <div class="songScheduler" style='margin-top:60px;'>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <h4 class="text-center">Repost on {{makeEvent.username}}</h4>
+                      <h5 class="text-pink text-center">Reach: {{makeEvent.followers | number:0}} Followers</h5>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <iframe id="scPlayer" width="100%" height="160" src="{{playerURL}}" style="margin:10px 0; position:relative; z-index:1; border:none;"></iframe>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 col-xs-12">
+                      <select class="form-control" ng-disabled="true">
+                        <option>{{makeEvent.day | date:'MMMM dd yyyy h:mma'}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <ul>
+                        <li class="switch-btn">
+                          <label class="switch">
+                            <input ng-disabled="true" checked="makeEvent.day < makeEvent.unrepostDate" type="checkbox">
+                            <div class="slider round"></div>
+                          </label>
+                          <label>Unrepost after
+                            <input ng-disabled="true" class="form-control input-hour" placeholder="1" ng-model="makeEvent.unrepostHours">hours</label>
+                        </li>
+                      </ul>
+                      <br/>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <div class="pull-right">
+                        <ul class="like-comment">
+                          <li>
+                            Like:
+                            <a href="javascript:void(0);" ng-click="changeLikeCommentIcons('like');"><img src="{{likeSrc}}">
+                            </a>
+                          </li>
+                          <li>
+                            Comment:
+                            <a href="javascript:void(0);" ng-click="changeLikeCommentIcons('comment');"><img src="{{commentSrc}}">
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="acceptance">
+                        <div class="channel-check">
+                          <textarea class="form-control" readonly>{{makeEvent.comment}}</textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 text-center">
+                      <br/>
+                      <button class="btn btn-border b-radius-10" ng-click="backToListEvent();">Back</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- list details end -->
+            </div>
+          </div>
+          <div class="space-10"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="overlay" ng-show="showOverlay" id="scheduleModal" ng-click="backEvent();" style="z-index: 999;">
+    <div class="available-popup-box">
+      <div class="label-scheduler label-smaller slot-box" ng-click="$event.stopPropagation();">
+        <div class="">
+          <div class="row">
+            <div class="col-md-12">
+              <h5 class="text-center">Repost on {{makeEvent.username}}</h5>
+              <h6 class="text-pink text-center">Reach: {{makeEvent.followers}} Followers</h6>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <iframe id="scPopupPlayer" width="300" height="120" src="{{playerURL}}" style="margin:10px 0; position:relative; z-index:1; border:none;"></iframe>
+            </div>
+          </div>
+          <!--row end-->
+          <div class="row">
+            <div class="col-md-12 col-xs-12">
+              <select class="form-control" ng-disabled="true">
+                <option>{{makeEvent.day | date:'MMMM dd yyyy h:mma'}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 text-left">
+              <li class="switch-btn" style="font-size: 12px;vertical-align: middle;
+              list-style: outside none none; padding:10px 0;">
+                <label class="switch" style="vertical-align: middle;">
+                  <input checked="" type="checkbox" ng-model="unrepostEnable" ng-disabled="true">
+                  <div class="slider round"></div>
+                </label>
+                <label>Unrepost after
+                  <input class="form-control input-hour" style="color: #868686;" placeholder="24" ng-model="makeEvent.unrepostHours" ng-disabled="true">hours</label>
+              </li>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="pull-right">
+                <ul class="like-comment">
+                  <li>
+                    Like:
+                    <a href="javascript:void(0);" ng-click="changeLikeCommentIcons('like');"><img src="{{likeSrc}}"></a>
+                  </li>
+                  <li>
+                    Comment:
+                    <a href="javascript:void(0);" ng-click="changeLikeCommentIcons('comment');"><img src="{{commentSrc}}"></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="acceptance">
+                <div class="channel-check">
+                  <textarea class="form-control" readonly>{{makeEvent.comment}}</textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <button class="btn btn-border b-radius-10  btn-block" ng-click="backEvent();">Back</button>
+            </div>
+          </div>
+          <!--row end-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-include src="'js/home/views/loader.html'"></ng-include>

@@ -1,0 +1,107 @@
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId: '1719978144956959',
+      xfbml: true,
+      version: 'v2.6'
+    });
+  };
+
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {
+      return;
+    }
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<!-- Content Start  -->
+<ng-include src="'js/artistTools/ArtistTools/header-navigation.html'"></ng-include>
+<div id="wrapper">
+  <!-- Content Start  -->
+  <ng-include src="'js/artistTools/ArtistTools/navigation.html'"></ng-include>
+  <div class="container-fluid height-100pr " ng-init="checkIfEdit();getTrackListFromSoundcloud();checkIfSubmission()"> 
+   <!--  <div class="content-area bg-white"> -->
+   <div class="row height-100pr">
+    <div class="col-md-12">
+      <div class="page-content right-side">
+       <div class="col-md-12">
+        <div class="row extrapadding">
+          <div class="container" ng-init="getDownloadList();checkIfSubmission()">
+            <div class="content-area bg-white">
+              <div class="row">
+                <div class="col-md-12 text-center">
+                  <div class="col-md-3">
+                    <a href="#" class="btn btn-enter" ng-click="authFacbook();">Facebook</a>
+                  </div>
+                  <div class="col-md-3">
+                    <a href="#" class="btn btn-enter" ng-click="authTwitter();">Twitter</a>
+                  </div>
+                  <div class="col-md-3">
+                    <a href="#" class="btn btn-enter" ng-click="authInstagram();">Instagram</a>
+                  </div>
+                  <div class="col-md-3">
+                    <a href="#" class="btn btn-enter" ng-click="authYoutube();">Youtube</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12" ng-if="showDayChanger" style="margin-top:15px;">
+                <div class="col-md-3">
+                  <a href="#" class="btn btn-enter" ng-click="this[daysCallbackFunction](null,1);">One Day</a>
+                </div>
+                <div class="col-md-3">
+                  <a href="#" class="btn btn-enter" ng-click="this[daysCallbackFunction](null,7);">7-Days</a>
+                </div>
+                <div class="col-md-3">
+                  <a href="#" class="btn btn-enter" ng-click="this[daysCallbackFunction](null,30);">Months</a>
+                </div>
+                <div class="col-md-3">
+                  <a href="#" class="btn btn-enter" ng-click="this[daysCallbackFunction](null,365);">Years</a>
+                </div>
+              </div>
+              <div class="row" ng-if="facebookPages">
+                <div class="col-md-12 text-center">
+                  <h3>Select Facebook Page</h3>
+                  <div class="col-md-3"></div>
+                  <div class="col-md-3" ng-repeat="facebookPage in facebookPages track by $index">
+                    <a href="#" class="btn btn-enter" ng-click="authFacbook(facebookPage);">{{facebookPage.name}}</a>
+                  </div>
+                  <div class="col-md-3"></div>
+                </div>
+              </div>
+              <div class="row" ng-if="showYoutubeChannel">
+                <div class="col-md-12 text-center">
+                  <h3>Select Youtube channel</h3>
+                  <div class="col-md-3"></div>
+                  <div class="col-md-3" ng-repeat="(key,value) in youtubeChannel track by $index">
+                    <a href="#" class="btn btn-enter" ng-click="authYoutube(key)">{{value}}</a>
+                  </div>
+                  <div class="col-md-3"></div>
+                </div>
+              </div>
+              <div class="col-md-3" ng-repeat="(key,value) in youtubeChannel track by $index">
+                <a href="#" class="btn btn-enter" ng-click="authYoutube(key)">{{value}}</a>
+              </div>
+        <!-- <div class="row" ng-show="displayError">
+      <div class="col-md-12 text-center">
+        <h3>Enter Youtube channel id</h3><br>
+        <div class="col-md-3"></div>
+        <input class="col-md-12 text-center" type="text" ng-model="youtube_channelId"><button ng-click="authYoutube()">Enter</button>
+        <div class="col-md-3"></div>
+      </div>
+    </div> -->
+        <!-- <div ng-controller="graphControler" ng-if="enableGraph">
+        <nvd3 options="options" data="data"></nvd3>
+      </div> -->
+      <div class="container analytics-graph" ng-if="enableGraph" ng-controller="graphControler">
+        <linechart data="data" options="options"></linechart>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Content End  -->
+<ng-include src="'js/home/views/loader.html'"></ng-include>

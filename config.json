@@ -1,0 +1,17 @@
+{
+  "root": "/home/ec2-user/.forever",
+  "pidPath": "/home/ec2-user/.forever/pids",
+  "sockPath": "/home/ec2-user/.forever/sock",
+  "loglength": 100,
+  "logstream": false,
+  "columns": [
+    "uid",
+    "command",
+    "script",
+    "forever",
+    "pid",
+    "id",
+    "logfile",
+    "uptime"
+  ]
+}

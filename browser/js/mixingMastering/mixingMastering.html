@@ -1,0 +1,49 @@
+<ng-include src="'js/home/views/navigation.html'"></ng-include>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="content-area bg-white">
+        <div class="row">
+          <div class="col-md-12">
+            <h1 class="text-center bold">Mixing & Mastering</h1>
+            <br/>
+            <div class="row">
+                <p><span></span></p>
+            </div>
+            <br/>
+            <form role="form" ng-submit="saveMixingMastering()">
+              <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                  <input class="form-control" type="file" fileread="mixingMastering.file" message="message" required/>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                  <input class="form-control" type="email" placeholder="Email" ng-model="mixingMastering.email" required/>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                  <input class="form-control" type="text" placeholder="Name" ng-model="mixingMastering.name" required/>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                  <textarea class="form-control" placeholder="Comment" ng-model="mixingMastering.comment" required></textarea>
+                </div>
+              </div>
+              <br>
+              <div class="text-center">
+                <button class="btn btn-pink btn-lg btn-enter">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-include src="'js/home/views/loader.html'"></ng-include>

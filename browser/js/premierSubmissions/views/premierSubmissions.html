@@ -1,0 +1,213 @@
+<style>
+.grey {
+  background-color: #EEEEEE;
+  color: #000000 !important;
+}
+</style>
+<ng-include src="'js/home/views/_adminHeaderNavigation.html'"></ng-include>
+<!-- Content Start  -->
+<div id="wrapper">
+  <ng-include src="'js/home/views/_adminNavigations.html'"></ng-include>
+  <div class="container-fluid height-100pr">
+    <div class="row">
+      <div class="col-md-12 " ng-init="getCurrentDate();getCurrentdateEvents();">
+        <div class="page-content right-side">
+          <!--page-contant Start-->
+          <div class="two-tabs">
+            <!-- Nav tabs :Start-->
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active" style="border-radius: 10px 0 0 0;">
+                <a href="#mysubmissions" aria-controls="mysubmissions" role="tab" data-toggle="tab" style="border-radius: 10px 0 0 0;">
+                  <img src="assets/images/music-icon-big.png" />MY SUBMISSIONS</a>
+              </li>
+              <li role="presentation" style="border-radius: 0 10px 0 0;">
+                <a href="#managesubmissions" aria-controls="managesubmissions" role="tab" data-toggle="tab" style="border-radius: 0 10px 0 0;"> <img src="assets/images/managereposts.png" />CUSTOM EMAILS</a>
+              </li>
+            </ul>
+          </div>
+          <!-- Nav tabs :End-->
+          <!-- Tab panes :: Start-->
+          <div class="tab-content" style="background-color:white">
+            <!-- MY SCHEDULE : Start-->
+            <div role="tabpanel" class="tab-pane fade in active" id="mysubmissions" style="background-color:white">
+              <div class="row" style="margin-top:10px;">
+                <div class="col-md-4 col-xs-12">
+                  <div class="btn-group view-padding-left" role="group" aria-label="...">
+                    <a class="btn btn-default b-radius-10" ng-class="{active : viewStatus == 'new'}" href="javascript:void(0)" ng-click="viewStatus='new'; changeChannelSelect();">New</a>
+                    <a class="btn btn-default b-radius-10" ng-class="{active : viewStatus == 'saved'}" href="javascript:void(0)" ng-click="viewStatus='saved'; changeChannelSelect();">Saved</a>
+                  </div>
+                </div>
+                <div class="col-md-4 col-xs-12">
+                  <select id="paidUsers" class="form-control" ng-model="channelSelect" ng-change="changeChannelSelect()" style="max-width:200px;">
+                    <option value="all" default>All</option>
+                    <option ng-repeat="chan in paidRepostAccounts" value="{{chan.userID}}">{{chan.user.username}}</option>
+                  </select>
+                </div>
+              </div>
+              <br>
+              <br>
+              <div ng-repeat="sub in showingElements" class="submi-section" ng-if="sub.status==viewStatus && (channelSelect == 'all' || channelSelect == sub.userID._id)">
+                <div class="tab-content-main">
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <ul class="submissions-tab-list">
+                        <li><strong>{{sub.name}} </strong>submitted a track <strong>{{sub.datedata}}</strong> to <strong>{{sub.userID.name}}</strong></li>
+                      </ul>
+                    </div>
+                    <div class="col-sm-4">
+                    </div>
+                  </div>
+                  <!--row ::end-->
+                  <div class="row" style="min-height:180px;">
+                    <div class="col-md-10">
+                      <div class="row" ng-if="!!sub.s3URL">
+                        <div class="col-md-12">
+                          <div style=" width: 100%;">
+                            <audio class="premier-video" controls>
+                              <source ng-src="{{sub.s3URL | trusted }}" type="audio/mpeg">
+                            </audio>
+                          </div>
+                        </div>
+                      </div>
+                      <!--row ::end-->
+                      <div class="row" ng-if="!!sub.trackLink">
+                        <div class="col-md-12">
+                          <div style="width: 100%;text-align:center;">
+                            <br>
+                            <a href="{{sub.trackLink}}" target="_blank" style='font-size:1.4em'>{{sub.trackLink}}</a>
+                          </div>
+                        </div>
+                      </div>
+                      <!--row ::end-->
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div style=" width: 100%; text-align:center;">
+                            <br>
+                            <a href="mailto:{{sub.email}}" style='font-size:1.2em'>{{sub.email}}</a>
+                          </div>
+                        </div>
+                      </div>
+                      <!--row ::end-->
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div style=" width: 100%; text-align:center;">
+                            <br>
+                            <p>{{sub.comment}}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <!--row ::end-->
+                    </div>
+                    <div class="col-md-2">
+                      <div class="">
+                        <br/>
+                        <br/>
+                        <ul class="submissions-tab-list decline-accpect-btn">
+                          <div class="dropdown sort-btn">
+                            <button class="btn dropdown-toggle sort-select descending" type="button" data-toggle="dropdown">CUSTOM EMAIL
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li><a href="javascript:void(0);" ng-click="openEmailClient(sub, button)" ng-repeat="button in user.premierCustomEmailButtons">{{button.buttonText}}</a></li>
+                            </ul>
+                          </div>
+                          <button class="btn decline" ng-click="delete(sub)">DELETE</button>
+                          <button class="btn accpect" ng-click="accept(sub)" ng-if="viewStatus=='new'">SAVE</button>
+                        </ul>
+                      </div>
+                    </div>
+                    <br>
+                  </div>
+                  <!--row ::end-->
+                </div>
+              </div>
+              <div class="col-md-12 text-center margin-20" style="padding:10px 10px;">
+                <button class="btn btn-pink" ng-click="loadMore()">LOAD MORE</button>
+              </div>
+            </div>
+            <!-- MY SCHEDULE : End-->
+            <!-- ORGANIZE SCHEDULE :Start -->
+            <!-- ORGANIZE SCHEDULE :End -->
+            <!-- MANAGE REPOSTS : Start -->
+            <div role="tabpanel" class="tab-pane fade" id="managesubmissions">
+              <div class="managesubmissions">
+                <h4>Here you can create custom buttons which will trigger an email draft to launch in your mail client. We do this to make it easier for you to organize your releases according to how you want to move forward with them. Examples of custom buttons can be "approved for release" which could be a template email you send if a premiere submission is something you want to premiere! We hope this feature helps make you more efficient when sifting through submissions.</h4>
+              </div>
+              <div class="managesubmissions">
+                <div class="row">
+                  <div class="row nav-tabs margin0">
+                    <div class="col-md-12 bg-white">
+                      <form ng-submit="saveSettings()">
+                        <br />
+                        <div class="row margin-bottom-10" ng-repeat="item in customEmailButtons track by $index" style="border-bottom: solid 1px #dcdcdc;">
+                          <div class="col-md-12">
+                            <div class="col-md-8 margin-bottom-10">
+                              <input type="text" ng-model="item.buttonText" class="form-control" placeholder="Button Title" index="{{$index}}">
+                              <br/>
+                              <input type="text" ng-model="item.toEmail" class="form-control toEmailArea{{$index}}" placeholder="To Email" index="{{$index}}" ng-click="addEventClass($index,'toEmailArea');">
+                              <br/>
+                              <input type="text" ng-model="item.subject" class="form-control subjectArea{{$index}}" placeholder="Subject" index="{{$index}}" ng-click="addEventClass($index,'subjectArea');">
+                              <br/>
+                              <textarea ng-model="item.emailBody" class="form-control emailBodyArea{{$index}}" rows="15" placeholder="Email body" index="{{$index}}" ng-click="addEventClass($index,'emailBodyArea');"></textarea>
+                              <br/>
+                              <div class="col-md-12 text-center">
+                                <button class="btn btn-default" ng-click="sendTestMail($index)">TEST EMAIL</button>
+                                <button class="btn btn-default" ng-click="removeItem($index)">DELETE</button>
+                              </div>
+                            </div>
+                            <div class="col-md-4 margin-bottom-10">
+                              <input ng-repeat="btn in dynamicButton " type="button" name="{{btn.name}}" class="btn btn-border organize-btn" style="margin-left:20px; display:block" value="{{btn.name}}" ng-click="appendBody(btn)">
+                            </div>
+                          </div>
+                          <div class="space-10">&nbsp;</div>
+                        </div>
+                        <br/>
+                        <div class="text-center margin-bottom-10">
+                          <a href="#" class="btn btn-default" ng-click="addItem()">ADD CUSTOM EMAIL</a>
+                        </div>
+                        <br/>
+                        <div class="">
+                          <div class="col-md-12 text-center" style="padding-top:20px;">
+                            <button type="submit" class="btn btn-pink btn-enter">SAVE SETTINGS</button>
+                          </div>
+                        </div>
+                        <br>
+                        <br>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="space-20"></div>
+            </div>
+            <!-- MANAGE REPOSTS : End -->
+          </div>
+          <!-- Tab panes :: End-->
+        </div>
+        <!-- overlay -->
+      </div>
+    </div>
+    <youtube-modal you-tube="youtubeModalId" modal-body="body" modal-footer="footer" modal-header="header" event-id="repostResponse" event-type="type"></youtube-modal>
+    <div style="position:absolute; top:0; left:0; right:0; height:5000px; background-color: rgba(0,0,0,1); z-index: 1000;" ng-show="hideall">
+    </div>
+  </div>
+  <!--overlay-->
+  <div style="position:absolute; top:0; left:0; right:0; height:5000px; background-color: rgba(0,0,0,0.85); text-align:center;" ng-show="showTestEmailModal">
+    <div class="modal fade" id="emailModal" data-backdrop="static" role="dialog">
+      <div class="modal-dialog modal-vertical-centered">
+        <div class="modal-content">
+          <div style="text-align:center; padding:10px;">
+            <div style="text-align:center;padding-bottom:10px;">
+              <div class="modal-body">
+                <input class="form-control form-scheduler" placeholder="Enter email address" style="text-align:center; width:300px; max-width:90%;" type="email" ng-model="email" required/>
+              </div>
+              <button type="button" class="btn btn-pink" data-dismiss="modal" ng-click="testEmail(email)">Send</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-include src="'js/home/views/loader.html'"></ng-include>
+</div>
+</div>
+</div>

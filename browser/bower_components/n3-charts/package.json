@@ -1,0 +1,135 @@
+{
+  "_args": [
+    [
+      {
+        "name": "n3-charts",
+        "raw": "n3-charts",
+        "rawSpec": "",
+        "scope": null,
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/home/thinkwik/puneet/artistsUnlimited"
+    ]
+  ],
+  "_from": "n3-charts@latest",
+  "_id": "n3-charts@2.0.27",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/n3-charts",
+  "_nodeVersion": "6.0.0",
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/n3-charts-2.0.27.tgz_1464792014037_0.9107668283395469"
+  },
+  "_npmUser": {
+    "email": "dolor_sit_amet@protonmail.ch",
+    "name": "lorem--ipsum"
+  },
+  "_npmVersion": "3.8.6",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "n3-charts",
+    "raw": "n3-charts",
+    "rawSpec": "",
+    "scope": null,
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/n3-charts/-/n3-charts-2.0.27.tgz",
+  "_shasum": "b9eecca9221321a6c3136bbfdb9d42c475549151",
+  "_shrinkwrap": null,
+  "_spec": "n3-charts",
+  "_where": "/home/thinkwik/puneet/artistsUnlimited",
+  "bugs": {
+    "url": "https://github.com/n3-charts/line-chart/issues"
+  },
+  "dependencies": {
+    "angular": "^1.4.0",
+    "d3": "^3.5.5",
+    "react": "^0.14.8",
+    "react-dom": "^0.14.8"
+  },
+  "description": "**n3-line-chart** is an easy-to-use JavaScript library for creating beautiful charts in [AngularJS][angular-home] applications and it is built on top of [D3.js][d3-home].",
+  "devDependencies": {
+    "angular-mocks": "^1.4.0",
+    "chai": "^2.3.0",
+    "expect.js": "^0.3.1",
+    "glob": "^5.0.15",
+    "gulp": "^3.8.11",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-clean": "^0.3.1",
+    "gulp-coveralls": "^0.1.4",
+    "gulp-data": "^1.2.0",
+    "gulp-foreach": "^0.1.0",
+    "gulp-karma": "0.0.4",
+    "gulp-load-plugins": "^0.10.0",
+    "gulp-mocha": "^2.1.0",
+    "gulp-protractor": "^1.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.3.1",
+    "gulp-serve": "^1.0.0",
+    "gulp-shell": "^0.4.1",
+    "gulp-template": "^3.0.0",
+    "gulp-tslint": "^3.0.1-beta",
+    "gulp-typescript": "^2.10.0",
+    "gulp-uglify": "^1.5.1",
+    "gulp-uglifycss": "^1.0.5",
+    "hjson": "^1.7.4",
+    "jasmine": "^2.4.1",
+    "jasmine-core": "^2.4.1",
+    "jsdom": "^5.4.3",
+    "karma": "^0.12.33",
+    "karma-chrome-launcher": "^0.1.12",
+    "karma-coverage": "^0.3.1",
+    "karma-jasmine": "^0.3.7",
+    "karma-mocha": "^0.1.10",
+    "karma-sinon": "^1.0.4",
+    "mocha": "^2.2.5",
+    "protractor": "^2.5.1",
+    "release-it": "^2.3.0",
+    "require-dir": "^0.3.0",
+    "run-sequence": "^1.1.0",
+    "sinon": "^1.14.1",
+    "tslint": "^3.5.0",
+    "typescript": "^1.8.7",
+    "typings": "^0.7.9",
+    "yargs": "^3.32.0"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "b9eecca9221321a6c3136bbfdb9d42c475549151",
+    "tarball": "https://registry.npmjs.org/n3-charts/-/n3-charts-2.0.27.tgz"
+  },
+  "files": [
+    "build/"
+  ],
+  "gitHead": "121cdf2d84002aa2714608fb077f90e42921333f",
+  "homepage": "http://n3-charts.github.io/line-chart/v2",
+  "licenses": {
+    "type": "MIT",
+    "url": "https://github.com/n3-charts/line-chart/blob/dev/LICENSE"
+  },
+  "maintainers": [
+    {
+      "email": "sebastien@metamarkets.com",
+      "name": "lorem--ipsum"
+    },
+    {
+      "email": "dolor_sit_amet@protonmail.ch",
+      "name": "lorem-ipsum"
+    }
+  ],
+  "name": "n3-charts",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/n3-charts/line-chart.git"
+  },
+  "scripts": {},
+  "version": "2.0.27"
+}

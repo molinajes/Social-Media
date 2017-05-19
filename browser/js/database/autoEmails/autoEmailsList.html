@@ -1,0 +1,45 @@
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+  }
+</style>
+<div class="container">
+  
+  <br>
+  <div>
+    <h2 style="display:inline;text-align:center">Admin</h2>
+    <div style="clear:both"></div>
+  </div>
+  <br>
+  <ng-include src="'js/home/views/_adminNavigations.html'"></ng-include>
+  <br>
+  <a hred="#" ui-sref="autoEmailsNew">Create New -></a>
+  <h2>Email templates</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Purpose</th>
+        <th>Reminder Day</th>
+        <th>Subject</th>
+        <th>From Email</th>
+        <th>From Name</th>
+        <th>isOn</th>
+        <th>isArtist</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr   ng-repeat="template in templates">
+        <td>{{template.purpose}}</td>
+        <td>{{template.reminderDay}}</td>
+        <td>{{template.subject}}</td>
+        <td>{{template.fromEmail}}</td>
+        <td>{{template.fromName}}</td>
+        <td>{{template.isSendEmail}}</td>
+        <td>{{template.isArtist}}</td>
+        <td><a href="#" ui-sref="autoEmailsEdit({ templateId: template._id})" >Edit</a></td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-include src="'js/home/views/loader.html'"></ng-include>

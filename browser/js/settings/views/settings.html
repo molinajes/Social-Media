@@ -1,0 +1,116 @@
+<ng-include src="'js/home/views/_adminHeaderNavigation.html'"></ng-include>
+<div id="wrapper">
+  <ng-include src="'js/home/views/_adminNavigations.html'"></ng-include>
+  <div class="container-fluid height-100pr ">
+    <div class="row height-100pr">
+      <div class="col-lg-12">
+        <div class="page-content right-side min-ht padding-10">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              <div class="permanent-links">  
+                <br/><br/>              
+                <form ng-submit="updateProfileWithPicture(profile)">
+                  <label>Profile Image</label>
+                  <input class="form-control" type="file" file-input="profilepic.file" name="imageFile" placeholder="Background Image" />
+                  <br/>                                  
+                  <label>User Name</label>                                
+                  <input class="form-control" placeholder="Username" value="{{profile.name}}" type="text" ng-model="profile.name" required />
+                  <br/>
+                  <div class="col-md-12 text-center">
+                    <button type="submit" class="btn btn-default btn-small">Save</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              <hr/>
+              <br/>
+              <div class="permanent-links" style="text-align: center;">
+                <h4 class="bold">Change Passwords</h4>
+                <form name="reset" ng-submit="updatePassword(data)">
+                  <input class="form-control" placeholder="Password" type="password" ng-model="data.newPassword" required/>
+                  <br/>
+                  <input class="form-control" type="password" placeholder="Confirm Password" ng-model="data.confirmPassword" required/>
+                  <br/>
+                  <div class="col-md-12 text-center">
+                    <button type="submit" class="btn btn-default btn-small">Save</button>
+                  </div>
+                </form>
+                <br/>                      
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              <hr/>
+              <br/>
+              <div style="text-align: center;">
+                <h4 class="bold">Facebook Messenger Notifications</h4>
+                <div class="fb-send-to-messenger" messenger_app_id="1771378846475599" page_id="499383536933941" data-ref="{{user._id}}" color="blue" size="standard"></div>    
+                <span ng-if="!!user.notificationSettings.facebookMessenger.messengerID">Linked &#10004</span> 
+                <br>
+                <label class="with-square-checkbox">
+                  <input type="checkbox" ng-model="user.notificationSettings.facebookMessenger.tradeRequest" ng-change="changeNotificationSettings()">
+                  <span>Trade Request</span>
+                </label>
+                <br>
+                <label class="with-square-checkbox">
+                  <input type="checkbox" ng-model="user.notificationSettings.facebookMessenger.tradeAcceptance" ng-change="changeNotificationSettings()">
+                  <span>Trade Acceptance</span>
+                </label>
+                <br>
+                <label class="with-square-checkbox">
+                  <input type="checkbox" ng-model="user.notificationSettings.facebookMessenger.trackRepost" ng-change="changeNotificationSettings()">
+                  <span>Track Repost</span>
+                </label>
+                <br>
+                <label class="with-square-checkbox">
+                  <input type="checkbox" ng-model="user.notificationSettings.facebookMessenger.trackUnrepost" ng-change="changeNotificationSettings()">
+                  <span>Track Unrepost</span>
+                </label>
+                <!-- <br> -->
+<!--               <label class="with-square-checkbox">
+                <input type="checkbox" ng-model="user.notificationSettings.facebookMessenger.dailyUnfilledTrade" ng-change="changeNotificationSettings()">
+                <span>Unfilled Traded Slots Tomorrow</span>
+              </label> -->
+              <br>
+              <br/>   
+              <h4 class="bold">Email Notifications</h4>
+              <label class="with-square-checkbox">
+                <input type="checkbox" ng-model="user.notificationSettings.email.tradeRequest" ng-change="changeNotificationSettings()">
+                <span>Trade Request</span>
+              </label>
+              <br>
+              <label class="with-square-checkbox">
+                <input type="checkbox" ng-model="user.notificationSettings.email.tradeAcceptance" ng-change="changeNotificationSettings()">
+                <span>Trade Acceptance</span>
+              </label>
+              <br>
+              <label class="with-square-checkbox">
+                <input type="checkbox" ng-model="user.notificationSettings.email.trackRepost" ng-change="changeNotificationSettings()">
+                <span>Track Repost</span>
+              </label>
+              <br>
+              <label class="with-square-checkbox">
+                <input type="checkbox" ng-model="user.notificationSettings.email.trackUnrepost" ng-change="changeNotificationSettings()">
+                <span>Track Unrepost</span>
+              </label>
+<!--               <br>
+              <label class="with-square-checkbox">
+                <input type="checkbox" ng-model="user.notificationSettings.email.dailyUnfilledTrade" ng-change="changeNotificationSettings()">
+                <span>Unfilled Traded Slots Tomorrow</span>
+              </label> -->
+            </div>
+          </div>
+        </div>
+        <br>                
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<!-- Content End  -->
+<ng-include src="'js/home/views/loader.html'"></ng-include>

@@ -1,0 +1,39 @@
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+  }
+</style>
+<div class="container" ng-init="getDownloadList()">
+  
+  <br>
+  <div>
+    <h2 style="display:inline;text-align:center">Admin</h2>
+    <div style="clear:both"></div>
+  </div>
+  <br>
+  <ng-include src="'js/home/views/_adminNavigations.html'"></ng-include>
+  <br>
+  <a hred="#" ui-sref="downloadGate">Create New -></a>
+  <h2>Download Gateways</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Track Title</th>
+        <th>Artist Username</th>
+        <th>Download Count</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in downloadGatewayList">
+        <td><a ng-href="item.trackDownloadUrl" target="_blank">{{item.trackTitle}}</a></td>
+        <td>{{item.artistUsername}}</td>
+        <td>{{item.downloadCount ? item.downloadCount : 0}}</td>
+        <td><a href="#" ui-sref="downloadGateEdit({ gatewayID: item._id})">Edit</a><span> | </span>
+          <a href="#" ng-click="deleteDownloadGateway($index)">Delete</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ng-include src="'js/home/views/loader.html'"></ng-include>

@@ -1,0 +1,63 @@
+<ng-include src="'js/home/views/navigation.html'"></ng-include>
+<!-- Content Start  -->
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="content-area bg-white">
+        <div class="row">
+          <div class="col-md-12" ng-init="getCustomizeSettings();">
+            <p class="text-center" style="color:{{customizeSettings.heading.style.fontColor}};
+            font-weight:{{customizeSettings.heading.style.fontWeight}};
+            font-size:{{customizeSettings.heading.style.fontSize}}px">{{customizeSettings.heading.text}}
+          </p>
+          <div class="internal-content">
+            <br>
+            <div class="row">
+              <div class="col-md-12">
+                <p class="text-left" style="color:{{customizeSettings.subHeading.style.fontColor}};font-size:{{customizeSettings.subHeading.style.fontSize}}px;font-weight:{{customizeSettings.subHeading.style.fontWeight}}" ng-bind-html="customizeSettings.subHeading.text"></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <form role="form" ng-submit="submit()">
+                  <br>
+                  <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3">
+                      <input type="text" placeholder="Song URL" ng-model="url" ng-change="urlChange()" style="width:100%; height:34px; padding:5px; border:solid {{customizeSettings.inputFields.style.border}}px; border-radius:{{customizeSettings.inputFields.style.borderRadius}}px; border-color:{{customizeSettings.inputFields.style.borderColor}}" required/>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3">
+                      <select ng-options="item for item in genreArray" ng-model="submission.genre" style="width:100%; height:34px; padding:5px; border:solid {{customizeSettings.inputFields.style.border}}px; border-radius:{{customizeSettings.inputFields.style.borderRadius}}px; border-color:{{customizeSettings.inputFields.style.borderColor}}" ng-init="submission.genre = null" required>
+                        <option value="" ng-disabled="!!submission.genre">--Select Genre--</option>
+                      </select>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3">
+                      <input type="text" placeholder="Name" ng-model="submission.name" style="width:100%; height:34px; padding:5px; border:solid {{customizeSettings.inputFields.style.border}}px; border-radius:{{customizeSettings.inputFields.style.borderRadius}}px; border-color:{{customizeSettings.inputFields.style.borderColor}}" required/>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3">
+                      <input type="email" placeholder="Email" ng-model="submission.email" style="width:100%; height:34px; padding:5px; border:solid {{customizeSettings.inputFields.style.border}}px; border-radius:{{customizeSettings.inputFields.style.borderRadius}}px;border-color:{{customizeSettings.inputFields.style.borderColor}}" required/>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="text-center">
+                    <button class="btn btn-default" style="color:{{customizeSettings.button.style.fontColor}}; font-size:{{customizeSettings.button.style.fontSize}}px; background-color:{{customizeSettings.button.style.bgColor}};">{{customizeSettings.button.text}}</button>
+                    <br/>
+                    <br/>
+                    <!-- <p ng-show="message.visible" class="text-center">{{message.val}}</p> -->
+                  </div>
+                </div>
+              </form>
+              <span ng-if="notFound">Track not found.<br>If a private track, please email it to: edward@peninsulamgmt.com</span>
+              <div id="scPlayer" style="margin:10px 0"></div>
+            </div>
+          </div>
+        </div>
+        <ng-include src="'js/home/views/loader.html'"></ng-include>

@@ -1,0 +1,25 @@
+<div class="permanent-links search">
+  <h1 class="au-title-head text-center text-uppercase">Auto-fill Tracks</h1>
+  <div class="col-md-6">
+    <div style="max-width:320px; margin:0 auto;">
+      <scsearch kind='track' returnitem='choseAutoFillTrack(item)' ></scsearch>
+      <scsearch kind='playlist' returnitem='choseAutoFillPlaylist(item)' ></scsearch>
+    </div>
+  </div>
+  <div class="col-md-6"> 
+    <h5 ng-show="showAutofillPlayer">loading...</h5>
+    <div class="tracks-box" ui-sortable="sortableOptions" ng-model="autoFillTracks" ng-if="autoFillTracks.length > 0">
+      <div class="track-item-list" ng-repeat="song in autoFillTracks track by $index" >
+        <span class="pull-left" style="margin-right: 5px; padding-top: 3px;">{{$index+1}}</span> <img class="avatar-20" ng-src="{{song.artwork_url}}">
+        <div class="tracks-title">
+          <a class="tracks-title-name" href="{{song.permalink_url}}" target="_blank">{{' ' + song.title}}</a>
+          <a class="close-tracks pull-right" href="#"><img src="assets/images/close.png" ng-click="removeQueueSong(song)"></a> 
+        </div>
+      </div>                             
+    </div>
+    <button class="btn btn-border" ng-click="removeAll()" ng-if="autoFillTracks.length > 0" style="margin-top:10px;">Remove All</button>
+    <div class="space-20"></div>
+  </div>
+  <br>
+  <iframe id="autofillPlayer" ng-show="showAutofillPlayer" width="300" height="1" src="https://w.soundcloud.com/player/?url=&auto_play=false&show_artwork=true" style="margin:10px 0; position:relative; z-index:-1; border:none;"></iframe>
+</div>

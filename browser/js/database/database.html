@@ -1,0 +1,108 @@
+<style>
+  select[multiple]{
+    display:inline;
+    height: 20px;
+  }
+
+  select[multiple]:hover{
+    display:inline;
+    height: 100px;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+  }
+</style>
+
+<div style="text-align:center">
+  <br>
+  <div>
+    <h2 style="display:inline;text-align:center">Admin</h2>
+    <div style="clear:both"></div>
+  </div>
+  <br>
+  <ng-include src="'js/home/views/_adminNavigations.html'"></ng-include>
+  <br>
+  <div>
+    <div style="margin:20px 20px; padding: 10px 10px; background-color:#D3D3D3">
+      <h2>Add user for genre:</h2>
+      <span>Soundcloud URL:</span><input type="text" ng-model="addUser.url"></input>
+      <span>Genre:</span><select ng-model="addUser.genre">
+      <option value="Chill/Mainstream">Chill/Mainstream</option>
+      <option value="Hip-Hop">Hip-Hop</option>
+      <option value="Trap">Trap</option>
+      <option value="Festival">Festival</option>
+      <option value="Creative">Creative</option>
+      <option value="House">House</option>
+      <option value="Indie/Alternative">Indie/Alternative</option>
+      <option value="Latin">Latin</option>
+      <option value="Vocalists">Vocalists</option>
+      <option value="Paid Repost">Paid Repost</option>
+    </select>
+    <span>Your email:</span><input type="text" ng-model="addUser.email"/>
+    <button ng-click="saveAddUser()">Submit</button>
+  </div>
+  <notification-bar></notification-bar>
+  <div style="margin:20px 20px; padding: 10px 10px; background-color:#D3D3D3">
+    <h3>Query Followers</h3>
+    <span>Artist:</span><select ng-model="query.artist">
+    <option value="artists">Artists</option>
+    <option value="non-artists">Non-artists</option>
+    <option value="both">Both</option>
+  </select>      
+  <span>Genre:</span><select ng-model="query.genre">
+  <option value="">All</option>
+  <option value="Chill/Mainstream">Chill/Mainstream</option>
+  <option value="Hip-Hop">Hip-Hop</option>
+  <option value="Trap">Trap</option>
+  <option value="Festival">Festival</option>
+  <option value="Creative">Creative</option>
+  <option value="House">House</option>
+  <option value="Indie/Alternative">Indie/Alternative</option>
+  <option value="Latin">Latin</option>
+  <option value="Vocalists">Vocalists</option>
+  <option value="Paid Repost">Paid Repost</option>
+</select>
+<span>Min Followers:</span><input type="number" ng-model="query.followersGT"/>
+<span>Max Followers:</span><input type="number" ng-model="query.followersLT"/>
+<span>Following User's URL:</span><input type="text" ng-model="query.trackedUsersURL"/>
+<br>
+<div ng-repeat="col in queryCols" style="display:inline-block">
+  <label style="margin:3px 4px">
+    <input type="checkbox" ng-model="col.value" ng-true-value="'{{col.value}}'" ng-false-value="null"/>{{col.name}}
+  </label>
+</div>
+<br>
+<button ng-click="createUserQueryDoc()">Query Followers</button>
+<button ng-click="download(filename)" style="background-color: red" ng-show="downloadButtonVisible">Download File</button>
+</div>
+<div style="margin:20px 20px; padding: 10px 10px; background-color:#D3D3D3">
+  <h3>Query Tracked Users</h3>
+  <span>Genre:</span><select ng-model="trdUsrQuery.genre">
+  <option value="">All</option>
+  <option value="Chill/Mainstream">Chill/Mainstream</option>
+  <option value="Hip-Hop">Hip-Hop</option>
+  <option value="Trap">Trap</option>
+  <option value="Festival">Festival</option>
+  <option value="Creative">Creative</option>
+  <option value="House">House</option>
+  <option value="Indie/Alternative">Indie/Alternative</option>
+  <option value="Latin">Latin</option>
+  <option value="Vocalists">Vocalists</option>
+  <option value="Paid Repost">Paid Repost</option>
+</select>
+<span>Min Followers:</span><input type="number" ng-model="trdUsrQuery.followersGT"/>
+<span>Max Followers:</span><input type="number" ng-model="trdUsrQuery.followersLT"/>
+<button ng-click="createTrdUsrQueryDoc()">Query Tracked Users</button>
+<button ng-click="download(trdUsrFilename)" style="background-color: red" ng-show="downloadTrdUsrButtonVisible">Download File</button>
+</div>
+<div style="margin:20px 20px; padding: 10px 10px; background-color:#D3D3D3">
+  <h3>Paid Repost Channels</h3>
+  <form ng-submit="savePaidRepostChannel()">
+    <span>Soundcloud Url:</span><input type="url" ng-model="paidRepost.soundCloudUrl" required/>
+    <button type="submit">Submit</button>
+  </form>
+</div>
+</div>
+</div>
+<ng-include src="'js/home/views/loader.html'"></ng-include>

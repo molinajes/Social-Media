@@ -1,0 +1,389 @@
+  <style>
+    .grey {
+     background-color:#EEEEEE;
+     color:#000000 !important;
+   }
+   #backgroundImage {
+    background-size: cover;
+    display: block;
+    float: right;
+    height:102%;
+    left: 0;
+    position: absolute;
+    right: 0;
+    width: 100%;
+    margin-bottom:60px;
+    z-index: 1;
+  }
+  #rightTemplate{
+    position: relative;
+    margin: 20px;  
+    z-index: 2;
+    padding: 0 10px;
+  }
+  .submi-section{
+   padding-bottom:60px;
+ }
+</style>
+<ng-include src="'js/home/views/_adminHeaderNavigation.html'"></ng-include>
+<!-- Content Start  -->
+<div id="wrapper">
+  <ng-include src="'js/home/views/_adminNavigations.html'"></ng-include>
+  <div class="container-fluid height-100pr">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="page-content right-side">
+          <!--page-contant Start-->
+          <div class="scheduler-tabs" ng-show="AccountsStepData.formActions=='Add' || AccountsStepData.formActions=='Edit'">
+            <!-- Nav tabs :Start-->
+            <ul class="nav nav-tabs" role="tablist" >
+              <li role="presentation" class="active" style="width:100%"><a href="javascript:void(0)" style=" background: #f5f5f5 none repeat scroll 0 0;opacity:0.6;"><img src="assets/images/managereposts.svg" />MANAGE ACCOUNTS</a></li>
+            </ul>
+          </div>  
+          <!-- Nav tabs :Start-->
+          <div class="space-10"></div>
+          <div ng-hide="AccountsStepData.formActions=='Add' || AccountsStepData.formActions=='Edit'">
+            <div class="text-center au-title-head" style="margin-top:30px;margin-bottom:30px;">SET UP YOUR ADMIN ACCOUNT</div>
+            <ul class="info-ui-tab" role="tablist">
+              <li>
+                <a href="javascript:void(0)">1  Basic Info</a>        
+              </li>
+              <li class="active">
+                <a href="javascript:void(0)"  role="tab" data-toggle="tab">2  Set up your first Channel</a>
+              </li>
+            </ul>
+            <div class="clearfix"></div>
+            <br/>
+          </div>  
+          <!-- Nav tabs :End-->
+          <!-- Tab panes :: Start-->
+          <div class="tab-content">
+            <!-- MY SCHEDULE : Start-->
+            <div role="tabpanel" class="tab-pane fade in active" id="step2">
+              <div class="row">
+                <div class="col-xs-12 text-center">
+                  <h5 class="margin-40">ADD NEW CHANNEL</h5>
+                </div>
+              </div>
+              <ul class="admin-ui-tabs" role="tablist">
+               <li>
+                <a href="javascript:void(0)"><span style="color:red;font-size:14px;">1</span>&nbsp;&nbsp;Set Submission URL</a>
+              </li>
+              <li>
+                <a href="javascript:void(0)"><span style="color:red;font-size:14px;">2</span>&nbsp;&nbsp;Set Price</a>
+              </li>
+              <li>
+                <a href="javascript:void(0)"><span style="color:red;font-size:14px;">3</span>&nbsp;&nbsp;  Customize Submission Page</a>
+              </li>
+              <li>
+                <a href="javascript:void(0)"><span style="color:red;font-size:14px;">4</span>&nbsp;&nbsp;Premiere Submission Page</a>
+              </li>
+              <li>
+                <a href="javascript:void(0)"><span style="color:red;font-size:14px;">5</span>&nbsp;&nbsp;Repost Preferences</a>
+              </li>
+              <li class="active">
+                <a href="javascript:void(0)"><span style="color:red;font-size:14px;">6</span>&nbsp;&nbsp;Manage Reposts</a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <!-- MY SCHEDULE : Start-->
+              <div role="tabpanel" class="tab-pane fade in active" id="tab3"  ng-init="AccountsStepData.postData.type='submit';AccountsStepData.postData.button.text='Submit'">
+                <div  class="submi-section">
+                  <div class=""> 
+                    <div class="col-md-12">
+                      <br />            
+                      
+                      <div class="container-90">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <br>
+                                <h5 class="text-center">SCHEDULE SETTINGS</h5>
+                                <br>
+                              </div>
+                            </div><!--row ::end-->
+                            <div class="row">                       
+                              <div class="col-md-3 border-right text-right">
+                                <div class="payed-reposts">
+                                 <ul class="repot-left-list"> 
+                                  <span style="margin: 0 0 17px 0;display: block;"></span>
+                                  <!--  <li><a href="#">Repost Limit per Day</a></li> -->
+                                  <li><a href="#">Default Like Repost</a></li>
+                                  <li><a href="#">Default Comment on Repost</a></li>
+                                  <li><a href="#">&nbsp;</a></li>
+                                  <li><a href="#">&nbsp;</a></li>
+                                  <li><a href="#">&nbsp;</a></li>              
+                                </ul>                           
+                              </div>
+                            </div>
+                            <div class="col-md-3 border-right text-center">   
+                              <div class="payed-reposts">
+                                <p>Paid Reposts</p>                         
+
+                                <li class="switch-btn">
+                                  <label class="switch">
+                                    <input checked="" type="checkbox" ng-model="user.repostSettings.paid.like" ng-change="saveRepostSettings('paid')">
+                                    <div class="slider round"></div>
+                                  </label>                               
+                                </li>                      
+                                <li class="switch-btn">
+                                  <label class="switch">
+                                    <input checked="" type="checkbox" ng-model="user.repostSettings.paid.comment" ng-click="saveRepostSettings('paid')">
+                                    <div class="slider round"></div>
+                                  </label>                               
+                                </li>
+                                <div class="payed-reposts-list">
+                                  <ul ng-if="user.repostSettings.paid.comments.length">
+                                    <li class="text-left"  ng-repeat="comment in user.repostSettings.paid.comments track by $index">{{comment}}<span class="pull-right" ng-click="editComments(comment,'paid',$index)">Edit</span></li>
+                                  </ul>
+                                </div>
+                                <br>
+                                <button type="button" class="btn payed-reposts-btn pull-right" data-toggle="modal" data-target="#paidCommentModal" ng-click="scheduleCommentIndex=undefined">+ COMMENT</button>
+                              </div>                           
+                            </div>
+                            <div class="col-md-3 border-right text-center">   
+                              <div class="payed-reposts">
+                                <p>Schedule Reposts</p>                         
+
+                                <li class="switch-btn">
+                                  <label class="switch">
+                                    <input checked="" type="checkbox" ng-model="AccountsStepData.repostSettings.schedule.like" ng-change="saveRepostSettings()">
+                                    <div class="slider round"></div>
+                                  </label>                               
+                                </li>                      
+                                <li class="switch-btn">
+                                  <label class="switch">
+                                    <input checked="" type="checkbox" ng-model="AccountsStepData.repostSettings.schedule.comment" ng-click="saveRepostSettings()">
+                                    <div class="slider round"></div>
+                                  </label>                               
+                                </li>
+                                <div class="payed-reposts-list">
+                                  <ul ng-if="AccountsStepData.repostSettings.schedule.comments.length">
+                                    <li class="text-left"  ng-repeat="comment in AccountsStepData.repostSettings.schedule.comments track by $index">{{comment}}<span class="pull-right" ng-click="editComments(comment,'schedule',$index)">Edit</span></li>
+                                  </ul>
+                                </div>
+                                <br>
+                                <button type="button" class="btn payed-reposts-btn pull-right" data-toggle="modal" data-target="#scheduleCommentModal" ng-click="scheduleCommentIndex=undefined">+ COMMENT</button>
+                              </div>                           
+                            </div>
+
+                            <div class="col-md-3 text-center"> 
+                              <div class="payed-reposts">
+                                <p>Trade Reposts</p>
+                            <!-- <div class="payed-reposts-select">
+                             <select class="form-control" id="sel1" ng-model="user.repostSettings.trade.limit" ng-change="saveRepostSettings()">
+                                <option value="{{limit}}" ng-repeat="limit in limit">{{limit}}</option>
+                              </select>
+                            </div>  -->                           
+                            <li class="switch-btn">
+                              <label class="switch">
+                                <input checked="" type="checkbox" ng-model="AccountsStepData.repostSettings.trade.like" ng-change="saveRepostSettings()">
+                                <div class="slider round"></div>
+                              </label>                               
+                            </li>                         
+                            <li class="switch-btn">
+                              <label class="switch">
+                                <input checked="" type="checkbox" ng-model="AccountsStepData.repostSettings.trade.comment" ng-click="saveRepostSettings()">
+                                <div class="slider round"></div>
+                              </label>                               
+                            </li>                           
+                            <div class="payed-reposts-list">
+                              <ul  ng-if="AccountsStepData.repostSettings.trade.comments.length">
+                                <li class="text-left" ng-repeat="comment in AccountsStepData.repostSettings.trade.comments track by $index">{{comment}}<span class="pull-right" ng-click="editComments(comment, 'trade',$index)">Edit</span></li>
+                              </ul>
+                            </div>
+                            <br>
+                            <button type="button" class="btn payed-reposts-btn pull-right" data-toggle="modal" data-target="#tradeCommentModal" ng-click="scheduleCommentIndex=undefined">+ COMMENT</button>
+                          </div>                           
+                        </div>                         
+                      </div><!--row ::end-->                
+                      <div class="row">
+                        <div class="col-md-12 col-xs-12 text-center">
+                          <div class="border-top text-center"> 
+                           <div class="payed-reposts-bottom">
+                            
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+                   <!--row ::end-->
+                 </div>
+               </div>
+               <!--row ::end-->
+               <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                  <div class="permanent-links search" style="text-align: center;">
+                    <h4 class="bold">Auto-fill Tracks</h4>
+                    <!--  <input class="form-control" placeholder="Soundcloud Track Url" type="text" ng-model="newQueueSong" ng-change="changeQueueSong()" /> -->
+                    <scsearch kind='track' returnitem='choseAutoFillTrack(item)'></scsearch>
+                    <div class="tracks-box" ng-if="autoFillTracks.length > 0">
+                      <div class="track-item-list" ng-repeat="song in autoFillTracks" >
+                        <img class="avatar-20" ng-src="{{song.artwork_url}}">
+                        <div class="tracks-title">
+                          <a class="tracks-title-name" href="{{song.permalink_url}}" target="_blank">
+                            {{' ' + song.title}}</a> 
+                            <a class="close-tracks pull-right" href="#"><img src="assets/images/close.png" ng-click="removeQueueSong(song)"></a> 
+                          </div>
+                        </div> 
+                      </div>
+                    </div>
+                  </div>
+                </div>
+               <!--  <div class="row" ng-init="getTrackListFromSoundcloud();loadQueueSongs();">
+                  <div class="col-md-8 col-md-offset-2">
+                    <div class="permanent-links search" style="text-align: center;">
+                      <h4 class="bold">Auto-fill Tracks</h4>
+                         <scsearch kind='track' returnitem='choseTrack(item)'></scsearch>
+                     <!--  <input class="form-control" placeholder="Soundcloud Track Url" type="text" ng-model="newQueueSong" ng-change="changeQueueSong()" /> 
+                              <br />
+                                
+                      <select class="form-control" ng-model="trackListObj" ng-options="item.title for item in trackList" ng-change="trackListChange(trackListObj)">
+                        <option value="" ng-disabled="!!trackListObj" ng-show="trackList.length > 0">-My Songs-</option>
+                      </select>
+                              <br />
+                      <span>{{newQueue.title}}</span>
+                      <br>
+                      <div class="col-md-12 text-center">
+                        <button class="btn btn-default btn-small" ng-click="addSong()">Add</button>
+                          </div>  
+                            <br />            
+                              <br />
+                      <div ng-repeat="song in autoFillTracks" style="padding:10px; color:#000; text-align: center;">
+                        <a href="{{song.permalink_url}}" target="_blank" style="color:#000;"><img class="avatar" ng-src="{{song.artwork_url}}">{{' ' + song.title}}</a>&nbsp;&nbsp;&nbsp;
+                        <a class="close-ic" href="#"><img src="assets/images/close.png" ng-click="removeQueueSong(AccountsStepData.queue.indexOf(song))"></a> 
+                      </div>                             
+                            </div>                              
+                          </div>   
+                        </div> -->
+
+                      </div>  
+                      
+                      <div class="clearfix"></div>            
+                    </div>
+                    <div class="clearfix"></div>          
+                  </div>  
+                </div>
+              </div>
+              <!-- MY SCHEDULE : End-->
+              <div class="clearfix"></div>     
+            </div>
+            <!-- Tab panes :: End-->
+          </div>
+          <!-- overlay -->
+          <div class="clearfix"></div>
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <div class="buttons margin-40">
+                <input type="button" name="back" value="Back" ng-click="nextStep(5,AccountsStepData,'channel')" class="btn active border-black-btn">
+                <input type="button" name="back" value="Finish"  ng-click="nextStep(7,AccountsStepData,'channel')" class="btn btn-pink b-radius-10 border-orange-btn">                                                    
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="position:absolute; top:0; left:0; right:0; height:5000px; background-color: rgba(0,0,0,1); z-index: 1000;" ng-show="hideall">
+      </div>
+    </div>
+    <!--overlay-->
+    <div class="modal fade" id="paidCommentModal" role="dialog">
+      <div class="modal-dialog">    
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Paid Comment Box</h4>
+          </div>
+          <div class="modal-body">
+            <input class="form-control" type="text" ng-model="paidComment" placeholder="Enter new comment"></input>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="saveComments(paidComment,'paid',scheduleCommentIndex)">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="scheduleCommentModal" role="dialog">
+      <div class="modal-dialog">    
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Schedule Comment Box</h4>
+          </div>
+          <div class="modal-body">
+            <input class="form-control" type="text" ng-model="scheduleComment" placeholder="Enter new comment"></input>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="saveComments(scheduleComment,'schedule',scheduleCommentIndex)">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ManageRepost paidComment overlay end -->
+    <!-- ManageRepost tradeComment overlay start -->
+    <div class="modal fade" id="tradeCommentModal" role="dialog">
+      <div class="modal-dialog">    
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Trade Comment Box</h4>
+          </div>
+          <div class="modal-body">
+            <input class="form-control" type="text" ng-model="tradeComment" placeholder="Enter new comment"></input>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="saveComments(tradeComment,'trade',scheduleCommentIndex)">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-include src="'js/home/views/loader.html'"></ng-include>
+  </div>
+</div>
+</div>
+<script type="text/javascript">
+  $(document).ready(function() {
+  // function readURL(input,element) {
+  //   if (input.files && input.files[0]) {
+  //     var reader = new FileReader();
+  //     reader.onload = function (e) {
+  //       if(element!="rightTemplate"){
+  //         $('#'+element).attr('src', e.target.result).show();
+  //       }
+  //       else{
+  //         angular.element('#backgroundImage').scope().addBackGroundImage(e.target.result,3);
+  //         $('#backgroundImage').css('background-image', 'url(' + e.target.result + ')');
+  //         // /setHeight();
+  //       }          
+  //     }
+  //     reader.readAsDataURL(input.files[0]);
+  //   }
+  // }    
+
+  $("#uploadLogo").change(function(){
+    //readURL(this,'templateLogo');
+    setTimeout(function(){
+      angular.element('#uploadLogo').scope().updateLOGOIMAGE(3);  
+    },500);    
+  });
+  $("#uploadBackground").change(function(){
+    //readURL(this,'rightTemplate');
+    setTimeout(function(){
+      angular.element('#uploadBackground').scope().updateBackgroundIMAGE(3);  
+    },500);    
+  });
+});
+ //  $(window).resize(function() { 
+ //    setHeight();
+ //  });
+ // function setHeight(){
+ //    var h = $("#rightTemplate").height()+100;
+ //    $('#backgroundImage').css('height',h);
+ //  }
+</script>

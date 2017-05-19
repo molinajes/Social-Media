@@ -1,0 +1,1341 @@
+<style type="text/css">
+.disabled {
+  opacity: 1.5;
+  pointer-events: none;
+}
+</style>
+<style>
+#backgroundImage1 {
+  background-size: cover;
+  display: block;
+  float: right;
+  top: -40px;
+  left: -40px;
+  position: absolute;
+  right: -40px;
+  bottom: -40px;
+  z-index: 1;
+}
+
+#rightpremierTemplate::-webkit-scrollbar {
+  display: none;
+}
+
+#rightpremierTemplate {
+  position: relative;
+  margin: 20px;
+  z-index: 2;
+  padding: 0 10px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 100%;
+}
+
+.submi-section {
+  padding-bottom: 60px;
+}
+
+.custom-settings {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0;
+  height: 100%;
+  bottom: 0;
+  width: 100%;
+  background-color: white !important;
+  text-align: center;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 10px;
+}
+</style>
+<div class=" ">
+  <div class="settings-tabs-5">
+    <ul class="nav nav-tabs" roe="tablist">
+      <li role="presentation" class="active" style="border-radius:10px 0 0 0;">
+        <a href="#submissionUrl" aria-controls="submissionUrl" role="tab" data-toggle="tab" style="padding-top: 18px; border-radius:10px 0 0 0;">Set Submission URL</a>
+      </li>
+      <li role="presentation" ng-class="{active : activeTab.indexOf('setPrice
+      ') > -1 && currentTab == 'setPrice',disabled:activeTab.indexOf('setPrice') == -1}">
+        <a href="#setPrice" aria-controls="setPrice" role="tab" data-toggle="tab" style="padding-top: 18px">Set Price</a>
+      </li>
+      <li role="presentation" ng-class="{active : activeTab.indexOf('customSubmission') > -1 && currentTab == 'customSubmission',disabled:activeTab.indexOf('customSubmission') == -1}">
+        <a href="#customSubmission" aria-controls="customSubmission" role="tab" data-toggle="tab" style="padding-top: 18px;">Repost Submission Page</a>
+      </li>
+      <li role="presentation" ng-class="{active : activeTab.indexOf('customPremiereSubmission') > -1 && currentTab == 'customPremiereSubmission',disabled:activeTab.indexOf('customPremiereSubmission') == -1}" style="border-radius:0 10px 0 0;">
+        <a href="#customPremiereSubmission" aria-controls="customPremiereSubmission" role="tab" data-toggle="tab" style="padding-top: 18px; border-radius:0 10px 0 0;">Premiere Submission Page</a>
+      </li>
+      <!-- <li role="presentation" ng-class="{active : activeTab.indexOf('repostPreferences') > -1 && currentTab == 'repostPreferences',disabled:activeTab.indexOf('repostPreferences') == -1}">
+        <a href="#repostPreferences" aria-controls="repostPreferences" role="tab" data-toggle="tab" style="padding-top: 18px">Repost Preferences</a>
+      </li>
+      <li role="presentation" ng-class="{active : activeTab.indexOf('manageReposts') > -1 && currentTab == 'manageReposts',disabled:activeTab.indexOf('manageReposts') == -1}" style="border-radius:0 10px 0 0;">
+        <a href="#manageReposts" aria-controls="manageReposts" role="tab" data-toggle="tab" style="padding-top: 18px; border-radius:10px 0 0 0;" ng-click="">Manage Reposts</a>
+      </li>       -->
+    </ul>
+    <div class="col-md-12 margin-10">
+      <button class="btn btn-pink pull-right" ng-show="!enableNavigation" ui-sref="accounts">BACK</button>
+    </div>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane fade in active" id="submissionUrl">
+        <div class="container-90">
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <div class="add-account text-center">
+                <div class="container-60">
+                  <div class="text-center">
+                    <button class="btn btn-pink btn-enter cl-sound-btn" ng-click="soundcloudLogin()" ng-disabled="AccountsStepData.submissionData.username">Connect with SoundCloud</button>
+                  </div>
+                  <span>Add your first Soundcloud account</span>
+                </div>
+                <div class="slidethamb-box">
+                  <div class="container-40">
+                    <div class="thumb-img-container margin-20">
+                      <p class="ng-binding new-trade-ingtexst">
+                        <div ng-show="AccountsStepData.submissionData.username"><strong>{{AccountsStepData.submissionData.username}}</strong></div>
+                        <div ng-show="AccountsStepData.submissionData.followers">{{AccountsStepData.submissionData.followers}} Followers</div>
+                      </p>
+                      <div ng-show="AccountsStepData.submissionData.avatarURL">
+                        <img src="{{AccountsStepData.submissionData.avatarURL}}" class="img-responsive" style="width:110px; height: 100%;margin: 0 auto;">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <div class="clearfix"></div>
+                <div class="container-60">
+                  <div ng-show="AccountsStepData.submissionData.submissionUrl">
+                    <lable>Repost Submission Url: {{AccountsStepData.submissionData.submissionUrl}} </lable>
+                  </div>
+                </div>
+                <br />
+                <div class="clearfix"></div>
+                <div class="container-60">
+                  <div ng-show="AccountsStepData.submissionData.premierUrl">
+                    <lable>Premier Submission Url: {{AccountsStepData.submissionData.premierUrl}}</lable>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <div class="buttons margin-40">
+                <input type="button" name="SAVE" value="SAVE" ng-click="nextStep(2,AccountsStepData,'channel')" class="btn btn-pink b-radius-10 border-orange-btn">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div role="tabpanel" class="tab-pane fade" id="setPrice">
+        <div class="container-90">
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <div class="add-account text-center container-60">
+                <div class="container-90">
+                  <br />
+                  <p> Set the price that each repost will cost for this channel </p>
+                  <p class="small-text">Recommended: 1$ for every 3,000 followers 60,000 followers = $20
+                  </p>
+                </div>
+                <div class="margin-40">
+                  <div class="margin-20">
+                    <span>Price for each repost:&nbsp;$
+                      <input ng-model="AccountsStepData.price" placeholder="10"  class="price-input" type="number">
+                    </span>
+                  </div>
+                </div>
+                <div class="container-60">
+                  <div class="margin-20">
+                    <textarea ng-model="AccountsStepData.description" class="form-control" name="Description" placeholder="Channel description"></textarea>
+                  </div>
+                  <div ng-if="AccountsStepData.formActions=='Add' || AccountsStepData.formActions=='Edit'">
+                    <p>Add this channel to one of your existing groups or creating a group to better organize your network!</p>
+                    <table width="100%">
+                      <tr>
+                        <td>
+                          <input type="text" name="group" id="group" class="form-control" ng-model="group">
+                        </td>
+                        <td>
+                          <input type="button" class="btn btn-xs" value="Add group" ng-click="addGroup(group)" style="background:#ff7676;padding:6px;color:white;margin-bottom:0px;">
+                        </td>
+                      </tr>
+                    </table>
+                    <br />
+                    <table width="100%" class="table table-bordered" ng-repeat="group in AccountsStepData.submissionData.groups" style="margin-bottom:5px">
+                      <tr>
+                        <td class="text-left" width="90%">{{group}}</td>
+                        <td class="text-center" width="10%"><img src="assets/images/x-gray.png" width="15px" height="15px;" style="cursor:pointer;" ng-click="removeGroup($index)"></td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="slidethamb-box">
+                    <div class="">
+                      <div class="margin-20">
+                        <p class="ng-binding">
+                          <strong>{{AccountsStepData.submissionData.username}}</strong>
+                          <br>{{AccountsStepData.submissionData.followers}} Followers
+                        </p>
+                        <img src="{{AccountsStepData.submissionData.avatarURL}}" class="img-responsive" style="width:110px; height: 100%;margin: 0 auto">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <div class="buttons margin-40">
+                  <input type="button" name="SAVE" value="SAVE" ng-click="nextStep(3,AccountsStepData,'channel')" class="btn btn-pink b-radius-10 border-orange-btn">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+      <div role="tabpanel" class="tab-pane fade" id="customSubmission">
+        <div class="submi-section">
+          <div class="">
+            <div class="col-md-12">
+              <div class="col-md-3">
+                <div class="custom-submission-accordion">
+                  <button class="btn btn-border" ng-click="defaultsRep()">Defaults</button>
+                  <button class="btn btn-border" ng-click="undoRep()">Undo</button>
+                  <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h4 class="panel-title">
+                          <a data-toggle="collapse" data-parent="#accordion" href="#pnlLayout" onclick="return false;">LAYOUT</span></a>                            
+                        </h4>
+                      </div>
+                      <div id="pnlLayout" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Layout:</label>
+                              <br>
+                              <label class='radio-inline'>
+                                <input type="radio" name="optradio" ng-model="AccountsStepData.postData.layout" value="1" />1</label>
+                              <label class='radio-inline'>
+                                <input type="radio" name="optradio" ng-model="AccountsStepData.postData.layout" value="2" />2</label>
+                              <label class='radio-inline'>
+                                <input type="radio" name="optradio" ng-model="AccountsStepData.postData.layout" value="3" />3</label>
+                              <label class='radio-inline'>
+                                <input type="radio" name="optradio" ng-model="AccountsStepData.postData.layout" value="4" />4</label>
+                            </div>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Templates:</label>
+                              <br>
+                              <ul style="list-style-type: none;">
+                                <li ng-repeat="template in user.templates track by $index">Template {{$index}}:<a ng-click="enableTemplate(template, 'submit')"> Load </a>-<a ng-click="deleteTemplate($index)" style="color:red">  Delete</a></li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h4 class="panel-title">
+                                  <a data-toggle="collapse" data-parent="#accordion" href="#pnlHeading" onclick="return false;">HEADING </span></a>                            
+                                </h4>
+                      </div>
+                      <div id="pnlHeading" class="panel-collapse collapse">
+                        <div class="panel-body">
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Heading Text</label>
+                              <input type="text" ng-model="AccountsStepData.postData.heading.text" class="form-control" placeholder="Heading Text">
+                            </div>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Font</label>
+                              <br>
+                              <div class="btn-group" style='width:100%'>
+                                <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span style="font-size:1.2em; font-family:{{AccountsStepData.postData.heading.style.fontFamily}};">{{repHeadFont}} </span><span class="caret"></span></button>
+                                <ul class="dropdown-menu" style="max-height:200px; overflow-y:scroll;">
+                                  <li ng-repeat='font in fontFamilies' ng-style="AccountsStepData.postData.heading.style.fontFamily == font.css?{'background-color':'#FF7F7F'}:{}">
+                                    <input type="radio" id="{{font.title}}repHead" name="repHeader" value="{{font.css}}" ng-change="changeFont('repHeadFont', font.title)" ng-model="AccountsStepData.postData.heading.style.fontFamily" style="visibility:hidden">
+                                    <label for="{{font.title}}repHead" style="font-family:{{font.css}}; width:80%;">{{font.title}}</label>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Font Size</label>
+                              <input type="number" ng-model="AccountsStepData.postData.heading.style.fontSize" class="form-control" placeholder="Font Size">
+                            </div>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Font color</label>
+                              <div colorpicker="rgba" style="border:1px solid black; border-radius:8px; width:100%; height:35px; background-color: {{AccountsStepData.postData.heading.style.fontColor}}" ng-model="AccountsStepData.postData.heading.style.fontColor"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h4 class="panel-title">
+                                  <a data-toggle="collapse" data-parent="#accordion" data-target="#pnlSubheading">SUB HEADING </a>
+                                </h4>
+                      </div>
+                      <div id="pnlSubheading" class="panel-collapse collapse">
+                        <div class="panel-body">
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Subheading</label>
+                              <textarea ng-model="AccountsStepData.postData.subHeading.text" class="form-control" style="height:200px;" name="Subheading Text" placeholder="Subheading"></textarea required>
+                            </div>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Font</label>
+                              <br>
+                              <div class="btn-group" style='width:100%'>
+                                <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span style="font-size:1.2em; font-family:{{AccountsStepData.postData.subHeading.style.fontFamily}};">{{repSubheadFont}} </span><span class="caret"></span></button>
+                                <ul class="dropdown-menu" style="max-height:200px; overflow-y:scroll;">
+                                  <li ng-repeat='font in fontFamilies' ng-style="AccountsStepData.postData.subHeading.style.fontFamily == font.css?{'background-color':'#FF7F7F'}:{}">
+                                    <input type="radio" id="{{font.title}}repSub" name="repHeader" value="{{font.css}}" ng-change="changeFont('repSubheadFont', font.title)" ng-model="AccountsStepData.postData.subHeading.style.fontFamily" style="visibility:hidden">
+                                    <label for="{{font.title}}repSub" style="font-family:{{font.css}}; width:80%;">{{font.title}}</label>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Font Size</label>
+                              <input type="number" ng-model="AccountsStepData.postData.subHeading.style.fontSize" class="form-control" placeholder="Font Size">
+                            </div>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Font color</label>
+                              <div colorpicker="rgba" style="border:1px solid black; border-radius:8px; width:100%; height:35px; background-color: {{AccountsStepData.postData.subHeading.style.fontColor}}" ng-model="AccountsStepData.postData.subHeading.style.fontColor"></div>
+                            </div>
+                            <br>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" data-target="#pnlLogo">LOGO </a>
+                                  </h4>
+                      </div>
+                      <div id="pnlLogo" class="panel-collapse collapse">
+                        <div class="panel-body">
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Image</label>
+                              <input type="file" name="uploadLogo" file-input="AccountsStepData.postData.logo.images" id="uploadLogo" class="pull-right" style="width:200px">
+                              <br>
+                              <button class="btn btn-border" ng-click="AccountsStepData.postData.logo.images = AccountsStepData.submissionData.avatarURL">Profile Picture</button>
+                              <button class="btn btn-border" ng-click="AccountsStepData.postData.logo.images = ''">Remove Image</button>
+                            </div>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Logo Position</label>
+                              <select class="form-control" ng-model="AccountsStepData.postData.logo.align" placeholder="Logo Position" ng-init="AccountsStepData.postData.logo.align='center'">
+                                <option ng-selected="true" value="center">Center</option>
+                                <option value="left">Left</option>
+                                <option value="right">Right</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" data-target="#pnlPremiereBackground">BACKGROUND </a>
+                                  </h4>
+                      </div>
+                      <div id="pnlPremiereBackground" class="panel-collapse collapse">
+                        <div class="panel-body">
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Image</label>
+                              <input type="file" name="uploadBackground" file-input="AccountsStepData.postData.background.images" id="uploadBackground" class="pull-right" style="width:200px">
+                              <br>
+                              <button class="btn btn-border" ng-click="AccountsStepData.postData.background.images = AccountsStepData.submissionData.avatarURL">Profile Picture</button>
+                              <button class="btn btn-border" ng-click="AccountsStepData.postData.background.images = ''">Remove Image</button>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="panel-body">
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Blur Amount</label>
+                              <input type="number" ng-model="AccountsStepData.postData.background.blur" placeholder="Blur Amount">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" data-target="#pnlPremiereButton">BUTTON </a>
+                                  </h4>
+                      </div>
+                      <div id="pnlPremiereButton" class="panel-collapse collapse">
+                        <div class="panel-body">
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Button text</label>
+                              <input class="form-control" type="text" ng-model="AccountsStepData.postData.button.text" placeholder="Button text" />
+                            </div>
+                            <br>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Font size</label>
+                              <input type="number" ng-model="AccountsStepData.postData.button.style.fontSize" class="form-control" placeholder="Font size">
+                            </div>
+                            <br>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Font color</label>
+                              <div colorpicker="rgba" style="border:1px solid black; border-radius:8px; width:100%; height:35px; background-color: {{AccountsStepData.postData.button.style.fontColor}}" ng-model="AccountsStepData.postData.button.style.fontColor"></div>
+                            </div>
+                            <br>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Border</label>
+                              <input type="number" ng-model="AccountsStepData.postData.button.style.border" class="form-control" placeholder="Border">
+                            </div>
+                            <br>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Border Radius</label>
+                              <input type="number" ng-model="AccountsStepData.postData.button.style.borderRadius" class="form-control" placeholder="Border Radius">
+                            </div>
+                            <br>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>BG color</label>
+                              <div colorpicker="rgba" style="border:1px solid black; border-radius:8px; width:100%; height:35px; background-color: {{AccountsStepData.postData.button.style.bgColor}}" ng-model="AccountsStepData.postData.button.style.bgColor"></div>
+                            </div>
+                            <br>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" data-target="#pnlInput">INPUT FIELDS </a>
+                                  </h4>
+                      </div>
+                      <div id="pnlInput" class="panel-collapse collapse">
+                        <div class="panel-body">
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Border</label>
+                              <input type="number" ng-model="AccountsStepData.postData.inputFields.style.border" class="form-control" placeholder="Border">
+                            </div>
+                            <br>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Border Radius</label>
+                              <input type="number" ng-model="AccountsStepData.postData.inputFields.style.borderRadius" class="form-control" placeholder="Border Radius">
+                            </div>
+                            <br>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Border color</label>
+                              <div colorpicker="rgba" style="border:1px solid black; border-radius:8px; width:100%; height:35px; background-color: {{AccountsStepData.postData.inputFields.style.borderColor}}" ng-model="AccountsStepData.postData.inputFields.style.borderColor"></div>
+                            </div>
+                            <br>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-9" ng-class="{disabled:true}" style="height:800px; z-index:1000">
+                <!-- custom page -->
+                <div class="custom-settings">
+                  <div id="backgroundImage1" style="background-size:cover; background-image:url( {{AccountsStepData.postData.background.images}}); filter: blur({{AccountsStepData.postData.background.blur}}px); -webkit-filter: blur({{AccountsStepData.postData.background.blur}}px);"></div>
+                  <div class="col-md-1"></div>
+                  <!-- template 1 -->
+                  <div id="rightpremierTemplate" class="col-md-10" ng-if='AccountsStepData.postData.layout == 1'>
+                    <p class="text-center" style="color:{{AccountsStepData.postData.heading.style.fontColor}};
+                              font-weight:{{AccountsStepData.postData.heading.style.fontWeight}};
+                              font-family:{{AccountsStepData.postData.heading.style.fontFamily}};
+                              font-size:{{AccountsStepData.postData.heading.style.fontSize}}px">{{AccountsStepData.postData.heading.text}}</p>
+                    <div class="internal-content">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <p class="text-center" style="color:{{AccountsStepData.postData.subHeading.style.fontColor}};
+                                    font-size:{{AccountsStepData.postData.subHeading.style.fontSize}}px; 
+                                    font-family:{{AccountsStepData.postData.subHeading.style.fontFamily}}; 
+                                    font-weight:{{AccountsStepData.postData.subHeading.style.fontWeight}}" ng-bind-html="AccountsStepData.postData.subHeading.text"></p>
+                        </div>
+                        <div class="col-md-12">
+                          <img class="text-center" style="width:80%; max-width:200px; margin:20px auto; margin-bottom:40px;" ng-if="AccountsStepData.postData.logo.images" id="templatepremierLogo" src="{{AccountsStepData.postData.logo.images}}">
+                        </div>
+                        <div class="col-md-12">
+                          <form role="form" ng-submit="submit()">
+                            <div class="row">
+                              <div class="search" style="max-width:350px; width:80%; margin:0 auto;">
+                                <scsearch kind='track' returnitem='choseTrack(item)' customstyle="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.postData.inputFields.style.border}}px; border-radius:{{AccountsStepData.postData.inputFields.style.borderRadius}}px; border-color:{{AccountsStepData.postData.inputFields.style.borderColor}}"></scsearch>
+                              </div>
+                            </div>
+                            <div class="row text-center" ng-show="showPlayer">
+                              <div style="max-width:350px; width:80%; margin:0 auto;">
+                                <iframe id="scPlayerCustom" width="700" height="160" src="https://w.soundcloud.com/player/?url=&auto_play=false&show_artwork=true" style="margin-top:10px; position:relative; z-index:1; border:none; max-width:100%"></iframe>
+                              </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                <select class="form-control" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.postData.inputFields.style.border}}px; border-radius:{{AccountsStepData.postData.inputFields.style.borderRadius}}px; border-color:{{AccountsStepData.postData.inputFields.style.borderColor}}" required>
+                                  <option value="genre" default>Genre</option>
+                                </select>
+                              </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                <input type="text" placeholder="Name" ng-model="submission.name" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.postData.inputFields.style.border}}px; border-radius:{{AccountsStepData.postData.inputFields.style.borderRadius}}px; border-color:{{AccountsStepData.postData.inputFields.style.borderColor}}" required/>
+                              </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                <input type="email" placeholder="Email" ng-model="submission.email" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.postData.inputFields.style.border}}px; border-radius:{{AccountsStepData.postData.inputFields.style.borderRadius}}px;border-color:{{AccountsStepData.postData.inputFields.style.borderColor}}" required/>
+                              </div>
+                            </div>
+                            <br>
+                            <div class="text-center">
+                              <button class="btn btn-default" style="color:{{AccountsStepData.postData.button.style.fontColor}}; 
+                                        font-size:{{AccountsStepData.postData.button.style.fontSize}}px; 
+                                        background-color:{{AccountsStepData.postData.button.style.bgColor}}; border:solid {{AccountsStepData.postData.inputFields.style.borderColor}} {{AccountsStepData.postData.button.style.border}}px; border-radius:{{AccountsStepData.postData.button.style.borderRadius}}px;">{{AccountsStepData.postData.button.text}}</button>
+                              <br>
+                              <br>
+                            </div>
+                            <br>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- template 2 -->
+                  <div id="rightpremierTemplate" class="col-md-10" style="overflow-y:scroll; height:100%" ng-if='AccountsStepData.postData.layout == 2'>
+                    <p class="text-center" style="color:{{AccountsStepData.postData.heading.style.fontColor}};
+                              font-weight:{{AccountsStepData.postData.heading.style.fontWeight}};
+                              font-family:{{AccountsStepData.postData.heading.style.fontFamily}};
+                              font-size:{{AccountsStepData.postData.heading.style.fontSize}}px">{{AccountsStepData.postData.heading.text}}</p>
+                    <div class="internal-content">
+                      <div class="row">
+                        <div class='col-md-6 text-center' style="margin-top:20px;">
+                          <div class="col-md-12">
+                            <p style="color:{{AccountsStepData.postData.subHeading.style.fontColor}};
+                                      font-size:{{AccountsStepData.postData.subHeading.style.fontSize}}px; 
+                                      font-family:{{AccountsStepData.postData.subHeading.style.fontFamily}}; 
+                                      font-weight:{{AccountsStepData.postData.subHeading.style.fontWeight}}; width:90%; max-width:350px; margin:0 auto; text-align:left;" ng-bind-html="AccountsStepData.postData.subHeading.text"></p>
+                          </div>
+                          <div class="col-md-12" style="margin-top:20px;">
+                            <form role="form" ng-submit="submit()">
+                              <div class="row">
+                                <div class="search" style="max-width:350px; width:80%; margin:0 auto;">
+                                  <scsearch kind='track' returnitem='choseTrack(item)' customstyle="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.postData.inputFields.style.border}}px; border-radius:{{AccountsStepData.postData.inputFields.style.borderRadius}}px; border-color:{{AccountsStepData.postData.inputFields.style.borderColor}}"></scsearch>
+                                </div>
+                              </div>
+                              <div class="row text-center" ng-show="showPlayer">
+                                <div style="max-width:350px; width:80%; margin:0 auto;">
+                                  <iframe id="scPlayerCustom" width="700" height="160" src="https://w.soundcloud.com/player/?url=&auto_play=false&show_artwork=true" style="margin-top:10px; position:relative; z-index:1; border:none; max-width:100%"></iframe>
+                                </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                  <select class="form-control" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.postData.inputFields.style.border}}px; border-radius:{{AccountsStepData.postData.inputFields.style.borderRadius}}px; border-color:{{AccountsStepData.postData.inputFields.style.borderColor}}" required>
+                                    <option value="genre" default>Genre</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                  <input type="text" placeholder="Name" ng-model="submission.name" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.postData.inputFields.style.border}}px; border-radius:{{AccountsStepData.postData.inputFields.style.borderRadius}}px; border-color:{{AccountsStepData.postData.inputFields.style.borderColor}}" required/>
+                                </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                  <input type="email" placeholder="Email" ng-model="submission.email" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.postData.inputFields.style.border}}px; border-radius:{{AccountsStepData.postData.inputFields.style.borderRadius}}px;border-color:{{AccountsStepData.postData.inputFields.style.borderColor}}" required/>
+                                </div>
+                              </div>
+                              <br>
+                              <div class="text-center">
+                                <button class="btn btn-default" style="color:{{AccountsStepData.postData.button.style.fontColor}}; 
+                                          font-size:{{AccountsStepData.postData.button.style.fontSize}}px; 
+                                          background-color:{{AccountsStepData.postData.button.style.bgColor}}; border:solid {{AccountsStepData.postData.inputFields.style.borderColor}} {{AccountsStepData.postData.button.style.border}}px; border-radius:{{AccountsStepData.postData.button.style.borderRadius}}px;">{{AccountsStepData.postData.button.text}}</button>
+                                <br>
+                                <br>
+                              </div>
+                              <br>
+                            </form>
+                          </div>
+                        </div>
+                        <div class="col-md-6" style="vertical-align:center;">
+                          <div class="col-md-12">
+                            <img class="text-center" style="width:90%; max-width:350px; margin:20px auto; margin-top:10px;" ng-if="AccountsStepData.postData.logo.images" id="templatepremierLogo" src="{{AccountsStepData.postData.logo.images}}">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- template 3 -->
+                  <div id="rightpremierTemplate" class="col-md-10" style="overflow-y:scroll; height:100%" ng-if='AccountsStepData.postData.layout == 3'>
+                    <p class="text-center" style="color:{{AccountsStepData.postData.heading.style.fontColor}};
+                              font-weight:{{AccountsStepData.postData.heading.style.fontWeight}};
+                              font-family:{{AccountsStepData.postData.heading.style.fontFamily}};
+                              font-size:{{AccountsStepData.postData.heading.style.fontSize}}px">{{AccountsStepData.postData.heading.text}}</p>
+                    <div class="internal-content">
+                      <div class="row">
+                        <div class='col-md-12 text-center' style="margin-top:20px;">
+                          <div class="col-md-12">
+                            <p class="text-center" style="color:{{AccountsStepData.postData.subHeading.style.fontColor}};
+                                      font-size:{{AccountsStepData.postData.subHeading.style.fontSize}}px; 
+                                      font-family:{{AccountsStepData.postData.subHeading.style.fontFamily}}; 
+                                      font-weight:{{AccountsStepData.postData.subHeading.style.fontWeight}}" ng-bind-html="AccountsStepData.postData.subHeading.text"></p>
+                          </div>
+                        </div>
+                        <div class="col-md-12" style="margin-top:40px;">
+                          <div class="col-md-6 text-center" style="margin-bottom:40px;">
+                            <img class="text-center" style="width:80%; max-width:350px; margin: 0 auto;" ng-if="AccountsStepData.postData.logo.images" id="templatepremierLogo" src="{{AccountsStepData.postData.logo.images}}">
+                          </div>
+                          <div class="col-md-6">
+                            <form role="form" ng-submit="submit()">
+                              <div class="row">
+                                <div class="search" style="max-width:350px; width:80%; margin:0 auto;">
+                                  <scsearch kind='track' returnitem='choseTrack(item)' customstyle="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.postData.inputFields.style.border}}px; border-radius:{{AccountsStepData.postData.inputFields.style.borderRadius}}px; border-color:{{AccountsStepData.postData.inputFields.style.borderColor}}"></scsearch>
+                                </div>
+                              </div>
+                              <div class="row text-center" ng-show="showPlayer">
+                                <div style="max-width:350px; width:80%; margin:0 auto;">
+                                  <iframe id="scPlayerCustom" width="700" height="160" src="https://w.soundcloud.com/player/?url=&auto_play=false&show_artwork=true" style="margin-top:10px; position:relative; z-index:1; border:none; max-width:100%"></iframe>
+                                </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                  <select class="form-control" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.postData.inputFields.style.border}}px; border-radius:{{AccountsStepData.postData.inputFields.style.borderRadius}}px; border-color:{{AccountsStepData.postData.inputFields.style.borderColor}}" required>
+                                    <option value="genre" default>Genre</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                  <input type="text" placeholder="Name" ng-model="submission.name" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.postData.inputFields.style.border}}px; border-radius:{{AccountsStepData.postData.inputFields.style.borderRadius}}px; border-color:{{AccountsStepData.postData.inputFields.style.borderColor}}" required/>
+                                </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                  <input type="email" placeholder="Email" ng-model="submission.email" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.postData.inputFields.style.border}}px; border-radius:{{AccountsStepData.postData.inputFields.style.borderRadius}}px;border-color:{{AccountsStepData.postData.inputFields.style.borderColor}}" required/>
+                                </div>
+                              </div>
+                              <br>
+                              <div class="text-center">
+                                <button class="btn btn-default" style="color:{{AccountsStepData.postData.button.style.fontColor}}; 
+                                          font-size:{{AccountsStepData.postData.button.style.fontSize}}px; 
+                                          background-color:{{AccountsStepData.postData.button.style.bgColor}}; border:solid {{AccountsStepData.postData.inputFields.style.borderColor}} {{AccountsStepData.postData.button.style.border}}px; border-radius:{{AccountsStepData.postData.button.style.borderRadius}}px;">{{AccountsStepData.postData.button.text}}</button>
+                                <br>
+                                <br>
+                              </div>
+                              <br>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- template 4 -->
+                  <div id="rightpremierTemplate" class="col-md-10" style="overflow-y:scroll; height:100%" ng-if='AccountsStepData.postData.layout == 4'>
+                    <p class="text-center" style="color:{{AccountsStepData.postData.heading.style.fontColor}};
+                              font-weight:{{AccountsStepData.postData.heading.style.fontWeight}};
+                              font-family:{{AccountsStepData.postData.heading.style.fontFamily}};
+                              font-size:{{AccountsStepData.postData.heading.style.fontSize}}px">{{AccountsStepData.postData.heading.text}}</p>
+                    <div class="internal-content">
+                      <div class="row">
+                        <div class='col-md-12 text-center' style="margin-top:20px; border-top:1px solid black; border-bottom:1px solid black;">
+                          <div class="row">
+                            <div class="col-md-3 vcenter">
+                              <img class="text-center" style="width:80%; max-width:350px; margin:20px auto;" ng-if="AccountsStepData.postData.logo.images" id="templatepremierLogo" src="{{AccountsStepData.postData.logo.images}}">
+                            </div>
+                            <div class="col-md-8 vcenter">
+                              <p class="text-center" style="color:{{AccountsStepData.postData.subHeading.style.fontColor}};
+                                        font-size:{{AccountsStepData.postData.subHeading.style.fontSize}}px; 
+                                        font-family:{{AccountsStepData.postData.subHeading.style.fontFamily}}; 
+                                        font-weight:{{AccountsStepData.postData.subHeading.style.fontWeight}}; text-align:left; margin:10px auto;" ng-bind-html="AccountsStepData.postData.subHeading.text"></p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-12" style="margin-top:40px;">
+                          <div class="col-md-12">
+                            <form role="form" ng-submit="submit()">
+                              <div class="row">
+                                <div class="search" style="max-width:350px; width:80%; margin:0 auto;">
+                                  <scsearch kind='track' returnitem='choseTrack(item)' customstyle="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.postData.inputFields.style.border}}px; border-radius:{{AccountsStepData.postData.inputFields.style.borderRadius}}px; border-color:{{AccountsStepData.postData.inputFields.style.borderColor}};"></scsearch>
+                                </div>
+                              </div>
+                              <div class="row text-center" ng-show="showPlayer">
+                                <div style="max-width:350px; width:80%; margin:0 auto;">
+                                  <iframe id="scPlayerCustom" width="700" height="160" src="https://w.soundcloud.com/player/?url=&auto_play=false&show_artwork=true" style="margin-top:10px; position:relative; z-index:1; border:none; max-width:100%;"></iframe>
+                                </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                  <select class="form-control" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.postData.inputFields.style.border}}px; border-radius:{{AccountsStepData.postData.inputFields.style.borderRadius}}px; border-color:{{AccountsStepData.postData.inputFields.style.borderColor}}" required>
+                                    <option value="genre" default>Genre</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                  <input type="text" placeholder="Name" ng-model="submission.name" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.postData.inputFields.style.border}}px; border-radius:{{AccountsStepData.postData.inputFields.style.borderRadius}}px; border-color:{{AccountsStepData.postData.inputFields.style.borderColor}};" required/>
+                                </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                  <input type="email" placeholder="Email" ng-model="submission.email" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.postData.inputFields.style.border}}px; border-radius:{{AccountsStepData.postData.inputFields.style.borderRadius}}px;border-color:{{AccountsStepData.postData.inputFields.style.borderColor}};" required/>
+                                </div>
+                              </div>
+                              <br>
+                              <div class="text-center">
+                                <button class="btn btn-default" style="color:{{AccountsStepData.postData.button.style.fontColor}}; 
+                                          font-size:{{AccountsStepData.postData.button.style.fontSize}}px; 
+                                          background-color:{{AccountsStepData.postData.button.style.bgColor}}; border:solid {{AccountsStepData.postData.inputFields.style.borderColor}} {{AccountsStepData.postData.button.style.border}}px; border-radius:{{AccountsStepData.postData.button.style.borderRadius}}px;">{{AccountsStepData.postData.button.text}}</button>
+                                <br>
+                                <br>
+                              </div>
+                              <br>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <div class="buttons margin-40">
+              <button class="btn btn-border b-radius-10" ng-click="saveTemplate()">SAVE AS TEMPLATE</button>
+              <br>
+              <input type="button" name="SAVE" value="SAVE" ng-click="nextStep(4,AccountsStepData,'channel')" class="btn btn-pink b-radius-10 border-orange-btn">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div role="tabpanel" class="tab-pane fade" id="customPremiereSubmission">
+        <div class="submi-section">
+          <div class="">
+            <div class="col-md-12">
+              <div class="col-md-3">
+                <div class="custom-submission-accordion">
+                  <button class="btn btn-border" ng-click="defaultsPrem()">Defaults</button>
+                  <button class="btn btn-border" ng-click="undoPrem()">Undo</button>
+                  <button class="btn btn-border" ng-click="matchRep()">Match Rep. Page</button>
+                  <div class="panel-group" id="accordion2">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion2" href="#pnl2Layout" onclick="return false;">LAYOUT</span></a>                            
+                                  </h4>
+                      </div>
+                      <div id="pnl2Layout" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Layout:</label>
+                              <br>
+                              <label class='radio-inline'>
+                                <input type="radio" name="optradio2" ng-model="AccountsStepData.premier.layout" value="1">1</label>
+                              <label class='radio-inline'>
+                                <input type="radio" name="optradio2" ng-model="AccountsStepData.premier.layout" value="2">2</label>
+                              <label class='radio-inline'>
+                                <input type="radio" name="optradio2" ng-model="AccountsStepData.premier.layout" value="3">3</label>
+                              <label class='radio-inline'>
+                                <input type="radio" name="optradio2" ng-model="AccountsStepData.premier.layout" value="4">4</label>
+                            </div>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Templates:</label>
+                              <br>
+                              <ul style="list-style-type: none;">
+                                <li ng-repeat="template in user.templates track by $index">Template {{$index}}:<a ng-click="enableTemplate(template, 'premiere')"> Load </a>-<a ng-click="deleteTemplate($index)" style="color:red">  Delete</a></li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion2" href="#pnl2Heading" onclick="return false;">HEADING </span></a>                            
+                                          </h4>
+                      </div>
+                      <div id="pnl2Heading" class="panel-collapse collapse">
+                        <div class="panel-body">
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Heading Text</label>
+                              <input type="text" ng-model="AccountsStepData.premier.heading.text" class="form-control" placeholder="Heading Text">
+                            </div>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Font</label>
+                              <br>
+                              <div class="btn-group" style='width:100%'>
+                                <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span style="font-size:1.2em; font-family:{{AccountsStepData.premier.heading.style.fontFamily}};">{{premHeadFont}} </span><span class="caret"></span></button>
+                                <ul class="dropdown-menu" style="max-height:200px; overflow-y:scroll;">
+                                  <li ng-repeat='font in fontFamilies' ng-style="AccountsStepData.premier.heading.style.fontFamily == font.css?{'background-color':'#FF7F7F'}:{}">
+                                    <input type="radio" id="{{font.title}}premHead" name="repHeader" value="{{font.css}}" ng-change="changeFont('premHeadFont', font.title)" ng-model="AccountsStepData.premier.heading.style.fontFamily" style="visibility:hidden">
+                                    <label for="{{font.title}}premHead" style="font-family:{{font.css}}; width:80%;">{{font.title}}</label>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Font Size</label>
+                              <input type="number" ng-model="AccountsStepData.premier.heading.style.fontSize" class="form-control" placeholder="Font Size">
+                            </div>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Font color</label>
+                              <div colorpicker="rgba" style="border:1px solid black; border-radius:8px; width:100%; height:35px; background-color: {{AccountsStepData.premier.heading.style.fontColor}}" ng-model="AccountsStepData.premier.heading.style.fontColor"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion2" data-target="#pnl2Subheading">SUB HEADING </a>
+                                          </h4>
+                      </div>
+                      <div id="pnl2Subheading" class="panel-collapse collapse">
+                        <div class="panel-body">
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Subheading</label>
+                              <textarea ng-model="AccountsStepData.premier.subHeading.text" class="form-control" style="height:200px;" name="Subheading Text" placeholder="Subheading"></textarea required>
+                            </div>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Font</label>
+                              <br>
+                              <div class="btn-group" style='width:100%'>
+                                <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span style="font-size:1.2em; font-family:{{AccountsStepData.premier.subHeading.style.fontFamily}};">{{premSubheadFont}} </span><span class="caret"></span></button>
+                                <ul class="dropdown-menu" style="max-height:200px; overflow-y:scroll;">
+                                  <li ng-repeat='font in fontFamilies' ng-style="AccountsStepData.premier.subHeading.style.fontFamily == font.css?{'background-color':'#FF7F7F'}:{}">
+                                    <input type="radio" id="{{font.title}}premSub" name="repHeader" value="{{font.css}}" ng-change="changeFont('premSubheadFont', font.title)" ng-model="AccountsStepData.premier.subHeading.style.fontFamily" style="visibility:hidden">
+                                    <label for="{{font.title}}premSub" style="font-family:{{font.css}}; width:80%;">{{font.title}}</label>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Font Size</label>
+                              <input type="number" ng-model="AccountsStepData.premier.subHeading.style.fontSize" class="form-control" placeholder="Font Size">
+                            </div>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Font color</label>
+                              <div colorpicker="rgba" style="border:1px solid black; border-radius:8px; width:100%; height:35px; background-color: {{AccountsStepData.premier.subHeading.style.fontColor}}" ng-model="AccountsStepData.premier.subHeading.style.fontColor"></div>
+                            </div>
+                            <br>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h4 class="panel-title">
+                                              <a data-toggle="collapse" data-parent="#accordion2" data-target="#pnl2Logo">LOGO </a>
+                                            </h4>
+                      </div>
+                      <div id="pnl2Logo" class="panel-collapse collapse">
+                        <div class="panel-body">
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Image</label>
+                              <input type="file" name="uploadpremier" file-input="AccountsStepData.premier.logo.images" id="uploadpremier" class="pull-right" style="width:200px">
+                              <br>
+                              <button class="btn btn-border" ng-click="AccountsStepData.premier.logo.images = AccountsStepData.submissionData.avatarURL">Profile Picture</button>
+                              <button class="btn btn-border" ng-click="AccountsStepData.premier.logo.images = ''">Remove Image</button>
+                            </div>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Logo Position</label>
+                              <select class="form-control" ng-model="AccountsStepData.premier.logo.align" placeholder="Logo Position" ng-init="AccountsStepData.premier.logo.align='center'">
+                                <option ng-selected="true" value="center">Center</option>
+                                <option value="left">Left</option>
+                                <option value="right">Right</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h4 class="panel-title">
+                                              <a data-toggle="collapse" data-parent="#accordion2" data-target="#pnl2Background">BACKGROUND </a>
+                                            </h4>
+                      </div>
+                      <div id="pnl2Background" class="panel-collapse collapse">
+                        <div class="panel-body">
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Image</label>
+                              <input type="file" name="uploadpremierBackground" file-input="AccountsStepData.premier.background.images" id="uploadpremierBackground" class="pull-right" style="width:200px">
+                              <br>
+                              <button class="btn btn-border" ng-click="AccountsStepData.premier.background.images = AccountsStepData.submissionData.avatarURL">Profile Picture</button>
+                              <button class="btn btn-border" ng-click="AccountsStepData.premier.background.images = ''">Remove Image</button>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="panel-body">
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Blur Amount</label>
+                              <input type="number" ng-model="AccountsStepData.premier.background.blur" placeholder="Blur Amount">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h4 class="panel-title">
+                                              <a data-toggle="collapse" data-parent="#accordion2" data-target="#pnl2Button">BUTTON </a>
+                                            </h4>
+                      </div>
+                      <div id="pnl2Button" class="panel-collapse collapse">
+                        <div class="panel-body">
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Button text</label>
+                              <input class="form-control" type="text" ng-model="AccountsStepData.premier.button.text" placeholder="Button text" />
+                            </div>
+                            <br>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Font size</label>
+                              <input type="number" ng-model="AccountsStepData.premier.button.style.fontSize" class="form-control" placeholder="Font size">
+                            </div>
+                            <br>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Font color</label>
+                              <div colorpicker="rgba" style="border:1px solid black; border-radius:8px; width:100%; height:35px; background-color: {{AccountsStepData.premier.button.style.fontColor}}" ng-model="AccountsStepData.premier.button.style.fontColor"></div>
+                            </div>
+                            <br>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Border</label>
+                              <input type="number" ng-model="AccountsStepData.premier.button.style.border" class="form-control" placeholder="Border">
+                            </div>
+                            <br>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Border Radius</label>
+                              <input type="number" ng-model="AccountsStepData.premier.button.style.borderRadius" class="form-control" placeholder="Border Radius">
+                            </div>
+                            <br>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>BG color</label>
+                              <div colorpicker="rgba" style="border:1px solid black; border-radius:8px; width:100%; height:35px; background-color: {{AccountsStepData.premier.button.style.bgColor}}" ng-model="AccountsStepData.premier.button.style.bgColor"></div>
+                            </div>
+                            <br>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h4 class="panel-title">
+                                              <a data-toggle="collapse" data-parent="#accordion2" data-target="#pnl2Input">INPUT FIELDS </a>
+                                            </h4>
+                      </div>
+                      <div id="pnl2Input" class="panel-collapse collapse">
+                        <div class="panel-body">
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Border</label>
+                              <input type="number" ng-model="AccountsStepData.premier.inputFields.style.border" class="form-control" placeholder="Border">
+                            </div>
+                            <br>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Border Radius</label>
+                              <input type="number" ng-model="AccountsStepData.premier.inputFields.style.borderRadius" class="form-control" placeholder="Border Radius">
+                            </div>
+                            <br>
+                          </div>
+                          <div class="row margin-bottom-10">
+                            <div class="col-md-12">
+                              <label>Border color</label>
+                              <div colorpicker="rgba" style="border:1px solid black; border-radius:8px; width:100%; height:35px; background-color: {{AccountsStepData.premier.inputFields.style.borderColor}}" ng-model="AccountsStepData.premier.inputFields.style.borderColor"></div>
+                            </div>
+                            <br>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-9" ng-class="{disabled:true}" style="height:800px; z-index:1000">
+                <!-- custom premiere -->
+                <div class="custom-settings">
+                  <div id="backgroundImage1" style="background-size:cover;background-image:url({{AccountsStepData.premier.background.images}}); filter: blur({{AccountsStepData.premier.background.blur}}px);-webkit-filter: blur({{AccountsStepData.premier.background.blur}}px);">
+                  </div>
+                  <div class="col-md-1"></div>
+                  <!-- template 1 -->
+                  <div id="rightpremierTemplate" class="col-md-10" ng-if='AccountsStepData.premier.layout == 1'>
+                    <p class="text-center" style="color:{{AccountsStepData.premier.heading.style.fontColor}};
+                                        font-weight:{{AccountsStepData.premier.heading.style.fontWeight}};
+                                        font-family:{{AccountsStepData.premier.heading.style.fontFamily}};
+                                        font-size:{{AccountsStepData.premier.heading.style.fontSize}}px">{{AccountsStepData.premier.heading.text}}</p>
+                    <div class="internal-content">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <p class="text-center" style="color:{{AccountsStepData.premier.subHeading.style.fontColor}};
+                                              font-size:{{AccountsStepData.premier.subHeading.style.fontSize}}px; 
+                                              font-family:{{AccountsStepData.premier.subHeading.style.fontFamily}}; 
+                                              font-weight:{{AccountsStepData.premier.subHeading.style.fontWeight}}" ng-bind-html="AccountsStepData.premier.subHeading.text"></p>
+                        </div>
+                        <div class="col-md-12">
+                          <img class="text-center" style="width:80%; max-width:200px; margin:20px auto; margin-bottom:40px;" ng-if="AccountsStepData.premier.logo.images" id="templatepremierLogo" src="{{AccountsStepData.premier.logo.images}}">
+                        </div>
+                        <div class="col-md-12">
+                          <form role="form" ng-submit="savePremier()">
+                            <div class="row">
+                              <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                <input class="form-control" type="file" accept="All" fileread="premierObj.file" message="message" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.premier.inputFields.style.border}}px; border-radius:{{AccountsStepData.premier.inputFields.style.borderRadius}}px; border-color:{{AccountsStepData.premier.inputFields.style.borderColor}}" />
+                              </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                <input type="text" placeholder="Link to track" ng-model="premierObj.trackLink" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.premier.inputFields.style.border}}px; border-radius:{{AccountsStepData.premier.inputFields.style.borderRadius}}px; border-color:{{AccountsStepData.premier.inputFields.style.borderColor}}" />
+                              </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                <textarea class="form-control" placeholder="Comment" ng-model="premierObj.comment" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.premier.inputFields.style.border}}px; border-radius:{{AccountsStepData.premier.inputFields.style.borderRadius}}px;border-color:{{AccountsStepData.premier.inputFields.style.borderColor}}"></textarea>
+                              </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                <input type="text" placeholder="Name" ng-model="premierObj.name" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.premier.inputFields.style.border}}px; border-radius:{{AccountsStepData.premier.inputFields.style.borderRadius}}px; border-color:{{AccountsStepData.premier.inputFields.style.borderColor}}" required/>
+                              </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                <input type="email" placeholder="Email" ng-model="premierObj.email" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.premier.inputFields.style.border}}px; border-radius:{{AccountsStepData.premier.inputFields.style.borderRadius}}px;border-color:{{AccountsStepData.premier.inputFields.style.borderColor}}" required/>
+                              </div>
+                            </div>
+                            <br>
+                            <div class="text-center">
+                              <button class="btn btn-default" style="color:{{AccountsStepData.premier.button.style.fontColor}}; 
+                                                  font-size:{{AccountsStepData.premier.button.style.fontSize}}px; 
+                                                  background-color:{{AccountsStepData.premier.button.style.bgColor}}; border:solid {{AccountsStepData.premier.inputFields.style.borderColor}} {{AccountsStepData.premier.button.style.border}}px; border-radius:{{AccountsStepData.premier.button.style.borderRadius}}px;">{{AccountsStepData.premier.button.text}}</button>
+                            </div>
+                          </form>
+                          <br>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- template 2 -->
+                  <div id="rightpremierTemplate" class="col-md-10" style="overflow-y:scroll; height:100%" ng-if='AccountsStepData.premier.layout == 2'>
+                    <p class="text-center" style="color:{{AccountsStepData.premier.heading.style.fontColor}};
+                                        font-weight:{{AccountsStepData.premier.heading.style.fontWeight}};
+                                        font-family:{{AccountsStepData.premier.heading.style.fontFamily}};
+                                        font-size:{{AccountsStepData.premier.heading.style.fontSize}}px">{{AccountsStepData.premier.heading.text}}</p>
+                    <div class="internal-content">
+                      <div class="row">
+                        <div class='col-md-6 text-center' style="margin-top:20px;">
+                          <div class="col-md-12">
+                            <p style="color:{{AccountsStepData.premier.subHeading.style.fontColor}};
+                                                font-size:{{AccountsStepData.premier.subHeading.style.fontSize}}px; 
+                                                font-family:{{AccountsStepData.premier.subHeading.style.fontFamily}}; 
+                                                font-weight:{{AccountsStepData.premier.subHeading.style.fontWeight}}; width:90%; max-width:350px; margin:0 auto; text-align:left;" ng-bind-html="AccountsStepData.premier.subHeading.text"></p>
+                          </div>
+                          <div class="col-md-12" style="margin-top:20px;">
+                            <form role="form" ng-submit="savePremier()">
+                              <div class="row">
+                                <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                  <input class="form-control" type="file" accept="All" fileread="premierObj.file" message="message" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.premier.inputFields.style.border}}px; border-radius:{{AccountsStepData.premier.inputFields.style.borderRadius}}px; border-color:{{AccountsStepData.premier.inputFields.style.borderColor}}" />
+                                </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                  <input type="text" placeholder="Link to track" ng-model="premierObj.trackLink" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.premier.inputFields.style.border}}px; border-radius:{{AccountsStepData.premier.inputFields.style.borderRadius}}px; border-color:{{AccountsStepData.premier.inputFields.style.borderColor}}" />
+                                </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                  <textarea class="form-control" placeholder="Comment" ng-model="premierObj.comment" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.premier.inputFields.style.border}}px; border-radius:{{AccountsStepData.premier.inputFields.style.borderRadius}}px;border-color:{{AccountsStepData.premier.inputFields.style.borderColor}}"></textarea>
+                                </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                  <input type="text" placeholder="Name" ng-model="premierObj.name" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.premier.inputFields.style.border}}px; border-radius:{{AccountsStepData.premier.inputFields.style.borderRadius}}px; border-color:{{AccountsStepData.premier.inputFields.style.borderColor}}" required/>
+                                </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                  <input type="email" placeholder="Email" ng-model="premierObj.email" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.premier.inputFields.style.border}}px; border-radius:{{AccountsStepData.premier.inputFields.style.borderRadius}}px;border-color:{{AccountsStepData.premier.inputFields.style.borderColor}}" required/>
+                                </div>
+                              </div>
+                              <br>
+                              <div class="text-center">
+                                <button class="btn btn-default" style="color:{{AccountsStepData.premier.button.style.fontColor}}; 
+                                                    font-size:{{AccountsStepData.premier.button.style.fontSize}}px; 
+                                                    background-color:{{AccountsStepData.premier.button.style.bgColor}}; border:solid {{AccountsStepData.premier.inputFields.style.borderColor}} {{AccountsStepData.premier.button.style.border}}px; border-radius:{{AccountsStepData.premier.button.style.borderRadius}}px;">{{AccountsStepData.premier.button.text}}</button>
+                              </div>
+                            </form>
+                            <br>
+                          </div>
+                        </div>
+                        <div class="col-md-6" style="vertical-align:center;">
+                          <div class="col-md-12">
+                            <img class="text-center" style="width:90%; max-width:350px; margin:20px auto; margin-top:10px;" ng-if="AccountsStepData.premier.logo.images" id="templatepremierLogo" src="{{AccountsStepData.premier.logo.images}}">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- template 3 -->
+                  <div id="rightpremierTemplate" class="col-md-10" style="overflow-y:scroll; height:100%" ng-if='AccountsStepData.premier.layout == 3'>
+                    <p class="text-center" style="color:{{AccountsStepData.premier.heading.style.fontColor}};
+                                        font-weight:{{AccountsStepData.premier.heading.style.fontWeight}};
+                                        font-family:{{AccountsStepData.premier.heading.style.fontFamily}};
+                                        font-size:{{AccountsStepData.premier.heading.style.fontSize}}px">{{AccountsStepData.premier.heading.text}}</p>
+                    <div class="internal-content">
+                      <div class="row">
+                        <div class='col-md-12 text-center' style="margin-top:20px;">
+                          <div class="col-md-12">
+                            <p class="text-center" style="color:{{AccountsStepData.premier.subHeading.style.fontColor}};
+                                                font-size:{{AccountsStepData.premier.subHeading.style.fontSize}}px; 
+                                                font-family:{{AccountsStepData.premier.subHeading.style.fontFamily}}; 
+                                                font-weight:{{AccountsStepData.premier.subHeading.style.fontWeight}}" ng-bind-html="AccountsStepData.premier.subHeading.text"></p>
+                          </div>
+                        </div>
+                        <div class="col-md-12" style="margin-top:40px;">
+                          <div class="col-md-6 text-center" style="margin-bottom:40px;">
+                            <img class="text-center" style="width:80%; max-width:350px; margin: 0 auto;" ng-if="AccountsStepData.premier.logo.images" id="templatepremierLogo" src="{{AccountsStepData.premier.logo.images}}">
+                          </div>
+                          <div class="col-md-6">
+                            <form role="form" ng-submit="savePremier()">
+                              <div class="row">
+                                <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                  <input class="form-control" type="file" accept="All" fileread="premierObj.file" message="message" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.premier.inputFields.style.border}}px; border-radius:{{AccountsStepData.premier.inputFields.style.borderRadius}}px; border-color:{{AccountsStepData.premier.inputFields.style.borderColor}}" />
+                                </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                  <input type="text" placeholder="Link to track" ng-model="premierObj.trackLink" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.premier.inputFields.style.border}}px; border-radius:{{AccountsStepData.premier.inputFields.style.borderRadius}}px; border-color:{{AccountsStepData.premier.inputFields.style.borderColor}}" />
+                                </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                  <textarea class="form-control" placeholder="Comment" ng-model="premierObj.comment" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.premier.inputFields.style.border}}px; border-radius:{{AccountsStepData.premier.inputFields.style.borderRadius}}px;border-color:{{AccountsStepData.premier.inputFields.style.borderColor}}"></textarea>
+                                </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                  <input type="text" placeholder="Name" ng-model="premierObj.name" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.premier.inputFields.style.border}}px; border-radius:{{AccountsStepData.premier.inputFields.style.borderRadius}}px; border-color:{{AccountsStepData.premier.inputFields.style.borderColor}}" required/>
+                                </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                  <input type="email" placeholder="Email" ng-model="premierObj.email" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.premier.inputFields.style.border}}px; border-radius:{{AccountsStepData.premier.inputFields.style.borderRadius}}px;border-color:{{AccountsStepData.premier.inputFields.style.borderColor}}" required/>
+                                </div>
+                              </div>
+                              <br>
+                              <div class="text-center">
+                                <button class="btn btn-default" style="color:{{AccountsStepData.premier.button.style.fontColor}}; 
+                                                    font-size:{{AccountsStepData.premier.button.style.fontSize}}px; 
+                                                    background-color:{{AccountsStepData.premier.button.style.bgColor}}; border:solid {{AccountsStepData.premier.inputFields.style.borderColor}} {{AccountsStepData.premier.button.style.border}}px; border-radius:{{AccountsStepData.premier.button.style.borderRadius}}px;">{{AccountsStepData.premier.button.text}}</button>
+                              </div>
+                            </form>
+                            <br>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- template 4 -->
+                  <div id="rightpremierTemplate" class="col-md-10" style="overflow-y:scroll; height:100%" ng-if='AccountsStepData.premier.layout == 4'>
+                    <p class="text-center" style="color:{{AccountsStepData.premier.heading.style.fontColor}};
+                                        font-weight:{{AccountsStepData.premier.heading.style.fontWeight}};
+                                        font-family:{{AccountsStepData.premier.heading.style.fontFamily}};
+                                        font-size:{{AccountsStepData.premier.heading.style.fontSize}}px">{{AccountsStepData.premier.heading.text}}</p>
+                    <div class="internal-content">
+                      <div class="row">
+                        <div class='col-md-12 text-center' style="margin-top:20px; border-top:1px solid black; border-bottom:1px solid black;">
+                          <div class="row">
+                            <div class="col-md-3 vcenter">
+                              <img class="text-center" style="width:80%; max-width:350px; margin:20px auto;" ng-if="AccountsStepData.premier.logo.images" id="templatepremierLogo" src="{{AccountsStepData.premier.logo.images}}">
+                            </div>
+                            <div class="col-md-8 vcenter">
+                              <p class="text-center" style="color:{{AccountsStepData.premier.subHeading.style.fontColor}};
+                                                  font-size:{{AccountsStepData.premier.subHeading.style.fontSize}}px; 
+                                                  font-family:{{AccountsStepData.premier.subHeading.style.fontFamily}}; 
+                                                  font-weight:{{AccountsStepData.premier.subHeading.style.fontWeight}}; text-align:left; margin:10px auto;" ng-bind-html="AccountsStepData.premier.subHeading.text"></p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-12" style="margin-top:40px;">
+                          <div class="col-md-12">
+                            <form role="form" ng-submit="savePremier()">
+                              <div class="row">
+                                <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                  <input class="form-control" type="file" accept="All" fileread="premierObj.file" message="message" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.premier.inputFields.style.border}}px; border-radius:{{AccountsStepData.premier.inputFields.style.borderRadius}}px; border-color:{{AccountsStepData.premier.inputFields.style.borderColor}}" />
+                                </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                  <input type="text" placeholder="Link to track" ng-model="premierObj.trackLink" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.premier.inputFields.style.border}}px; border-radius:{{AccountsStepData.premier.inputFields.style.borderRadius}}px; border-color:{{AccountsStepData.premier.inputFields.style.borderColor}}" />
+                                </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                  <textarea class="form-control" placeholder="Comment" ng-model="premierObj.comment" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.premier.inputFields.style.border}}px; border-radius:{{AccountsStepData.premier.inputFields.style.borderRadius}}px;border-color:{{AccountsStepData.premier.inputFields.style.borderColor}}"></textarea>
+                                </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                  <input type="text" placeholder="Name" ng-model="premierObj.name" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.premier.inputFields.style.border}}px; border-radius:{{AccountsStepData.premier.inputFields.style.borderRadius}}px; border-color:{{AccountsStepData.premier.inputFields.style.borderColor}}" required/>
+                                </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                <div style="max-width:350px; width:80%; margin: 0 auto;">
+                                  <input type="email" placeholder="Email" ng-model="premierObj.email" style="width:100%; height:34px; padding:5px; border:solid {{AccountsStepData.premier.inputFields.style.border}}px; border-radius:{{AccountsStepData.premier.inputFields.style.borderRadius}}px;border-color:{{AccountsStepData.premier.inputFields.style.borderColor}}" required/>
+                                </div>
+                              </div>
+                              <br>
+                              <div class="text-center">
+                                <button class="btn btn-default" style="color:{{AccountsStepData.premier.button.style.fontColor}}; 
+                                                    font-size:{{AccountsStepData.premier.button.style.fontSize}}px; 
+                                                    background-color:{{AccountsStepData.premier.button.style.bgColor}}; border:solid {{AccountsStepData.premier.inputFields.style.borderColor}} {{AccountsStepData.premier.button.style.border}}px; border-radius:{{AccountsStepData.premier.button.style.borderRadius}}px;">{{AccountsStepData.premier.button.text}}</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <div class="buttons margin-40">
+              <button class="btn btn-border b-radius-10" ng-click="saveTemplate()">SAVE AS TEMPLATE</button>
+              <br>
+              <input type="button" name="SAVE" value="SAVE" ng-click="nextStep(5,AccountsStepData,'channel')" class="btn btn-pink b-radius-10 border-orange-btn">
+            </div>
+          </div>
+        </div>
+      </div>
+      <script type="text/javascript">
+      $(document).ready(function() {
+        $("#uploadLogo").change(function() {
+          //readURL(this,'templateLogo');
+          setTimeout(function() {
+            angular.element('#uploadLogo').scope().updateLOGOIMAGE(3);
+          }, 500);
+        });
+        $("#uploadBackground").change(function() {
+          //readURL(this,'rightTemplate');
+          setTimeout(function() {
+            angular.element('#uploadBackground').scope().updateBackgroundIMAGE(3);
+          }, 500);
+        });
+        $("#uploadpremier").change(function() {
+          //readURL(this,'templatepremierLogo');
+          setTimeout(function() {
+            angular.element('#uploadpremier').scope().updateLOGOIMAGE(4);
+          }, 500);
+        });
+        $("#uploadpremierBackground").change(function() {
+          //readURL(this,'rightpremierTemplate');
+          setTimeout(function() {
+            angular.element('#uploadpremierBackground').scope().updateBackgroundIMAGE(4);
+          }, 500);
+        });
+      });
+      </script>

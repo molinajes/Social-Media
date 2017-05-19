@@ -1,0 +1,94 @@
+<style>
+  .grey {
+   background-color:#EEEEEE;
+   color:#000000 !important;
+ }
+ #backgroundImage1 {
+  background-size: cover;
+  display: block;
+  float: right;
+  height:102%;
+  left: 0;
+  position: absolute;
+  right: 0;
+  width: 100%;
+  z-index: 1;
+}
+#rightpremierTemplate{
+  position: relative;
+  margin: 20px;  
+  z-index: 2;
+  padding: 0 10px;
+}
+.submi-section{
+ padding-bottom:60px;
+}
+.custom-settings {
+ position: absolute;
+ top: 0px;
+ left: 0px;
+ right: 0;
+ height: 100%;
+ bottom: 0;
+ width: 100%;
+}
+</style>
+<ng-include src="'js/home/views/navigation.html'" ng-if="!customizeSettings"></ng-include>
+
+<!-- Content Start  -->
+<div class="container" style='background-color: white;'>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="content-area" ng-class="{bgwhite: !customizeSettings}">
+        <div class="row">
+          <div class="col-md-12" ng-show="!customizeSettings">
+            <h1 class="text-center bold">Premiere Submission</h1>
+            <br>
+            <form role="form" ng-submit="savePremier()">
+              <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                  <input class="form-control" type="file" accept="All" fileread="premierObj.file" message="message" required/>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                  <select class="form-control" ng-options="item for item in genreArray" ng-model="premierObj.genre" ng-init="premierObj.genre = null" required>
+                    <option value="" ng-disabled="!!premierObj.genre">--Select Genre--</option>
+                  </select>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                  <input class="form-control" type="email" placeholder="Email" ng-model="premierObj.email" required/>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                  <input class="form-control" type="text" placeholder="Name"ng-model="premierObj.name" required/>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                  <textarea class="form-control" placeholder="Comment" ng-model="premierObj.comment"></textarea>
+                </div>
+              </div>
+              <br>
+              <div class="text-center">
+                <p ng-show="message.visible" class="text-center">{{message.val}}</p>
+                <br/>
+                <button class="btn btn-pink btn-lg btn-enter">Enter</button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>  
+</div>
+</div>
+<ng-include src="'js/home/views/loader.html'"></ng-include>

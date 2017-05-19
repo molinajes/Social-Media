@@ -1,0 +1,148 @@
+<style>
+    .grey {
+        background-color: #EEEEEE;
+        color: #000000 !important;
+    }
+</style>
+<ng-include src="'js/home/views/_adminHeaderNavigation.html'"></ng-include>
+<!-- Content Start  -->
+<div id="wrapper">
+    <ng-include src="'js/home/views/_adminNavigations.html'"></ng-include>
+    <div class="container-fluid height-100pr">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-content right-side">
+                    <!--page-contant Start-->
+                    <div class="two-tabs">
+                       <div class="space-10"></div>
+                       <!-- Nav tabs :Start-->
+                       <div class="text-center au-title-head" style="margin-top:30px;margin-bottom:30px;">SET UP YOUR ADMIN ACCOUNT</div>
+                       <ul class="info-ui-tab" role="tablist" ng-hide="AccountsStepData.formActions=='Add' || AccountsStepData.formActions=='Edit'">
+                        <li class="active">
+                          <a href="javascript:void(0)"><span style="color:red;font-size:14px;">1</span>&nbsp;&nbsp;Basic Info</a>
+                      </li>
+                      <li>
+                          <a href="javascript:void(0)" role="tab" data-toggle="tab"><span style="color:red;font-size:14px;">2</span>&nbsp;&nbsp;Set up your first Channel</a>
+                      </li>
+                  </ul>
+                  <div class="clearfix"></div>
+                  <!-- Nav tabs :End-->
+                  <!-- Tab panes :: Start-->
+                  <div class="tab-content  margin-20">
+                    <!-- MY SCHEDULE : Start-->
+                    <div role="tabpanel" class="tab-pane fade in active" id="step1">
+                     <ul class="admin-ui-tabs" >
+                        <li class="active">
+                            <a href="javascript:void(0)" ><span style="color:red;font-size:14px;">1</span>&nbsp;&nbsp;Set General Info</a>
+                        </li>
+                        <li class="active">
+                            <a href="javascript:void(0)" ><span style="color:red;font-size:14px;">2</span>&nbsp;&nbsp;Repost Submissions Customize E-mails</a>
+                        </li>
+                        <li >
+                            <a href="javascript:void(0)" ><span style="color:red;font-size:14px;">3</span>&nbsp;&nbsp;Premiere Submissions Customize E-mails</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" ><span style="color:red;font-size:14px;">4</span>&nbsp;&nbsp;Notification Settings</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" ><span style="color:red;font-size:14px;">5</span>&nbsp;&nbsp;PayPal Info</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <!-- MY SCHEDULE : Start-->
+                        <div role="tabpanel" class="tab-pane fade in active" id="tab2">
+                            <div class="container-90">
+                                <div class="row">
+                                 &nbsp; 
+                             </div>
+                             <div class="row">
+                                 &nbsp; 
+                             </div>
+                             <!--row ::end-->
+                             <div class="row" ng-repeat="custom in AccountsStepData.repostCustomizeEmails track by $index">
+                                <div class="col-md-6 text-center">
+                                    <div class="container-90">
+                                        <h6 class="text-center" ng-show="!$index">{{custom.acceptance.title}}</h6>
+                                        <input ng-show="$index" class="acceptance-signatur" type="text" ng-model="custom.acceptance.title" placeholder="Title" style="margin-left:0px">
+                                        <div class="acceptance">
+                                            <div class="channel-check">
+                                                <div class="channel-masege">
+                                                    <input type="text" ng-model="custom.acceptance.subject" placeholder="Subject..." class="acceptance-input">
+                                                </div>
+                                                <div class="check-list">
+                                                    <textarea ng-model="custom.acceptance.body" index="{{$index}}" ng-click="addEventClass($index,'acceptancebox');" class="acceptance-textareas acceptancebox"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-default" ng-click="sendTestMail('repostaccept')">Send test mail</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 text-center">
+                                    <div class="container-90">
+                                        <h6 class="text-center" ng-show="!$index">{{custom.decline.title}}</h6>
+                                        <input ng-show="$index" class="acceptance-signatur" type="text" ng-model="custom.decline.title" placeholder="Title" style="margin-left:0px">
+                                        <div class="acceptance">
+                                            <div class="channel-check">
+                                                <div class="channel-masege">
+                                                    <input type="text" placeholder="Subject..." ng-model="custom.decline.subject" class="acceptance-input">
+                                                </div>
+                                                <div class="check-list">
+                                                    <textarea ng-model="custom.decline.body" index="{{$index}}" ng-click="addEventClass($index,'declinebox');" class="acceptance-textareas declinebox">
+                                                    </textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-default" ng-click="sendTestMail('repostdecline')">Send test mail</button>
+                                </div>
+                            </div>
+                            <div class="">
+                                <div class="col-md-12">
+                                    <div class="button-list text-center">
+                                        <input ng-repeat="btn in stepButton " type="button" name="{{btn.name}}" class="btn btn-border b-radius-10 organize-btn" style="margin-left:5px;" value="{{btn.name}}" ng-click="appendBody(btn,'repost')">
+                                    </div>
+                                </div>
+                            </div>
+                            <!--row-->
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <div class="buttons margin-40">
+                                        <input type="button" name="back" value="Back" ng-click="nextStep(1,AccountsStepData,'basic')" class="btn active border-black-btn">
+                                        <input type="button" name="Next" value="Next" ng-disabled="!(AccountsStepData.repostCustomizeEmails[0].acceptance.subject && AccountsStepData.repostCustomizeEmails[0].acceptance.body && AccountsStepData.repostCustomizeEmails[0].decline.subject && AccountsStepData.repostCustomizeEmails[0].decline.body)" ng-click="nextStep(3,AccountsStepData,'basic')" class="btn btn-pink b-radius-10 border-orange-btn">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div style="position:absolute; top:0; left:0; right:0; height:5000px; background-color: rgba(0,0,0,1); z-index: 1000;" ng-show="hideall">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!--overlay-->
+<div style="position:absolute; top:0; left:0; right:0; height:5000px; background-color: rgba(0,0,0,0.85); text-align:center;" ng-show="showTestEmailModal">
+    <div class="modal fade" id="emailModal" data-backdrop="static" role="dialog">
+      <div class="modal-dialog modal-vertical-centered">    
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div style="text-align:center; padding:10px;">        
+            <div style="text-align:center;padding-bottom:10px;">
+              <form ng-submit="sendMail(modal.email)">
+                 <input class="form-control form-scheduler" placeholder="Enter email address" style="text-align:center; width:300px; max-width:90%;" type="email" ng-model="modal.email" required/>
+                 <button class="btn btn-default" ng-click="closeModal()">Close</button>
+                 <button class="btn btn-default btn-small" type="submit">Send Mail</button>
+             </form>
+         </div>
+     </div>      
+ </div>
+</div>
+</div>
+</div>
+<ng-include src="'js/home/views/loader.html'"></ng-include>
+</div>
+</div>
+</div>

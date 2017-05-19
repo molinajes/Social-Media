@@ -1,0 +1,56 @@
+<ng-include src="'js/home/views/navigation.html'"></ng-include>
+<!-- Content Start  -->
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="content-area bg-white">
+        <div class="row">
+         <div class="col-md-6">
+           <h1 class="bold">Apply</h1>
+         </div>
+       </div>
+       <div class="row" ng-if="!sent.application">
+         <div class="col-md-6 col-md-offset-3">
+          <h3 class="bold text-center">Join the team!</h3>
+          <form role="form" ng-submit="saveApplication()">
+           <div class="internal-content">
+            <div class="row">
+              <div class="form-group col-md-6">
+               <input class="form-control" type="text" placeholder="First Name" ng-model="applicationObj.firstName" required/>
+             </div>
+             <div class="form-group col-md-6">
+               <input class="form-control" type="text" placeholder="Last Name" ng-model="applicationObj.lastName"/>
+             </div>
+           </div>
+           <div class="form-group">
+             <input class="form-control" type="email" placeholder="Email" ng-model="applicationObj.email"required />
+           </div>
+           <div class="form-group text-center">
+             <p ng-show="message.application.visible" class="text-center">
+               {{message.application.val}}
+               <br>
+               <br>
+             </p>
+             <button class="btn btn-pink btn-lg btn-enter" type="submit">Enter</button>
+           </div>
+         </div>
+       </form>
+     </div>
+   </div>
+   <div class="row text-center" ng-if="sent.application">
+     <div class="col-md-6 col-md-offset-3">
+      <h3 class="bold">Your application has been sent.</h3>
+      <div class="margin-top-20">
+       <img class="img-responsive center-block" src="/assets/images/check.png" align="middle"/>
+     </div>
+     <div class="margin-top-20">
+       <button class="btn btn-default btn-lg btn-enter" type="button" ng-click="toggleApplicationSent()">Resubmit</button>
+     </div>
+   </div>
+ </div>
+</div>
+</div>	
+</div>
+</div>
+
+<!-- Content End  -->

@@ -1,0 +1,192 @@
+<style>
+  .grey {
+   background-color:#EEEEEE;
+   color:#000000 !important;
+ }
+</style>
+<ng-include src="'js/home/views/_adminHeaderNavigation.html'"></ng-include>
+<!-- Content Start  -->
+<div id="wrapper">
+  <ng-include src="'js/home/views/_adminNavigations.html'"></ng-include>
+  <div class="container-fluid height-100pr">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="page-content right-side">
+          <!--page-contant Start-->
+          <div class="two-tabs">
+           <div class="space-10"></div>
+           <!-- Nav tabs :Start-->
+           <div class="text-center au-title-head" style="margin-top:30px;margin-bottom:30px;">SET UP YOUR ADMIN ACCOUNT</div>
+
+           <ul class="info-ui-tab" role="tablist" ng-hide="AccountsStepData.formActions=='Add' || AccountsStepData.formActions=='Edit'">
+            <li class="active">
+              <a href="javascript:void(0)"><span style="color:red;font-size:14px;">1</span>&nbsp;&nbsp;Basic Info</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" role="tab" data-toggle="tab"><span style="color:red;font-size:14px;">2</span>&nbsp;&nbsp;Set up your first Channel</a>
+            </li>
+          </ul>
+          <div class="clearfix"></div>
+          <!-- Nav tabs :End-->
+          <!-- Tab panes :: Start-->
+          <div class="tab-content  margin-20">
+            <!-- MY SCHEDULE : Start-->
+            <div role="tabpanel" class="tab-pane fade in active" id="step1">
+              <ul class="admin-ui-tabs" >
+                <li class="active">
+                  <a href="javascript:void(0)" ><span style="color:red;font-size:14px;">1</span>&nbsp;&nbsp;Set General Info</a>
+                </li>
+                <li class="active">
+                  <a href="javascript:void(0)" ><span style="color:red;font-size:14px;">2</span>&nbsp;&nbsp;Repost Submissions Customize E-mails</a>
+                </li>
+                <li class="active">
+                  <a href="javascript:void(0)" ><span style="color:red;font-size:14px;">3</span>&nbsp;&nbsp;Premiere Submissions Customize E-mails</a>
+                </li>
+                <li class="active">
+                  <a href="javascript:void(0)" ><span style="color:red;font-size:14px;">4</span>&nbsp;&nbsp;Notification Settings</a>
+                </li>
+                <li >
+                  <a href="javascript:void(0)" ><span style="color:red;font-size:14px;">5</span>&nbsp;&nbsp;PayPal Info</a>
+                </li>                  
+              </ul>
+              <div class="container-90">
+                <div class="row">
+                  <div class="col-xs-12 text-center">
+                    <h4 class="bold">Notification Settings</h4>
+                  </div>
+                </div>
+                <!--row end-->
+                <div class="row margin-40">
+                  <div class="col-md-8 col-md-offset-2">
+                    <div style="text-align: center;">
+                      <h5 class="bold">Facebook Messenger Notifications</h5>
+                      <div class="fb-send-to-messenger" messenger_app_id="1771378846475599" page_id="499383536933941" color="blue" size="large" data-ref="{{AccountsStepData._id}}">
+                      </div>
+                      <span ng-if="!!AccountsStepData.notificationSettings.facebookMessenger.messengerID">Linked &#10004</span>                       
+                      <br />
+                      <label class="with-square-checkbox">
+                        <input type="checkbox" ng-model="AccountsStepData.notificationSettings.facebookMessenger.tradeRequest" >
+                        <span>Trade Request</span>
+                      </label>
+                      <br>
+                      <label class="with-square-checkbox">
+                        <input type="checkbox" ng-model="AccountsStepData.notificationSettings.facebookMessenger.tradeAcceptance" >
+                        <span>Trade Acceptance</span>
+                      </label>
+                      <br>
+                      <label class="with-square-checkbox">
+                        <input type="checkbox" ng-model="AccountsStepData.notificationSettings.facebookMessenger.trackRepost" >
+                        <span>Track Repost</span>
+                      </label>
+                      <br>
+                      <label class="with-square-checkbox">
+                        <input type="checkbox" ng-model="AccountsStepData.notificationSettings.facebookMessenger.trackUnrepost" >
+                        <span>Track Unrepost</span>
+                      </label>
+                      <br>
+
+                      <h5 class="bold">Email Notifications</h5>
+                      <input type="text" ng-model="AccountsStepData.email"><br>
+                      <label class="with-square-checkbox">
+                        <input type="checkbox" ng-model="AccountsStepData.notificationSettings.email.tradeRequest" >
+                        <span>Trade Request</span>
+                      </label>
+                      <br>
+                      <label class="with-square-checkbox">
+                        <input type="checkbox" ng-model="AccountsStepData.notificationSettings.email.tradeAcceptance" >
+                        <span>Trade Acceptance</span>
+                      </label>
+                      <br>
+                      <label class="with-square-checkbox">
+                        <input type="checkbox" ng-model="AccountsStepData.notificationSettings.email.trackRepost" >
+                        <span>Track Repost</span>
+                      </label>
+                      <br>
+                      <label class="with-square-checkbox">
+                        <input type="checkbox" ng-model="AccountsStepData.notificationSettings.email.trackUnrepost" >
+                        <span>Track Unrepost</span>
+                      </label>
+                      <br>
+<!--                         <label class="with-square-checkbox">
+                          <input type="checkbox" ng-model="AccountsStepData.notificationSettings.email.dailyUnfilledTrade" >
+                          <span>Unfilled Traded Slots Tomorrow</span>
+                        </label>
+                      </div> -->
+                    </div>
+                  </div>
+                  <div class="clearfix"></div>            
+                </div>
+                <div class="clearfix"></div>          
+              </div>  
+              <!-- MY SCHEDULE : End-->
+              <div class="clearfix"></div>     
+
+            </div>
+            <!-- Tab panes :: End-->
+          </div>
+          <!-- overlay -->
+          <div class="clearfix"></div>
+          <center>
+           <div class="row">
+            <div class="col-md-12 text-center">
+              <div class="buttons">
+                <!-- " -->
+                <input type="button" name="back" value="Back" ng-click="nextStep(3,AccountsStepData,'basic')" class="btn active border-black-btn">
+                <input type="button" name="back" value="Next"  ng-click="nextStep(5,AccountsStepData,'basic')" class="btn btn-pink b-radius-10 border-orange-btn">
+              </div>
+            </div>
+          </div>
+        </center>
+        <br />  
+        <div class="clearfix"></div>
+
+      </div>
+    </div>
+    <div style="position:absolute; top:0; left:0; right:0; height:5000px; background-color: rgba(0,0,0,1); z-index: 1000;" ng-show="hideall">
+    </div>
+  </div>
+  <!--overlay-->
+
+  <ng-include src="'js/home/views/loader.html'"></ng-include>    </div>
+</div>
+</div>
+<script type="text/javascript">
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        $('#profilePicture').attr('src', e.target.result);
+      }
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+  $("#uploadImage").change(function(){
+    readURL(this);
+  });
+</script>
+
+<script>
+  setTimeout(function(){
+   $(document).ready(function(){
+    FB.init({
+      appId: '1771378846475599',
+      xfbml: true,
+      version: 'v2.6'
+    });
+
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {
+        return;
+      }
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  })
+   console.log('done');
+ }, 2000);
+</script>

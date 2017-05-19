@@ -1,0 +1,53 @@
+<ng-include src="'js/artistTools/ArtistTools/header-navigation.html'"></ng-include>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="content-area bg-white">
+        <div class="row">
+          <div class="col-md-12">
+            <h1 class="bold">Promotion Marketplace</h1>
+            <h4>Please select all the channels on which you would like to be reposted.</h4>
+            <div class="col-md-3" ng-repeat="channel in channels track by $index" style="margin-top: 20px; margin-left: 0px; padding-left: -10px; min-height:450px;">
+              <p class="text-center">
+                <a href="{{channel.user.permalinkURL}}">
+                  <strong style="font-size: 18px;">{{channel.user.username}}</strong>
+                  <br/>
+                  <span>{{channel.user.followers | number}} Followers</span>
+                </a>
+                <br>
+                <span ng-if="auDLLink" class="intro"> <span style="text-decoration: line-through;"> ${{channel.price | number: 2}}</span> &nbsp;&nbsp;${{channel.price | calculateDiscount | number: 2}} </span>
+                <span ng-if="!auDLLink" class="intro" style="font-size: 16px;">${{channel.price | number: 2}}</span>
+              </p>
+              <p><img ng-src="{{channel.user.avatarURL}}" class="img-responsive" alt="" style="border: 1px solid orange; height:200px" / height="200px;" width="300px"></p>
+              <p class="hidescrollbar" style="max-height:80px; overflow-y: scroll;">{{channel.description}}</p>
+              <button ng-show="channel.addtocart" class="btn btn-default btn-block" ng-click="addToCart(channel)">
+                REMOVE FROM CART
+              </button>
+              <button ng-show="!channel.addtocart" class="btn btn-pink btn-block" ng-click="addToCart(channel)">Add to cart</button>
+            </div>
+            <div class="clearfix"></div>
+            <div style="margin: 30px 0px;display: inline-block;width: 100%;">
+              <span style="float: left; background-color: transparent; color: grey; outline: none; box-shadow: none;padding: 10px 0px;margin: 0px; font-size:1.3em">TOTAL: ${{showTotal}}</span></span>
+              <button class="btn btn-enter btn-pink" style="float: right; outline: none; box-shadow: none;padding: 10px 0px;margin: 0px; font-size:1.3em" ng-click="makePayment()">Checkout</button>
+            </div>
+            <div>
+              <span style="font-size:.9em">Disclaimer: Reposts will be unreposted after 7 days. If a paid repost fails, you will be notified by email that you will be refunded for the repost at a later date. We guarantee refund for all failed reposts. If you have a question please email coayscue@artistsunlimited.com. <span style="font-size:8px">12/10/2016</span></span>
+            </div>
+            <iframe id="scPlayer" width="1000" height="160" src="https://w.soundcloud.com/player/?url=&auto_play=false&show_artwork=true" style="margin:10px 0; position:relative; z-index:1; border:none;"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-include src="'js/home/views/loader.html'"> </ng-include>
+  <script type="text/ng-template" id="discountModal.html">
+    <div class="modal-header">
+      <h3 class="modal-title" style="text-align:center">Discount Terms</h3>
+      <br>
+      <p style="text-align:center">By accepting the discount, you agree to keep the AU download link or your track will not be reposted and you will not receive a refund. You can choose to accept or decline the discount.
+    </div>
+    <div class="modal-body" style="display:flex; flex-direction: row; justify-content:space-between;">
+      <button class="btn btn-info" ng-click="continuePay(false)">Decline Discount</button>
+      <button class="btn btn-success pull-right" ng-click="continuePay(true)">Accept Discount</button>
+    </div>
+  </script>

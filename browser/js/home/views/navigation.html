@@ -1,0 +1,47 @@
+<!-- Navigation Start -->
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="navbar-inner">
+	  <div class="container">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand logo" href="#" ui-sref="home"><img src="/assets/images/logo.png"></a>
+	    </div>
+
+	    <!-- Collect the nav links, forms, and other content for toggling -->
+	    <div class="collapse navbar-collapse" id="navbar-collapse">
+	      	<ul class="nav navbar-nav text-uppercase ">
+       			<li ui-sref-active="active" id="about" class="active"><a href="#" ui-sref="about">About</a></li>
+          	<li ui-sref-active="active" id="services"><a href="#" ui-sref="services">Services</a></li>
+          	<li ui-sref-active="active" id="artist-tools"><a href="#" ui-sref="login">Artist Tools</a></li>
+          	<li ui-sref-active="active" id="faqs"><a href="#" ui-sref="faqs">FAQs</a></li>
+          	<li ui-sref-active="active" id="apply"><a href="#" ui-sref="apply">Apply</a></li>
+          	<li ui-sref-active="active" id="contact"><a href="#" ui-sref="contact">Contact</a></li>
+	      	</ul>
+	    </div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+	</div>
+</nav>
+<!-- Navigation End -->
+<script>
+  $(document).ready(function(){
+    var windowHeight = $(window).height();
+    var navHeight = $('.navbar').height();
+
+    /* Here 90 is the fixed padding from top that is assigned to body */
+    var marginBottom = 90 - navHeight;
+    $('.content-area').css('min-height', (windowHeight - navHeight - marginBottom * 2) + 'px');
+    $('.content-area').css('margin-bottom', (marginBottom) + 'px');
+    // var page = window.location.pathname;
+    // page = page.replace('/','');
+    // $(".navbar-nav li").each(function(){
+    // 	$(this).removeClass('active');
+    // });
+    // $("#"+page).addClass('active');
+  });
+</script>

@@ -1,0 +1,79 @@
+<ng-include src="'js/home/views/_adminHeaderNavigation.html'"></ng-include>
+<div id="wrapper">
+  <ng-include src="'js/home/views/_adminNavigations.html'"></ng-include>
+  <div class="container-fluid height-100pr">
+    <div class="row height-100pr">
+      <div class="col-lg-12">
+        <div class="page-content right-side min-ht padding-10"><!--page-contant Start-->
+          <div class="col-md-12">
+            <div class="row">
+              <div class="row nav-tabs margin0">
+                <div class="col-md-12 bg-white">
+                  <form ng-submit="saveSettings()">
+                    <br />
+                    <p class="text-center">To use a value from the submission, you can write: {name} for the submitter's name, {title} for the title of the track, {email} for the submitter's email or {url} for the url of the track.</p>
+                    <br />
+                    <div class="row margin-bottom-10" ng-repeat="item in customEmailButtons" style="border-bottom: solid 1px #dcdcdc;">
+                      <div class="col-md-12">
+                        <div class="col-md-1 margin-bottom-10">&nbsp;</div>
+                        <div class="col-md-5 margin-bottom-10">
+                          <label>To Email</label>
+                          <input type="text" ng-model="item.toEmail" class="form-control" placeholder="To Email">
+                          <br/>
+                          <label>Subject</label>
+                          <input type="text" ng-model="item.subject" class="form-control" placeholder="Subject">
+                        </div>
+                        <div class="col-md-5 margin-bottom-10">
+                          <label>Button Text</label>
+                          <input type="text" ng-model="item.buttonText" class="form-control" placeholder="Button Text">
+                          <br/>
+                          <label>Button Background Color</label>
+                          <input colorpicker ng-model="item.buttonBgColor" class="form-control" placeholder="Button Background Color">
+                        </div>
+                        <div class="col-md-1 margin-bottom-10" style="margin-top:70px;">
+                          <span class="glyphicon glyphicon-trash pull-left" ng-click="removeItem($index)"></span>
+                        </div>
+                      </div>
+                      <div class="col-md-12 margin-bottom-10">
+                        <div class="col-md-1">&nbsp;</div>
+                        <div class="col-md-10">
+                          <label>Email Body</label>
+                          <textarea ng-model="item.emailBody" class="form-control" rows="10" placeholder="Email body"></textarea>
+                        </div>
+                        <div class="col-md-1">&nbsp;</div>
+                      </div>
+                    </div>
+                    <br/>
+                    <div class="text-center margin-bottom-10">
+                      <a href="#" ng-click="addItem()">+ Add More</a>
+                    </div> 
+                    <br/>   
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-pink b-radius-10 btn-enter">Save Settings</button>
+                    </div>
+                    <br>
+                    <br>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Content End  -->
+<ng-include src="'js/home/views/loader.html'"></ng-include>
+<script>
+  $(document).ready(function(){
+    $('.collapse').collapse({
+      toggle: false
+    })
+    $('.collapse').on('shown.bs.collapse', function(){
+      $(this).parent().find(".glyphicon-plus").removeClass("glyphicon-plus").addClass("glyphicon-minus");
+    }).on('hidden.bs.collapse', function(){
+      $(this).parent().find(".glyphicon-minus").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+    });
+  });
+</script>

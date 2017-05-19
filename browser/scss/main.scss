@@ -1,0 +1,552 @@
+#youtube-btn .btn-test{
+	width: 25%;
+	float: left;
+}
+.no-padding {
+	padding: 0;
+}
+.no-margin {
+	margin: 0;
+}
+.processing-overlay {
+	position:fixed;
+	top:0;
+	left:0;
+	right:0;
+	width: 100%;
+	height:100%;
+	background-color: rgba(249, 214, 176, 0.9);
+	text-align:center;
+	z-index: 1;
+}
+.processing-inner {
+	font-color:white;
+	margin-top:400px;
+	z-index:2;
+	overflow: hidden;
+}
+
+/******* Preloader Css Start ********/
+
+
+
+#preloader {
+    position: fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background-color: rgba(249, 214, 176, 0.9);
+    z-index:1043; /* makes sure it stays on top */
+}
+.loader-spinner {
+    position: absolute;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    -webkit-animation: spinner 0.5s linear infinite;
+    animation: spinner 0.5s linear infinite;
+    left:50%; /* centers the loading animation horizontally on the screen */
+    top:50%; /* centers the loading animation vertically on the screen */
+    margin:-20px 0 0 -20px; /* is width and height divided by two */
+}
+.loader-spinner > span {
+    position: absolute;
+    display: block;
+    width: 35px;
+    height: 35px;
+    overflow: hidden;
+    top: -3px;
+    left: -3px;
+}
+.loader-spinner > span > span {
+    display: block;
+    width: 50px;
+    height: 50px;
+    border: 3px solid #E87133;
+    border-radius: 50%;
+}
+
+.ZebraDialog .ZebraDialog_Title, .ZebraDialog .ZebraDialog_BodyOuter, .ZebraDialog .ZebraDialog_ButtonsOuter {
+    border-width: 0px;
+    background: #fff;
+}
+
+.ZebraDialog_BodyOuter{
+    border-top-right-radius: 8px !important;
+    border-top-left-radius: 8px !important;
+}
+
+.ZebraDialog_ButtonsOuter{
+    border-bottom-right-radius: 8px !important;
+    border-bottom-left-radius: 8px !important;
+}
+
+.ZebraDialog .ZebraDialog_Buttons a:hover {
+    background: #e7edef;
+    color: #332;
+    border-radius: 8px;
+}
+
+.ZebraDialog .ZebraDialog_Buttons a {
+    background: #f5bbbc;
+    color: #FFF;
+    border-radius: 8px;
+}
+.time{
+    text-align:center;
+}
+.msg-box{
+    border-radius: 0px;
+    padding:2px 14px;
+}
+.alert-box{
+    text-align:center;
+    color: #ff3300
+}
+.ZebraDialog .ZebraDialog_Information { background-image: url('../assets/images/zebra_dialog_icon.png') }
+
+.ZebraDialog .ZebraDialog_Confirmation { background-image: url('../assets/images/zebra_dialog_icon.png') }
+
+.ZebraDialog .ZebraDialog_Error { background-image: url('../assets/images/zebra_dialog_icon.png') }
+
+.ZebraDialog .ZebraDialog_Question { background-image: url('../assets/images/zebra_dialog_icon.png') }
+
+.ZebraDialog .ZebraDialog_Warning { background-image: url('../assets/images/zebra_dialog_icon.png') }
+
+
+@-webkit-keyframes spinner {
+	from {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	to {
+     -webkit-transform: rotate(360deg);
+     transform: rotate(360deg);
+ }
+}
+@keyframes spinner {
+	from {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+}
+}
+/******* Preloader Css End ********/
+
+@import 'home/main';
+@import 'download/main';
+@import 'artistTools/main';
+
+
+.ac-row-scheduler {
+height: 24px;
+border: solid #dddddd;
+border-width: 1px;
+border-radius: 5px;
+cursor: pointer;
+vertical-align: middle;
+overflow: hidden;
+display: inline-block;
+width: 67px !important;
+float: left; 
+margin-top: 3px;
+}
+
+.count-no{
+    width:90px;
+    
+}
+.video-graph{
+    display:inline-block; 
+    width: 39%;
+    /*height:150px;*/ 
+    vertical-align: top;
+    margin-top:5px;
+}
+
+.video-main{
+    display:inline-block; 
+    width:100%; 
+    background-color:gray; 
+    height:150px;
+    margin-top:10px;
+}
+
+/*submision*/
+.submi-section{
+    padding:15px 10px; 
+    background-color: #fff; 
+    height:100%;  
+    /*border-bottom: 1px solid #dcdcdc;*/
+}
+
+.btn-grp{
+    display: block;
+    word-break: break-all;
+}
+
+.mail-btn{
+    padding: 5px 12px;
+    font-size: 22px;
+    margin: 3px 5px;
+    width: 30%;
+    display: initial;
+    float: left;
+}
+/*premiersubmissions page css*/
+.premier{
+    width:100%;
+    margin: 0 auto;
+    padding-top:10px;
+    padding-bottom:10px;
+}
+.premier-btn{
+   width: 130px;
+   height: 45px; 
+   margin-top: 7px; 
+   font-size:21px;
+}
+.send-mail{
+    padding: 5px 18px;
+    background-color: yellow;
+    font-size: 21px;
+    margin-top: 10px;
+}
+
+.premier-slect{
+    width: 40%; margin: 0 auto; padding-top:10px;padding-bottom:10px;
+}
+
+.premier-slect select{
+ width:100%;
+ float:left;
+}
+
+.premier-video{
+    display: block !important; width: 50%; height: 50px; margin: 0 auto;
+}
+.navbar-nav{
+    margin: 0px 0;
+    vertical-align: top;
+    display: inline-flex;
+}
+.graybox {
+    display: inline-block;
+}
+
+.graybox-main{
+    flex-flow: row wrap;
+    justify-content: space-around;
+    margin: 0px auto;
+    text-align:center;
+}
+
+.img-btn{
+    margin-left:42px;
+}
+.slide-img-box div{
+    padding: 0 0 0 3%;
+}
+/*********** Media CSS **************/
+@media screen and (max-width: 1280px) {
+    .mail-btn{
+        font-size:17px;     
+    }
+    .img-btn{margin-left: 20px;}
+
+}
+@media screen and (max-width: 1024px) {
+    .slidethamb-box {
+        padding: 0 0;
+        margin: 0 auto;
+        text-align: center;
+        display: inline-block;
+     }
+     .mail-btn{
+        font-size:17px;
+        width:87%; 
+        display: block;
+        margin:5px 0px;
+    }
+    .left-menus ul li a{
+    padding:20px;
+    }
+    .reFor-scroll{
+        text-align:center;
+    }
+    .manage-thumb{
+           display: inline-flex;
+    }
+}
+
+
+
+@media screen and (max-width: 980px) {
+     .img-btn{margin-left: 40px;}
+
+     .slot-date{
+        margin-bottom:7px;
+    }
+    .video-graph{
+        matgin-top:5px;
+    }
+    .left-menus ul li a {
+        padding: 20px 15px;
+    }
+     .reFor-scroll{
+        text-align:center;
+    }
+    .manage-thumb{
+           display: inline-flex;
+}
+}
+
+@media screen and (max-width: 800px) {
+    .img-btn{
+        margin-left: 37px;
+    }
+    .left-menus ul li a{
+        padding:20px;
+    }
+   .left-menus ul li a{
+    padding:20px;
+    }
+     .reFor-scroll{
+        text-align:center;
+    }
+    .manage-thumb{
+           display: inline-flex;
+            }
+}
+
+@media screen and (max-width: 768px) {
+    .premier-video{
+        width:100%;
+    }
+    .img-btn {
+        margin-left: 55px; 
+    }
+    .reFor-scroll {
+        text-align: center;
+    }
+    .manage-trade-thumb {
+        position: relative;
+        margin: 0 auto;
+        display: inline-flex;
+     }
+      .reFor-scroll{
+        text-align:center;
+    }
+    .manage-thumb{
+           display: inline-flex;
+    }
+    .inner-head .menu-bar{
+        text-align: center;
+    }
+    .range-main{
+        width: 70%;
+        margin: 15px auto;
+    }
+}
+
+@media screen and (max-width: 667px) {
+  .img-btn {
+         margin-left: 251px; } 
+    .reFor-scroll {
+         text-align: center;
+    }
+    .manage-trade-thumb {
+        position: relative;
+        margin: 0 auto;
+        display: inline-flex;
+     }
+
+     .mail-btn, .premier{ 
+        width: 100%;
+        margin: 5px auto;
+        text-align: center;
+        float: none;
+        }
+         .reFor-scroll{
+        text-align:center;
+    }
+    .manage-thumb{
+           display: inline-flex;
+    }
+}
+
+@media screen and (max-width: 640px) {
+      .img-btn{
+         margin-left: 252px; 
+        }
+        .reFor-scroll {
+            text-align: center;
+        }
+
+    .manage-trade-thumb {
+        position: relative;
+        margin: 0 auto;
+        display: inline-flex;
+     }
+     .mail-btn, .premier{ 
+        width: 100%;
+        margin: 5px auto;
+        text-align: center;
+        float: none;
+        }
+
+}
+
+@media screen and (max-width: 490px) {
+    .premier-slect {
+        width: 100%;
+    }
+    .video-graph{
+        width:100%;
+    }
+    .premier-btn{
+      width: 76px;
+        font-size:17px;
+    }
+    .btn-grp{
+       width: 30%;
+       display: inline-block;
+       vertical-align: top;
+    }
+    .mail-btn{
+        width: 100%;
+        margin: 5px 5px;
+    }
+
+    .video-main{
+        width:100%;
+    }
+    .submi-section{
+        heigth:auto!important;
+    }
+    .user-cell{
+        margin-top:18px;
+    }
+    .column-day{
+        margin-left: 4px;
+    }
+    .reFor-scroll{
+        text-align:center;
+    }
+    .img-btn {
+        margin-left: 93px;
+    }
+    .manage-trade-thumb {
+        position: relative;
+        margin: 0 auto;
+        display: inline-flex;
+     }
+    .mail-btn, .premier{ 
+        width: 100%;
+        margin: 5px auto;
+        text-align: center;
+        float: none;
+    }
+}
+@media screen and (max-width: 480px) {
+  .img-btn {
+        margin-left: 154px; 
+    } 
+    .mail-btn, .premier{ 
+        width: 100%;
+        margin: 5px auto;
+        text-align: center;
+        float: none;
+        }
+    }
+
+@media screen and (max-width:375px) {
+    .img-btn {
+    margin-left: 105px; }
+    .manage-trade-thumb {
+        position: relative;
+        margin: 0 auto;
+        display: inline-flex;
+     }
+     .mail-btn, .premier{ 
+        width: 100%;
+        margin: 5px auto;
+        text-align: center;
+        float: none;
+    }
+    .graybox-main{
+       text-align: left;
+    }
+}
+
+@media screen and (max-width:360px) {
+    .user-cell{
+     margin-top: 35px;
+    }
+    .column-day{
+        margin-left: 4px;
+    }
+     .img-btn {
+        margin-left: 99px;
+     }
+    .manage-trade-thumb {
+        position: relative;
+        margin: 0 auto;
+        display: inline-flex;
+     }
+     .mail-btn, .premier{ 
+        width: 100%;
+        margin: 5px auto;
+        text-align: center;
+        float: none;
+        }
+    .graybox-main{
+       text-align: left;
+    }
+}
+
+@media screen and (max-width:320px) {
+    .btn-grp{
+        display: inline;
+        width: 30%;
+    }
+     .mail-btn,.premier{
+        width: 100%;
+        margin: 5px 0px;
+    }
+    .premier-btn{
+        width:50%;
+    }
+     .submi-section{
+        heigth:auto;
+    }
+    .user-cell{
+        margin-top:30px;
+    }
+    .column-day{
+        margin-left: 4px;
+    }
+     .img-btn {
+        margin-left: 78px;
+    }
+    .manage-trade-thumb {
+        position: relative;
+        margin: 0 auto;
+        display: inline-flex;
+     }
+    .mail-btn, .premier{ 
+        width: 100%;
+        margin: 5px auto;
+        text-align: center;
+        float: none;
+    }
+    .graybox-main{
+       text-align: left;
+    }
+}

@@ -1,0 +1,47 @@
+<div class="page-header navbar-fixed-top"><!--page-header start-->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4 col-sm-6 col-xs-4">
+        <div id="logo">
+          <a href="#"><img src="assets/images/logo.png" height="40" />
+          </a>
+        </div><!--logo end-->
+      </div>
+      <div class="col-md-8 col-sm-6 col-xs-8">
+        <div class="inner-head">
+          <ul class="nav navbar-nav navbar-right">
+      <!--   <li>
+          <a href="#"><img class="img-responsive" src="assets/images/notification.png"></a>
+        </li> -->
+        <!-- <li>
+          <a href="#"><img class="img-responsive" src="assets/images/message.png"></a>
+        </li> -->
+        <li>
+          <a class="btn btn-default question-btn" href="#" ng-click="openHelpModal()"><img  src="assets/images/question_icon.png"></a>
+        </li>
+        <!-- <li>
+          <a href="#"><img class="img-responsive" src="assets/images/home.png"></a>
+        </li> -->
+        <li class="switch-btn">
+          <label class="switch">
+            <input type="checkbox" ng-checked="true" ng-click="swithUser(true)">
+            <div class="slider round"></div>
+          </label> 
+        </li>
+        <li style="padding-right:10px;padding-top:5px;"> 
+          <h5>Admin</h5> 
+        </li>
+        <li > 
+          <a class="menu-bar" href="#menu-toggle" id="menu-toggle">
+            <img src="assets/images/bar-icon.svg"/>
+          </a>  
+        </li> 
+        <li ng-if="isLoggedIn" class="logout btn btn-pink" id="logout"><a href="javascript:void(0)" ng-click="adminlogout()" style="color:#fff !important;">Logout</a> 
+        </li>      
+      </ul>     
+    </div>
+  </div>
+</div>
+<!--page-header End-->
+</div>
+</div>

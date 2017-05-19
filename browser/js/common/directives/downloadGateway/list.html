@@ -1,0 +1,70 @@
+<!-- Content Start  -->
+<div class="container-fluid height-100pr " ng-init="showProfileInfo();getDownloadList();checkIfSubmission()">
+  <div class="row height-100pr">
+    <div class="col-lg-12">
+      <div class="page-content right-side min-ht padding-10"><!--page-contant Start-->
+        <div class="row extrapadding">
+          <div class="col-md-12 text-center"> <a href="#" class="btn btn-pink b-radius-10" ui-sref="{{isAdminRoute ? 'adminDownloadGatewayNew' : 'artistToolsDownloadGatewayNew'}}">Add New</a> </div>
+        </div>
+        <div style="padding:0px 20px;">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Track Title</th>
+                <!--  <th>Artist Username</th> -->
+                <th>Download Count</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-if="downloadGatewayList.length == 0"><td colspan="3" align="center"><b>No download tracks found!</b></td></tr>
+              <tr ng-repeat="item in downloadGatewayList">
+                <td><a href="{{item.trackDownloadUrl}}" target="_blank">{{item.trackTitle}}</a></td>
+                <!--   <td>{{item.artistUsername}}</td> -->
+                <td>{{item.downloadCount ? item.downloadCount : 0}}</td>
+                <td><a href="#" ui-sref="{{isAdminRoute ? 'adminDownloadGatewayEdit({ gatewayID: item._id})' : 'artistToolsDownloadGatewayEdit({ gatewayID: item._id})'}}" ui-sref-opts="{reload: true}">Edit</a><span> | </span> <a href="#" ng-click="deleteDownloadGateway($index)">Delete</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <br> <br>
+        <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+            <div class="permanent-links search" style="text-align: center;">
+              <h4 class="bold">Permanent Artists:</h4>
+              <div class="row">
+                <div class="col-md-6">
+                 <scsearch kind='user' returnitem='choseArtist(item)'></scsearch>
+               </div>
+               <div class="col-md-6">
+                <div class="tracks-box" ng-if="user.permanentLinks.length > 0">
+                  <div class="track-item-list" ng-repeat="permanentLink in user.permanentLinks" >
+                    <img class="avatar-20" ng-src="{{permanentLink.avatar}}">
+                    <div class="tracks-title">
+                      <a class="tracks-title-name" href="{{permanentLink.url}}" target="_blank">
+                        {{' ' + permanentLink.username}}</a> 
+                        <a class="close-tracks pull-right" href="#"><img src="assets/images/close.png" ng-click="removePermanentLink($index)"></a> 
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <youtube-modal you-tube="youtubeModalId" modal-body="body" modal-footer="footer" modal-header="header" event-id="repostResponse" event-type="type"></youtube-modal>
+    </div>
+    <script type="text/ng-template" id="thankYou.html">
+      <div class="modal-header">
+        <h3 class="modal-title" style="text-align:center">Thank You</h3>
+        <br>
+        <p style="text-align:center">Thank you for creating a download link! You now have a 10% discount. 
+          <br><br>
+          Click "Continue" to checkout with your 10% discount.</p>
+        </div>
+        <div class="modal-body">
+          <button class="btn btn-danger" type="button" ng-click="$parent.closeModal()">Close</button>
+          <a class="btn btn-success pull-right" ui-sref="pay({ submissionID: $parent.thankYouModal.submissionID })">Continue</a>
+        </div>
+      </script>

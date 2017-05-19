@@ -1,0 +1,65 @@
+<ng-include src="'js/home/views/navigation.html'"></ng-include>
+<!-- Content Start  -->
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="content-area bg-white">
+        <div class="row">
+         <div class="col-md-12">
+           <h1 class="bold">Artist Tools</h1>
+           <div class="internal-content">
+            <br>
+            <form role="form" ng-submit="signup()">
+             <div class="row">
+              <div class="col-sm-5 col-sm-offset-3">
+                <input class="form-control" type="text" placeholder="Name" ng-model="signupObj.name" required/>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-sm-5 col-sm-offset-3">
+                <input class="form-control" type="email" placeholder="Email" ng-model="signupObj.email" required/>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-sm-5 col-sm-offset-3">
+                <input class="form-control" type="password" placeholder="Password" ng-model="signupObj.password" required/>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-sm-5 col-sm-offset-3">
+                <input class="form-control" type="password" placeholder="Confirm Password" ng-model="signupObj.confirmPassword" required/>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-sm-5 col-sm-offset-3">
+                <div class="text-center">
+                  <p ng-show="message.visible" class="text-center">{{message.val}}</p>
+                  <br/>
+                  <a class="btn btn-default btn-lg btn-enter pull-left" href="#" ui-sref="login">LOGIN</a>
+                  <button class="btn btn-default btn-lg btn-enter pull-right" type="submit">SIGN UP</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>	
+</div>
+</div>
+<script type="text/ng-template" id="signupComplete.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Thank you for joining artists Unlimited. Please use below link to login </h3>
+    <a ui-sref="login">Click here to login</a>
+  </div>
+  <div class="modal-body">
+    <button class="btn btn-warning" type="button" ng-click="$parent.closeModal()">Close</button>
+  </div>
+</script>				
+<!-- Content End  -->
+<ng-include src="'js/home/views/loader.html'"></ng-include>

@@ -1,0 +1,107 @@
+<style>
+  .grey {
+   background-color:#EEEEEE;
+   color:#000000 !important;
+ }
+</style>
+<ng-include src="'js/home/views/_adminHeaderNavigation.html'"></ng-include>
+<!-- Content Start  -->
+<div id="">
+  <div class="container-fluid height-100pr">
+    <div class="row">
+      <div class="col-md-12 " ng-init="getCurrentDate();getCurrentdateEvents();">
+        <div class="page-content right-side background-none">
+          <!--page-contant Start--> 
+          <div class="login-admin">
+            <div class="row">
+              <div class="col-md-offset-2 col-md-4 col-sm-6">
+               <div id="loginbox" class="mainbox">                    
+                <div class="panel panel-default" >
+                  <div class="panel-heading">
+                    <div class="panel-title text-center">
+                      <h5>WELCOME TO ARTISTS UNLIMITED</h5>
+                    </div>                       
+                  </div>
+                  <div style="padding-top:30px" class="panel-body" >
+                    <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+                    <form id="loginform" class="form-horizontal" role="form" ng-submit="login()">
+                      <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon sms-icon" style="background: none;"><i></i></span>
+                        <input id="login-username" type="text" class="form-control" name="username" value="" placeholder="E-mail" ng-model="loginObj.email" required>
+                      </div>                                
+                      <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon key-icon" style="background: none;"><i></i></span>
+                        <input id="login-password" type="password" class="form-control" name="password" placeholder="Password" ng-model="loginObj.password" required>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="input-group text-left">
+                            <div class="">                          
+                              <label class="with-square-checkbox">
+                                <input class="ng-pristine ng-untouched ng-valid ng-not-empty" type="checkbox">
+                                <span> Remember me</span> 
+                              </label>                          
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6 text-right">
+                          <a class="text-pink" href="mailto:coayscue@artistsunlimited.com?subject=Artists Unlimited - Forgot Password">Forgot Password?</a>
+                        </div>                        
+                      </div>  <!--row ::end-->                            
+                      <div class="row">
+                        <div class="col-md-12 col-xs-12">                           
+                          <button id="btn-login" href="#" class="btn btn-pink login-btn" type="submit">LOG IN</button>
+                        </div>
+                      </div><!--row ::end-->                     
+                      <br />
+                      <div class="row">
+                        <div class="col-md-12 col-xs-12 text-center">                           
+                          <p style="color:red">{{signinError}}</p>
+                        </div>
+                      </div><!--row ::end-->                     
+                    </form> 
+                  </div>                     
+                </div>  
+              </div>
+              <!--panel ::end-->
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <div class="panel panel-default">                     
+                <div class="panel-body text-center">
+                  <div class="become-admin">
+                    <h2 >Become an admin</h2>
+                    <div class="row">
+                      <div class="col-xs-12 text-center">
+                        <p>MONETIZE YOUR ACCOUNT</p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-12 text-center">
+                        <p>SCHEDULE RELEASES WEEKS AHEAD</p>
+                      </div>
+                    </div>                        
+                    <div class="col-md-12 col-xs-12"> 
+                      <a id="btn-login" href="mailto:coayscue@artistsunlimited.com;edward@peninsulamgmt.com?subject=Inquiry For Partnering with Artists Unlimited&body=[Include information about your network, label, or agency so we can assess your inquiry!]" class="btn btn-pink  login-btn">APPLY</a>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-12 text-center">
+                        <p>BECOME THE BEST RECORD LABEL, MUSIC CURATOR, OR DISTRIBUTOR YOU CAN BE!</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div><!--panel ::end-->
+            </div><!--Become an admin ::End-->
+          </div> <!--row ::end-->
+        </div>
+        <!--page-contant End-->   
+      </div>
+    </div>
+    <div style="position:absolute; top:0; left:0; right:0; height:5000px; background-color: rgba(0,0,0,1); z-index: 1000;" ng-show="hideall">
+    </div>
+  </div>
+  <!--overlay-->   
+  <ng-include src="'js/home/views/loader.html'"></ng-include>   
+</div>
+</div>
+</div>

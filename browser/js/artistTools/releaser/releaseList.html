@@ -1,0 +1,98 @@
+<style type="text/css">
+.red {
+   background-color:#FF000C;
+  color:#ffffff !important;
+}
+
+.green {
+   background-color:#6DFD43;
+   color:#000000 !important;
+}
+
+.grey {
+   background-color:#EEEEEE;
+   color:#000000 !important;
+}
+.btn-action,.btn-action:hover
+{
+   background-color:#000000;
+   color:#ffffff !important;
+}
+</style>
+<ng-include src="'js/artistTools/ArtistTools/header-navigation.html'"></ng-include>
+<div id="wrapper">
+  <ng-include src="'js/artistTools/ArtistTools/navigation.html'"></ng-include>
+<!-- Content Start  -->
+  <div class="container-fluid height-100pr " ng-init="getPost()">
+    <div class="row height-100pr">
+      <div class="col-lg-12">
+        <div class="page-content right-side min-ht padding-10"><!--page-contant Start-->
+          <div class="row extrapadding">
+            <div class="col-md-12 text-center"> <a href="#" class="btn btn-pink b-radius-10 btn-enter" ui-sref="releaserNew">Add New Post</a> </div>
+          </div>
+          <div class="buffer oauth text-center">
+            <a href="javascript:void(0);" ng-click="socialLogin('/auth/facebook')" class="btn btn-social btn-{{ providerName | lowercase }}">Authenticate Facebook</a>
+            <a href="javascript:void(0);" ng-click="socialLogin('/auth/twitter')" class="btn btn-social btn-{{ providerName | lowercase }}">Authenticate Twitter</a>
+            <a href="javascript:void(0);" ng-click="socialLogin('/auth/google')" class="btn btn-social btn-{{ providerName | lowercase }}">Authenticate Youtube</a>
+          </div>
+          <div style="padding:0px 20px;">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th width="50%">Post Title</th>
+                    <th width="20%">Release Date</th>
+                    <th width="30%">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="item in posts" ng-class='{green : item.postDate.split("T")[0] <= currentDate && item.released==false,red:item.postDate.split("T")[0] >currentDate && item.released==false}' ng-show="item.released==false">
+                    <td>{{item.postTitle}}</td>                   
+                    <!-- <td>{{item.postDate.split('T')[0] | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a'}}</td> -->                 
+                    <td>{{item.postDate.split('T')[0] | amDateFormat:'MMMM Do YYYY'}}</td>
+                    <td><a href="javascript:void(0);" class="btn btn-secondary btn-action" ui-sref="releaserEdit({ releaseID: item._id})" style="color:black"  ui-sref-opts="{reload: true}">Edit</a><span>&nbsp;&nbsp;</span> <a href="javascript:void(0);" style="color:black" class="btn btn-secondary btn-action" ng-click="deletePost($index)">Delete</a><span>&nbsp;&nbsp;</span> <a href="javascript:void(0);" style="color:black" class="btn btn-secondary btn-action" ng-click="broadcastPost(item)">Release</a></td>
+                  </tr>
+                </tbody>
+              </table>
+              <hr/>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th width="50%"></th>
+                    <th width="20%"></th>
+                    <th width="30%"></th>
+                  </tr>
+                </thead>
+                <tbody>               
+                  <tr ng-repeat="item in posts" class="grey" ng-show="item.released==true">
+                    <td>{{item.postTitle}}</td>                   
+                    <td>{{item.postDate.split('T')[0] | amDateFormat:'MMMM Do YYYY'}}</td>
+                    <td></td>
+                  </tr>                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Content End  -->
+<ng-include src="'js/home/views/loader.html'"></ng-include>
+<script type="text/ng-template" id="thankYou.html">
+  <div class="modal-header">
+  <h3 class="modal-title" style="text-align:center">Thank You</h3>
+  <br>
+  <p style="text-align:center">Thank you for creating a download link! You now have a 10% discount. 
+    <br><br>
+    Click "Continue" to checkout with your 10% discount.</p>
+  </div>
+  <div class="modal-body">
+    <button class="btn btn-danger" type="button" ng-click="$parent.closeModal()">Close</button>
+    <a class="btn btn-success pull-right" ui-sref="pay({ submissionID: $parent.thankYouModal.submissionID })">Continue</a>
+  </div>
+</script>

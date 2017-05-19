@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <base href="/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="icon" href="/favicon.ico">
+  <title>Artists Unlimited | Soundcloud Manager</title>
+  <meta property="og:url" content="https://artsistsunlimited.com/index.html" />
+  <meta property="fb:app_id" content="1771378846475599">
+  <meta property="og:title" content="Artists Unlimited" />
+  <!-- <meta property="og:description" name="description" content="Optimize your Soundcloud!" /> -->
+  <meta property="og:image" content="https://artistsunlimited.com/assets/images/fb-logo.jpg" />
+  <meta property="og:type" content="website" />
+  <link rel="stylesheet" type="text/css" href="/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="/font-awesome/css/font-awesome.css" />
+  <link rel="stylesheet" href="/zebra_dialog/public/css/default/zebra_dialog.css" type="text/css">
+  <!-- Slick -->
+  <link rel="stylesheet" type="text/css" href="/slick-carousel/slick/slick.css">
+  <link rel="stylesheet" type="text/css" href="/slick-carousel/slick/slick-theme.css">
+  <!-- Angular range slider -->
+  <link rel="stylesheet" type="text/css" href="/src/angular-range-slider/angular.rangeSlider.css">
+  <link rel="stylesheet" type="text/css" href="/style.css" />
+  <link href="https://fonts.googleapis.com/css?family=Abel|Acme|Amatic+SC|Architects+Daughter|Aref+Ruqaa|Arvo|Bungee|Calligraffitti|Ceviche+One|Chewy|Cinzel|Cinzel+Decorative|Dancing+Script|Exo|Gloria+Hallelujah|Inconsolata|Indie+Flower|Josefin+Slab|Lobster|Lobster+Two|Merriweather|Molle:400i|Nova+Script|Open+Sans|Orbitron|Pacifico|Permanent+Marker|Play|Playfair+Display|Poiret+One|Press+Start+2P|Roboto+Slab|Sahitya|Shadows+Into+Light|Space+Mono|Special+Elite|Yanone+Kaffeesatz" rel="stylesheet">
+  <script src="/lodash/index.js"></script>
+  <script src="/jquery/dist/jquery.min.js"></script>
+  <script src="/jquery-ui.js"></script>
+  <script src="/jquery-scrollify/jquery.scrollify.min.js"></script>
+  <script src="/angular/angular.js"></script>
+  <script src="/angular-cookies/angular-cookies.min.js"></script>
+  <script src="/src/scrollpoint.min.js"></script>
+  <script src="/src/timeAgo.js"></script>
+  <script src="/angular-animate/angular-animate.js"></script>
+  <script src="/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="/angular-ui-bootstrap/ui-bootstrap.js"></script>
+  <script src="/angular-ui-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="/socket.io-client/socket.io.js"></script>
+  <script src="/src/satellizer.min.js"></script>
+  <script src="/soundcloud/sdk.js"></script>
+  <script src="/soundcloudWidget.js"></script>
+  <script type="text/javascript" src="zebra_dialog/public/javascript/zebra_dialog.js"></script>
+  <link rel="stylesheet" href="/angular-bootstrap-colorpicker/css/colorpicker.css" />
+  <script src="/main.js"></script>
+  <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js"></script>
+  <script src="/moment/min/moment.min.js"></script>
+  <script src="/angular-moment/angular-moment.min.js"></script>
+  <script src="/angularjs-scroll-glue/src/scrollglue.js"></script>
+  <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/2867894.js"></script>
+  <!-- Slick -->
+  <script src="/slick-carousel/slick/slick.min.js"></script>
+  <!-- Angular range slider -->
+  <script type="text/javascript" src="/src/angular-range-slider/angular.rangeSlider.js"></script>
+  <script src="/angular-sanitize/angular-sanitize.min.js"></script>
+  <script src="bower_components/d3/d3.js"></script>
+  <script src="/bower_components/n3-charts/build/LineChart.js"></script>
+  <!-- clipboard -->
+  <script src="/clipboard/dist/clipboard.min.js"></script>
+  <script src="/ngclipboard/dist/ngclipboard.min.js"></script>
+  <!-- drag and sort array -->
+  <script src="/angular-ui-sortable/src/sortable.js"></script>
+  <link rel="stylesheet" href="/bower_components/n3-charts/build/LineChart.css">
+</head>
+
+<body class="scroll-hide" ng-app="FullstackGeneratedApp" ng-controller="FullstackGeneratedController">
+  <script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId: "1771378846475599",
+      xfbml: true,
+      version: "v2.6"
+    });
+  };
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {
+      return;
+    }
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+  </script>
+  <div class="main-scroll-body" ng-style="embedded?{'overflow':'hidden'}:{}" when-scrolled="loadList()">
+    <div id="main" ui-view></div>
+  </div>
+</body>
+
+</html>

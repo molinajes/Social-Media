@@ -1,0 +1,86 @@
+ .follow-area {
+ 	height: auto;
+ 	padding: 0;
+ }
+ .follow-section{
+ 	position: relative;
+ }
+ .follow-container {
+ 	height: 100%;
+ 	width: 100%;
+ 	min-height: 595px;
+ 	position: relative;
+	// background: #fff url(../../assets/images/header-overlay.png) no-repeat;
+	padding: 12% 0;
+}
+.follow-box-container {
+	position: absolute;
+	top: 18%;
+	left: 50%;
+	margin-left: -195px;
+	padding-bottom: 100px;
+}
+.follow-box {
+	background: #fff;
+	// height: 400px;
+	position: relative;
+	margin: 0 0 20px;
+	overflow: hidden;
+}
+.custom-sc-player {
+	width:360px;
+	height: 360px;
+}
+.custom-sc-player-overlay {
+	height: 100%;
+	width: 100%;
+	cursor: pointer;
+}
+.follow-bottom {
+	padding: 10px 10px;
+	background-color: #fff;
+	width: 100%;
+	bottom: 0;
+}
+.avatar {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+}
+.control-icon {
+	font-size: 50px;
+	margin: 150px auto;
+	color: #FFFFFF
+}
+.pad-download-agreement {
+	padding: 15px 5px 0 5px;
+	text-align:center;
+	font-size:0.8em;
+}
+
+.sidebar-tracks {
+	position: absolute;
+	right:0;
+	top: 0;
+	padding: 10px;
+	margin-top: 90px;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+	z-index: 3;
+}
+
+.songs-list h4{
+	font-size:12px;
+}
+
+.song-list span{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 400px;
+}
+
+.songs-list a {
+	display: inline-block;
+	white-space: nowrap;
+	text-align: right;
+}
