@@ -199,8 +199,9 @@ app.directive('adminsettings', function($http) {
                           "buttonBgColor": "#592e2e"
                         }
                       }]);
-                      $scope.activeTab.push('sce');
-                      $('.nav-tabs a[href="#sce"]').tab('show');
+                      //rascal 3-30
+                      //$scope.activeTab.push('sce');
+                      //$('.nav-tabs a[href="#sce"]').tab('show');
                       SessionService.createAdminUser($scope.AccountsStepData);
                     }
                   })
@@ -235,8 +236,9 @@ app.directive('adminsettings', function($http) {
               //    "buttonBgColor": "#592e2e"
               //  }
               // }]);
-              $scope.activeTab.push('notifications');
-              $('.nav-tabs a[href="#notifications"]').tab('show');
+              //rascal 3-30
+              //$scope.activeTab.push('notifications');
+              //$('.nav-tabs a[href="#notifications"]').tab('show');
               SessionService.createAdminUser($scope.AccountsStepData);
               break;
             case 4:
@@ -244,8 +246,9 @@ app.directive('adminsettings', function($http) {
                   premierCustomizeEmails: $scope.AccountsStepData.premierCustomizeEmails
                 })
                 .then(function(res) {
-                  $scope.activeTab.push('notifications');
-                  $('.nav-tabs a[href="#notifications"]').tab('show');
+                  //rascal_3-30
+                  // $scope.activeTab.push('notifications');
+                  //$('.nav-tabs a[href="#notifications"]').tab('show');
                   $scope.processing = false;
                 })
                 .catch(function() {});
@@ -269,8 +272,9 @@ app.directive('adminsettings', function($http) {
                 $scope.AccountsStepData.paypal.varify = false;
                 $scope.AccountsStepData.paypal.processchannel = false;
               }
-              $scope.activeTab.push('paypalInfo');
-              $('.nav-tabs a[href="#paypalInfo"]').tab('show');
+              //rascal_3-30
+              //$scope.activeTab.push('paypalInfo');
+              //$('.nav-tabs a[href="#paypalInfo"]').tab('show');
               SessionService.createAdminUser($scope.AccountsStepData);
               break;
           }

@@ -378,7 +378,8 @@
           <span class="au-title-head text-center" ng-if="(makeEvent.type == 'traded')">Owned by {{makeEvent.owner.soundcloud.username}}</span>
           <div class="row">
             <div class="col-md-12 search">
-              <scsearch kind='track' returnitem='choseTrack1(item)' ng-if="!isTraded"></scsearch>
+               <scsearch kind='track' returnitem='choseTrack1(item)' ng-if="!isTraded"></scsearch>
+               <scsearch kind='playlist' returnitem='choseTrack1(item)' ng-if="!isTraded"></scsearch>   <!--rascal add 3-30-->
             </div>
           </div>
           <div class="space-10"></div>

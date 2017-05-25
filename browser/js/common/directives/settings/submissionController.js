@@ -144,7 +144,7 @@ app.controller('SubmissionController', function($rootScope, $state, $scope, $htt
   $scope.changeChannelSelect_repost = function() {
     $scope.showingElements = [];
     $scope.loadMarketSubmissions();
-	   
+	   console.log("rascal");
   }
 
   $scope.loadSubmissions = function() {
