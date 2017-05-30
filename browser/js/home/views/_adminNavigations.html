@@ -25,8 +25,11 @@
           <li ui-sref-active-eq="left-menu-active" ng-class="{disabled:enableNavigation}" class="border-bottom REPOSTSUBMISSIONS"><a style="font-size:.9em; padding:12px 15px;" href="javascript:void(0)" ng-click="changeUserAdmin('admin', '/admin/submissions', 'submissions');">REPOST SUBS<div class="badge notification-bubble-submission-count" ng-show="submissionsCount > 0">{{submissionsCount}}</div></a></li>
           <li ui-sref-active-eq="left-menu-active" ng-class="{disabled:enableNavigation}" class="border-bottom PREMIERSUBMISSIONS"><a style="font-size:.9em; padding:12px 15px;" href="javascript:void(0)" ng-click="changeUserAdmin('admin', '/admin/premiersubmissions','premiersubmissions');">PREMIERE SUBS<div class="badge notification-bubble-submission-count" ng-show="premiereCount > 0">{{premiereCount}}</div></a></li>
           <li ui-sref-active-eq="left-menu-active" ng-class="{disabled:enableNavigation}" class="border-bottom SETTINGS"><a style="font-size:.9em; padding:12px 15px;" href="javascript:void(0)" ng-click="changeUserAdmin('admin','/admin/basic/step1','basicstep1');">SETTINGS</a></li>
+
           <li ui-sref-active-eq="left-menu-active" ng-class="{disabled:enableNavigation}" class="border-bottom ACCOUNTS"><a style="font-size:.9em; padding:12px 15px;" href="javascript:void(0)" ng-click="changeUserAdmin('admin', '/admin/accounts','accounts');">ACCOUNTS</a></li>
-           <li ui-sref-active-eq="left-menu-active" ng-class="{disabled:enableNavigation}" class="border-bottom ACCOUNTS"><a style="font-size:.9em; padding:12px 15px;" href="javascript:void(0)" ng-click="changeUserAdmin('admin', '/admin/thirdparties','accounts');">THIRD-PARTIES</a></li>
+
+           <li ui-sref-active-eq="left-menu-active" ng-class="{disabled:enableNavigation}" class="border-bottom THIRDPARTY"><a style="font-size:.9em; padding:12px 15px;" href="javascript:void(0)" ng-click="changeUserAdmin('admin', '/admin/thirdparty','thirdparty');">THIRD-PARTIES</a></li>
+
           <li ui-sref-active-eq="left-menu-active" ng-class="{disabled:enableNavigation}" class="border-bottom SCHEDULER"><a style="font-size:.9em; padding:12px 15px;" href="javascript:void(0)" ng-click="changeUserAdmin('user', '/admin/scheduler','scheduler')">SCHEDULER</a></li>
           <li ui-sref-active-eq="left-menu-active" ng-class="{disabled:enableNavigation}" class="border-bottom REPOSTTRADES"><a style="font-size:.9em; padding:12px 15px;" href="javascript:void(0)" ng-click="changeUserAdmin('user', '/admin/reposttraders','adminRepostTraders');">REPOST TRADER<div class="badge notification-bubble-submission-count" ng-show="inboxTrades > 0">{{inboxTrades}}</div></a></li>
           <li ui-sref-active-eq="left-menu-active" ng-class="{disabled:enableNavigation}" class="border-bottom DOWNLOADGATEWAY"><a style="font-size:.9em; padding:12px 15px;" href="javascript:void(0)" ng-click="changeUserAdmin('user', '/admin/downloadGateway','adminDownloadGateway');">DL GATEWAY</a></li>
@@ -58,9 +61,9 @@ $(document).ready(function() {
       break;
     case "/admin/premiersubmissions":
       $(".PREMIERSUBMISSIONS").addClass("left-menu-active");
-      break;
-    case "/admin/thirdparties":
-      $(".ACCOUNTS").addClass("left-menu-active");
+      break;    
+    case "/admin/thirdparty":
+      $(".THIRDPARTY").addClass("left-menu-active");
       break;
     case "/admin/accounts":
       $(".ACCOUNTS").addClass("left-menu-active");
@@ -68,6 +71,7 @@ $(document).ready(function() {
     case "/admin/basic/step1":
       $(".SETTINGS").addClass("left-menu-active");
       break;
+
   }
 
   setTimeout(function() {

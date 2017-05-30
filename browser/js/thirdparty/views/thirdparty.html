@@ -1,0 +1,218 @@
+<style>
+  .grey {
+    background-color:#EEEEEE;
+    color:#000000 !important;
+  }
+  .margin-bottom-20{
+    margin-bottom: 20px;
+  }
+  .disabled{
+    opacity: 1.5;
+    pointer-events: none;
+  }
+  
+</style>
+<ng-include src="'js/home/views/_adminHeaderNavigation.html'"></ng-include>
+<div id="wrapper">
+  <ng-include src="'js/home/views/_adminNavigations.html'"></ng-include>
+  <div class="container-fluid height-100pr" ng-init="checkCommentEnable();getListEvents();getLinkedAccounts();" body.onload="refresh()">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="page-content right-side">
+          <!--page-contant Start-->
+          <div class="two-tabs">
+            <!-- Nav tabs :Start-->
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active" style="border-radius: 10px 0 0 0;">
+                <a href="#linkedaccounts" aria-controls="linkedaccounts" role="tab" data-toggle="tab" style="border-radius: 10px 0 0 0;"><img src="assets/images/managereposts.png" />LINKED ACCOUNTS</a>
+              </li>
+              <li role="presentation" style="border-radius: 0 10px 0 0;">
+                <a href="#activitylog" aria-controls="activitylog" role="tab" data-toggle="tab" style="border-radius: 0 10px 0 0;"> <img src="assets/images/managereposts.png" />ACTIVITY LOG</a>
+              </li>
+            </ul>
+          </div>
+          
+          <!-- Nav tabs :End-->
+          <!-- Tab panes :: Start-->
+          <!-- LINKED ACCOUNTS : Start-->
+          <div class="tab-content" style="background-color:white">
+            <!-- MY thirdparty : Start-->
+            <div role="tabpanel" class="tab-pane fade in active" id="linkedaccounts" style="background-color:white">
+              <div class="row" style="margin-top:10px;">                               
+                <div class="col-md-12 col-xs-12">
+                  <h4 align="center"><b>Third-Party Logins</b></h4>
+                  <div class="modal fade" id="AddUser" role="dialog">
+                    <div class="modal-dialog modal-vertical-centered">
+                      <!-- Modal content-->
+                      <div class="modal-content">                        
+                        <div style="padding:10px;">
+                          <h5>CREATE NEW USER</h5>
+                          <div style="text-align:center;padding-bottom:10px;">
+                            <ul class="list-material">
+                              <li class="has-action-left">                           
+                                <a href="#" class="visible ">
+                                  <div class="list-action-left">
+                                    <img src="assets/images/managereposts.png" class="face-radius" alt="">
+                                  </div>
+                                  <div class="list-content">
+                                     <input class="form-control form-scheduler" placeholder="EMAIL" style="text-align:center; width:300px; max-width:90%;" type="email" ng-model="email" required/>
+                                    <input class="form-control form-scheduler" placeholder="PASSWORD" style="text-align:center; width:300px; max-width:90%;" type="password" ng-model="password" required/>
+                                    <button class="btn btn-default" ng-click="closeModal()">Cancel</button>
+                                    <button class="btn btn-default btn-small" data-dismiss="modal" ng-click="Createuser(email, password)">Creat User</button>
+                                  </div>
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 text-center col-xs-12 active_party" > 
+                    <h4 class="active_party_padding_top">Active Third-Parties</h4>
+                    <button class="btn active_party_padding_top btn-pink" ng-click="Adduser_domodal()" >ADD A USER</button>   
+                    <!--panel body start-->
+                    <div class="panel-body without-padding">
+                      <ul class="list-material">
+                        <li class="has-action-left" ng-repeat="user in Userlist">
+                          <div class="visible" ng-click="adduser(user.email)">
+                            <a href="#" class="visible ">
+                              <div class="list-action-left">
+                                <img src="assets/images/managereposts.png" class="face-radius" alt="">
+                              </div>
+                              <div class="list-content">
+                                <span class="title">{{user.name}}</span>
+                                <span class="caption">{{user.email}}</span>
+                              </div>
+                            </a>
+                          </div>
+                        </li>                      
+                      </ul>
+                    </div><!--.panel-body-->                 
+                  </div>
+                  <div class="col-md-6 text-center col-xs-12  active_show_padding" > 
+                    <ul class="list-material ">
+                      <li class="has-action-left">                        
+                        <div class="list-action-left">
+                          <img src="assets/images/managereposts.png" class="face-radius" alt="">
+                        </div>
+                        <div class="list-content">
+                          <span class="title">{{adduser.name}}</span>
+                          <span class="caption">{{adduser.email}}</span>
+                        </div>
+                      </li>
+                      <li class="has-action-left text-center active_show_padding active_show_border " style="border-radius: 10px; margin: 20px;">
+                        <h4>Scheduler Access</h4>
+                        <div class="col-md-12">
+                          <div class="checkbox-container " >
+                            <ul>
+                              <li class="has-action-left" ng-repeat="userdata in accountuser.paidRepost">
+                                <label class="with-square-checkbox ">
+                                  <input type="checkbox" ng-model="addaccount[$index]" ng-true-value="'{{userdata}}'" ng-false-value="' '">
+                                  <!--<input type="checkbox" >-->
+                                  <span class="checkbox-padding" >{{userdata.user.username}}<br>
+                                    {{userdata.user.followers}} Followers</span>
+                                </label>
+                              </li>
+                            </ul>                                                                                        
+                          </div>
+                        </div>                          
+                      </li>                      
+                      <li class="has-action-left text-center active_show_padding active_show_border " style="border-radius: 10px; margin: 20px;">
+                        <h4>Subbmission Access</h4>
+                        <div class="col-md-6">
+                          <div class="checkbox-container ">
+                            <ul>
+                              <li>
+                                <label class="with-square-checkbox ">
+                                  <input type="checkbox" >
+                                  <span class="checkbox-padding">Account</span>
+                                </label>
+                              </li>
+                              <li>
+                                <label class="with-square-checkbox ">
+                                  <input type="checkbox" >
+                                  <span class="checkbox-padding">Account</span>
+                                </label>
+                              </li>
+                              <li>
+                                <label class="with-square-checkbox ">
+                                  <input type="checkbox" >
+                                  <span class="checkbox-padding">Account</span>
+                                </label>
+                              </li>
+                              <li>
+                                <label class="with-square-checkbox ">
+                                  <input type="checkbox" >
+                                  <span class="checkbox-padding">Account</span>
+                                </label>
+                              </li>
+                            </ul>                                      
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="checkbox-container ">
+                            <ul>
+                              <li>
+                                <label class="with-square-checkbox ">
+                                  <input type="checkbox" >
+                                  <span class="checkbox-padding">Account</span>
+                                </label>
+                              </li>
+                              <li>
+                                <label class="with-square-checkbox ">
+                                  <input type="checkbox" >
+                                  <span class="checkbox-padding">Account</span>
+                                </label>
+                              </li>
+                              <li>
+                                <label class="with-square-checkbox ">
+                                  <input type="checkbox" >
+                                  <span class="checkbox-padding">Account</span>
+                                </label>
+                              </li>
+                              <li>
+                                <label class="with-square-checkbox ">
+                                  <input type="checkbox" >
+                                  <span class="checkbox-padding">Account</span>
+                                </label>
+                              </li>
+                            </ul>                                      
+                          </div>
+                        </div>  
+                      </li> 
+                    </ul>    
+                    <div class="col-md-8">                          
+                      <div class="col-md-12 text-center margin-20" style="padding:5px 10px;">
+                        <button class="btn btn-pink" ng-click="deleteuser()">DELETE USER</button>
+                      </div>                                   
+                    </div>
+                    <div class="col-md-4">                          
+                      <div class="col-md-12 text-center margin-20" style="padding:10px 10px;">
+                        <button class="btn " ng-click="save()">SAVE</button>                                              
+                      </div>
+                    </div>                
+                  </div>
+                </div>
+              </div>              
+            </div>
+            <!-- LINKED ACCOUNTS : End-->            
+            <!-- ACTIVITY LOG : Start -->
+            <div role="tabpanel" class="tab-pane fade" id="activitylog">
+              <div class="activitylog">                
+              </div>             
+            </div>
+            <!-- ACTIVITY LOG : End -->
+          </div>
+          <!-- Tab panes :: End-->
+          <!-- Save And Share overlay end -->
+        </div>  
+        
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Content End  -->
+<ng-include src="'js/home/views/loader.html'"></ng-include>
+
+

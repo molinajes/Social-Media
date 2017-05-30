@@ -32,39 +32,43 @@ app.controller('SubmitSongController', function(SessionService, $rootScope, $sta
   $scope.searchString = "";
 
   $scope.showPlayer = false;
+  
   $scope.choseTrack = function(track) {
-    $scope.searchString = track.title;
-    $scope.submission.trackID = track.id;
-    $scope.submission.title = track.title;
-    $scope.submission.trackURL = track.permalink_url;
-    if (track.user) {
-      $scope.submission.trackArtist = track.user.username;
-      $scope.submission.trackArtistURL = track.user.permalink_url;
-    }
-    $scope.submission.artworkURL = track.artwork_url;
-    var widget = SC.Widget('scPlayerCustom');
-    widget.load($scope.submission.trackURL, {
-      auto_play: false,
-      show_artwork: true,
-      callback: function() {
-        if ($scope.submission.title == "--unknown--") {
-          widget.getCurrentSound(function(track) {
-            console.log(track);
-            $scope.searchString = track.title;
-            $scope.submission.trackID = track.id;
-            $scope.submission.title = track.title;
-            $scope.submission.trackURL = track.permalink_url;
-            $scope.submission.trackArtist = track.user.username;
-            $scope.submission.trackArtistURL = track.user.permalink_url;
-            $scope.submission.artworkURL = track.artwork_url;
-          })
-        }
+    console.log(track.permalink_url);
+    if (track.user.permalink_url!="http://soundcloud.com/tropisnetwork") 
+    {
+      $scope.searchString = track.title;
+      $scope.submission.trackID = track.id;
+      $scope.submission.title = track.title;
+      $scope.submission.trackURL = track.permalink_url;
+      if (track.user) {
+        $scope.submission.trackArtist = track.user.username;
+        $scope.submission.trackArtistURL = track.user.permalink_url;
       }
-    });
-    $scope.showPlayer = true;
-    document.getElementById('scPlayerCustom').style.visibility = "visible";
+      $scope.submission.artworkURL = track.artwork_url;
+      var widget = SC.Widget('scPlayerCustom');
+      widget.load($scope.submission.trackURL, {
+        auto_play: false,
+        show_artwork: true,
+        callback: function() {
+          if ($scope.submission.title == "--unknown--") {
+            widget.getCurrentSound(function(track) {
+              console.log(track);
+              $scope.searchString = track.title;
+              $scope.submission.trackID = track.id;
+              $scope.submission.title = track.title;
+              $scope.submission.trackURL = track.permalink_url;
+              $scope.submission.trackArtist = track.user.username;
+              $scope.submission.trackArtistURL = track.user.permalink_url;
+              $scope.submission.artworkURL = track.artwork_url;
+            })
+          }
+          }
+        });
+        $scope.showPlayer = true;
+        document.getElementById('scPlayerCustom').style.visibility = "visible";
+      }
   }
-
   $scope.submit = function() {
     if (!$scope.submission.email || !$scope.submission.name || !$scope.submission.trackID) {
       $.Zebra_Dialog("Please fill in all fields")
