@@ -4,6 +4,7 @@ var _ = require('lodash');
 var LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var thirdpartyuser = mongoose.model('thirdpartyuser');
 
 module.exports = function(app) {
 
@@ -36,6 +37,43 @@ module.exports = function(app) {
     usernameField: 'email',
     passwordField: 'password'
   }, strategyFn));
+
+  var substrategyFn = function(email, password, done) {
+    console.log("rascal substrategyFn");
+    thirdpartyuser.findOne({
+        "email": email
+      })
+      .then(function(thirdpartyuser) {
+        console.log("rascal sub login find");  
+        console.log(thirdpartyuser);   
+        console.log(password);
+        /*console.log(thirdpartyuser.password + "dbpassword");
+        var temppw = thirdpartyuser.generateSalt();
+        
+        console.log(thirdpartyuser.encryptPassword(password, temppw) + "currentpassword");
+        console.log(thirdpartyuser);   */
+        // user.correctPassword is a method from the User schema.
+        // if (!user || !user.correctPassword(password)) {
+        if (!thirdpartyuser || password!=thirdpartyuser.password) {
+          console.log("rascal uncorrectpassword");
+          console.log(thirdpartyuser);
+          done(null, false);
+        } else {
+          // Properly authenticated.
+          console.log("rascal correctPassword");
+          console.log(thirdpartyuser);
+          done(null, thirdpartyuser);
+        }
+      }, function(err) {
+        console.log("rascal login error");
+        done(err);
+      });
+  };
+
+  passport.use('local-sublogin', new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password'
+  }, substrategyFn));
 
   // A POST /login route is created to handle login.
   // app.post('/login', function(req, res, next) {

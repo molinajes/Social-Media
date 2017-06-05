@@ -6,6 +6,7 @@ var chalk = require('chalk');
 var DATABASE_URI = require(path.join(__dirname, '../env')).DATABASE_URI;
 
 var mongoose = require('mongoose');
+mongoose.Promise = Promise;
 if (process.env.DEBUG == "ON") mongoose.set('debug', true);
 // var db = mongoose.connect(DATABASE_URI).connection;
 

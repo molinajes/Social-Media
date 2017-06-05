@@ -32,6 +32,7 @@ router.use('/aws/', require('./aws.js'));
 router.use('/broadcast/', require('./broadcast.js'));
 router.use('/customsubmissions/', require('./customSubmissions/customSubmissions.js'));
 router.use('/search/', require('./search/search.js'));
+router.use('/thirdpartyuser', require('./thirdparty/thirdpartyuser.js'));
 
 
 router.use('/logout', function(req, res) {

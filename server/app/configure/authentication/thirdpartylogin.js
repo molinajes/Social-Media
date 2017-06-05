@@ -1,10 +1,11 @@
 'use strict';
-var passport = require('passport');
-var _ = require('lodash');
 var LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var crypto = require('crypto');
+var passport = require('passport');
+var _ = require('lodash');
+
 
 module.exports = function(app) {
   var thirdPartyStrategyFn = function(req, username, password, done) {
@@ -25,12 +26,7 @@ module.exports = function(app) {
       });
   };
 
-  passport.use('local-thirdParty', new LocalStrategy({
-    usernameField: 'username',
-    passwordField: 'password',
-    passReqToCallback: true
-  }, thirdPartyStrategyFn));
-
+ 
   var encryptPassword = function(plainText, salt) {
     var hash = crypto.createHash('sha1');
     hash.update(plainText);
@@ -42,5 +38,11 @@ module.exports = function(app) {
     var encryptedpass = encryptPassword(password, salt);
     return encryptPassword(password, salt) === dbpassword;
   }
+   passport.use('local-thirdParty', new LocalStrategy({
+    usernameField: 'username',
+    passwordField: 'password',
+    passReqToCallback: true
+  }, thirdPartyStrategyFn));
+
 
 };

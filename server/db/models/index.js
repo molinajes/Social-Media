@@ -22,3 +22,4 @@ require('./analytics.js');
 require('./post.js');
 require('./customSubmission.js');
 require('./networkAccount.js');
+require('./thirdpartyuser.js');
