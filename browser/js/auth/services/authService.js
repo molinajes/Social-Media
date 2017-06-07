@@ -17,6 +17,7 @@ app.factory('AuthService', ['$http', function($http){
 
 	return {
 		login: login,
+		sublogin: sublogin,
 		signup: signup,
 		thirdPartylogin:thirdPartylogin
 	};

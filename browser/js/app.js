@@ -110,7 +110,11 @@ app.run(function($rootScope, $window, $http, AuthService, $state, $uiViewScroll,
       if (user) {
         var isAdminAuthenticate = ($window.localStorage.getItem('isAdminAuthenticate') ? $window.localStorage.getItem('isAdminAuthenticate') : false);
         var redirectPath = (isAdminAuthenticate ? "/admin" : "/login");
+        //console.log(redirectPath + " rascal redirectPath");
+        //console.log($window.location.pathname + " $window.location.pathname");
+        //console.log(isAdminAuthenticate + " rasca  isAdminAuthenticate");
         if ($window.location.pathname.indexOf('admin') != -1 && !isAdminAuthenticate) {
+          //console.log(user + "app.js user");
           $http.post('/api/logout').then(function() {
             SessionService.deleteUser();
             $state.go('admin');
