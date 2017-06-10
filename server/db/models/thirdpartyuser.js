@@ -4,7 +4,7 @@ var crypto = require('crypto');
 var schema = new mongoose.Schema({
   role: {
     type: String,
-    default: 'admin'
+    default: 'user'
   },
   name: {
     type: String
@@ -14,6 +14,9 @@ var schema = new mongoose.Schema({
     default: true
   },
   email: {
+    type: String
+  }, 
+  accountemail: {
     type: String
   },  
   password:{
@@ -50,6 +53,19 @@ var schema = new mongoose.Schema({
     type: Number,
     default: -300
   },
+  availableSlots: {
+    type: Object,
+    default: {
+      'sunday': [1, 4, 8, 11, 14, 17, 20],
+      'monday': [1, 4, 8, 11, 14, 17, 20],
+      'tuesday': [1, 4, 8, 11, 14, 17, 20],
+      'wednesday': [1, 4, 8, 11, 14, 17, 20],
+      'thursday': [1, 4, 8, 11, 14, 17, 20],
+      'friday': [1, 4, 8, 11, 14, 17, 20],
+      'saturday': [1, 4, 8, 11, 14, 17, 20]
+    }
+  },
+  paypal_email: String,
   linkedaccount: [{
     userID: {
       type: mongoose.Schema.Types.ObjectId,
@@ -76,7 +92,28 @@ var schema = new mongoose.Schema({
     linkInBio: {
       type: Boolean
     }
-  }]
+  }],
+  cut: {
+    type: Number,
+    default: 0.7
+  },
+  templates: {
+    type: Array,
+    default: []
+  },
+  soundcloud: {
+    id: Number,
+    username: String,
+    permalinkURL: String,
+    avatarURL: String,
+    token: String,
+    followers: Number,
+    pseudoname: String
+  },
+  ips: {
+    type: Array,
+    default: []
+  }
 });
 
 /*var generateSalt = function() {

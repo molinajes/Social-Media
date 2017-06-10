@@ -41,9 +41,19 @@ var generateSalt = function() {
 
 //sub admin create part
 router.post('/', function(req, res, next) {
+  console.log(req.body.accountemail + " accountemail");
+  var soundcloud;
+  User.findOne({ email: req.body.accountemail})
+  .then(function(docs){
+    console.log(" find success");
+    soundcloud = docs.soundcloud;    
+    console.log(docs.soundcloud + "account soundcloud");
+  });
   var newuser = new thirdpartyuser;
   newuser.email = req.body.email;
   newuser.password = req.body.password;
+
+  newuser.accountemail = req.body.accountemail;
   var paidaccount = {
     userID: "",
     premierUrl: "",
@@ -56,6 +66,7 @@ router.post('/', function(req, res, next) {
   };
   //newuser.paidRepost = paidaccount;
   newuser.name="rascal";
+  newuser.soundcloud = soundcloud;
   newuser.save().then(function(docs){
     console.log(docs + "rascal creact admin success");
   });
