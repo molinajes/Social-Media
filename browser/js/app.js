@@ -495,6 +495,7 @@ app.controller('FullstackGeneratedController', function($stateParams, $window, $
 
   $rootScope.getUserNetwork = $scope.getUserNetwork = function() {
     if ($window.location.pathname.includes('admin/')) {
+      console.log($window.location.pathname + " $window.location.pathname");
       var adminUser = JSON.parse($window.localStorage.getItem('adminUser'));
       return $http.get("/api/database/adminUserNetwork/" + adminUser._id)
         .then(function(res) {

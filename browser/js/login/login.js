@@ -11,7 +11,7 @@ app.controller('AdminLoginController', function($rootScope, $state, $scope, $htt
   $scope.showingElements = [];
   $scope.submissions = [];
   $scope.loginObj = {};
-  $scope.subloginObj = {};
+  $scope.subadminObj = {};
   var userData = SessionService.getUser();
   $scope.isLoggedIn = SessionService.getUser() ? true : false;
   if ($scope.isLoggedIn) {
@@ -40,9 +40,6 @@ app.controller('AdminLoginController', function($rootScope, $state, $scope, $htt
         SessionService.create(userData);
         $scope.getIncompleteTradesCount();
         userData.loginInfo = $scope.loginObj;
-        console.log(userData.loginInfo + "loginInfo");
-        console.log(userData + "userData");
-        alert(userData.loginInfo);
         $window.localStorage.setItem('adminUser', JSON.stringify(userData));
         $window.localStorage.setItem('hasBeenAdmin', true);
         $scope.getSubmissionCount();
@@ -71,12 +68,12 @@ app.controller('AdminLoginController', function($rootScope, $state, $scope, $htt
     }
   }
   //sub login function
-/*  $scope.sublogin = function() {
-     console.log("rascal sublogin");
-     console.log($scope.subloginObj.email);
+/*  $scope.subadmin = function() {
+     console.log("rascal subadmin");
+     console.log($scope.subadminObj.email);
      $http.post('/api/thirdpartyuser/login', {           
-        email: $scope.subloginObj.email,
-        password: $scope.subloginObj.password
+        email: $scope.subadminObj.email,
+        password: $scope.subadminObj.password
       }).then(function(res) {
       console.log("rascal res");
       //window.location.href = '/admin/submissions';
@@ -84,10 +81,10 @@ app.controller('AdminLoginController', function($rootScope, $state, $scope, $htt
       });
   }*/
 
-  $scope.sublogin = function() {
+  $scope.subadmin = function() {
     $scope.signinError = "";
     AuthService
-      .sublogin($scope.subloginObj)
+      .subadmin($scope.subadminObj)
       .then(handleLoginResponse)
       .catch(handleLoginError)
       /*
@@ -101,7 +98,7 @@ app.controller('AdminLoginController', function($rootScope, $state, $scope, $htt
         console.log("rascal admin login test");
 
         $scope.getIncompleteTradesCount();
-        userData.loginInfo = $scope.subloginObj;
+        userData.loginInfo = $scope.subadminObj;
         console.log(userData.loginInfo + "loginInfo");
         alert(userData.loginInfo);
         $window.localStorage.setItem('adminUser', JSON.stringify(userData));
@@ -136,31 +133,14 @@ app.controller('AdminLoginController', function($rootScope, $state, $scope, $htt
         console.log("rascal admin login test");
 
         $scope.getIncompleteTradesCount();
-        userData.loginInfo = $scope.subloginObj;
-        console.log(userData.loginInfo + "loginInfo");
-        alert(userData.loginInfo);
+        userData.loginInfo = $scope.subadminObj;
         $window.localStorage.setItem('adminUser', JSON.stringify(userData));
         $window.localStorage.setItem('hasBeenAdmin', true);
-        $scope.getSubmissionCount();
         if (userData.paypal_email == undefined || userData.paypal_email == ""){
           console.log("basicstep1");
           $state.go('thirdpartybasicstep1');
         }
-        else
-        if (!userData.paidRepost[0]) {
-          console.log("channelstep1");
-          SessionService.addActionsfoAccount('Add', 'index');
-          $state.go('channelstep1');
-        } else {
-          console.log("scheduler");
-          $http.get('/api/users/byId/' + userData.paidRepost[0].userID)
-            .then(function(res) {
-              $window.localStorage.setItem('prevATUser', JSON.stringify(res.data));
-              SessionService.removeAccountusers();
-              window.location.href = '/admin/scheduler';
-            })
-            .then(console.debug);
-        }        
+            
       } else {
         $scope.signinError = "Invalid Email or Password.";
       }

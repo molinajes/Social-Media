@@ -196,8 +196,6 @@ app.controller('AuthController', function($rootScope, $state, $stateParams, $sco
       .then(function(res) {
         $scope.processing = false;
         var userData = res.data.user;
-        console.log(userData + "rascal soundcloudLogin");
-        alert(userData);
         userData.isAdmin = false;
         SessionService.create(userData);
         $scope.user = SessionService.getUser();
