@@ -4,7 +4,7 @@ var crypto = require('crypto');
 var schema = new mongoose.Schema({
   role: {
     type: String,
-    default: 'user'
+    default: 'admin'
   },
   name: {
     type: String
@@ -19,6 +19,14 @@ var schema = new mongoose.Schema({
   accountemail: {
     type: String
   },  
+  submissionaccount: [{
+    name: {
+      type: String
+    },
+    email: {
+      type: String
+    }
+  }],
   password:{
   	type: String
   },

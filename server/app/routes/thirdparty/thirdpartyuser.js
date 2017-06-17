@@ -22,7 +22,7 @@ scWrapper.init({
   uri: scConfig.redirectURL
 });
 var thirdpartyuser = mongoose.model('thirdpartyuser');
-
+var submission = mongoose.model('Submission');
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
 
@@ -110,7 +110,6 @@ router.post('/login', function(req, res, next) {
       });
     } else {    	
       req.login(user, function(err) {
-        console.log("rascal_locallogin login test")
         //if(req.body.rememberme && (req.body.rememberme == "1" || req.body.rememberme == 1)){
         //req.session.cookie.expires = false;
         req.session.name = user.userid;
@@ -171,11 +170,10 @@ router.get('/getPaidRepostAccounts', function(req, res, next) {
     }).then(null, next);
 });
 
-//account add
+//add subadminaccount 
+/*
 router.post('/addaccount', function(req, res, next) {
-  console.log(req.body.useremail + " thirdpartyaccount add");
   var regaccount = req.body.registeraccount;
-
   console.log(req.body.userID + " thirdpartyaccount add registeraccount");
   var paidaccount = {
     userID: req.body.userID,
@@ -191,36 +189,92 @@ router.post('/addaccount', function(req, res, next) {
       email: req.body.useremail
     }, {
       $addToSet: {
-        //email : "req.body.useremail"
         paidRepost : paidaccount
       }
     },{
       new: true
     })
     .then(function(data) {
-      console.log("rascal account update");
-    });
-  
-   
-});
-/*router.post('/', function(req, res, next) {
-  console.log("rascal thirdpartyuser add");
-  var body = req.body;
-  var updateObj = body;
-  var newuser = new thirdpartyuser;
-  newuser.email = req.body.email;  
-  //password encrypt part 
-  //updateObj.salt = thirdpartyuser.generateSalt();
-  //updateObj.password = thirdpartyuser.encryptPassword(req.body.password, updateObj.salt);
-  //newuser.password = updateObj.password;
-  newuser.password=req.body.password;
-  console.log(newuser.password+ "rascal");
+    });   
+});*/
 
-  //newuser.save();
-  if(newuser.save()){
-  	res.send();
-  }
-})*/
+//save subadminaccount with scheduler and subadminaccount part
+router.post('/saveaccount', function(req, res, next) {
+  var regaccount = req.body.registeraccount;
+  var schduleraccount = {};
+  var subadminaccount = {};
+  var paidaccount = {};
+  schduleraccount = req.body.scheduleraccount;
+  //subadminaccount = req.body.subadminaccount;
+  //paid account add part
+  for (var i = 0; i < schduleraccount.length; i++) {
+    console.log(schduleraccount[i].userID + " schduleraccount[i].userID");
+    paidaccount = {
+    userID: schduleraccount[i].userID,
+    premierUrl: schduleraccount[i].premierUrl,
+    submissionUrl: schduleraccount[i].submissionUrl,
+    description: schduleraccount[i].description,
+    price : schduleraccount[i].price,
+    createdOn : schduleraccount[i].createdOn,
+    groups : [],
+    linkInBio : schduleraccount[i].linkInBio
+    };
+    thirdpartyuser.findOneAndUpdate({
+      email: req.body.useremail
+    }, {
+      $addToSet: {
+        paidRepost : paidaccount
+      }
+    },{
+      new: true
+    })
+    .then(function(data) {
+    }); 
+  };
+  //submissionaccount add part
+  for ( i = 0; i < req.body.submissionaccount.length; i++) {
+    console.log(req.body.submissionaccount[i].name + " req.body.submissionaccount[i].name");
+    subadminaccount = {
+      name: req.body.submissionaccount[0][i],
+      email: req.body.submissionaccount[1][i]
+    };
+    thirdpartyuser.findOneAndUpdate({
+      email: req.body.useremail
+    }, {
+      $addToSet: {
+        submissionaccount : subadminaccount
+      }
+    },{
+      new: true
+    })
+    .then(function(data) {
+    }); 
+  };
+});
+
+//get submission email 
+router.get('/getsubmissionAccounts', function(req, res, next){
+  submission.find(function(err, docs){
+    res.json(docs);
+  });
+
+  /*
+  var submissionuser = {};
+  var submissionname = {};
+  var submissionemail = {};
+  submission.find(function(err, json){
+    var submissionus = JSON.parse(docs);
+    for (var i = 0; i < submissionus.length; i++) {
+      submissionname[i] = submissionus[i].username;
+      submissionemail[i] = submissionus[i].useremail;
+      console.log(submissionemail[i] + " submissionemail");
+    };
+    submissionuser[0] = submissionname;
+    submissionuser[1] = submissionemail;
+    console.log(submissionuser[0] + "submission email");
+    res.json(submissionuser);
+  });*/
+});
 
 /*module.exports = function(app) {
 
@@ -252,7 +306,7 @@ router.post('/addaccount', function(req, res, next) {
 
 };*/
 
-
+  //password encrypt part
   /*var encryptPassword = function(plainText, salt) {
     var hash = crypto.createHash('sha1');
     hash.update(plainText);
