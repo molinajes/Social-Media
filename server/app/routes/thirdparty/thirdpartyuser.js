@@ -41,13 +41,11 @@ var generateSalt = function() {
 
 //sub admin create part
 router.post('/', function(req, res, next) {
-  console.log(req.body.accountemail + " accountemail");
   var soundcloud;
   User.findOne({ email: req.body.accountemail})
   .then(function(docs){
     console.log(" find success");
     soundcloud = docs.soundcloud;    
-    console.log(docs.soundcloud + "account soundcloud");
   });
   var newuser = new thirdpartyuser;
   newuser.email = req.body.email;
@@ -76,10 +74,8 @@ router.post('/', function(req, res, next) {
 //sub admin add part   mongo findone method
 router.get('/adduser/:id', function(req, res){
 	var id= req.params.id;
-	console.log(id);
 	thirdpartyuser.findOne({ email: id})
 	.then(function(docs){
-		console.log(docs + "rascal docs");
 		res.json(docs);
 	});
 });
@@ -89,7 +85,6 @@ router.delete('/:id', function(req, res){
 	console.log(id);
 	thirdpartyuser.remove({ email: id})
 	.then( function(docs){
-		console.log("rascal delete");
 		res.json(docs);
 	})
 });
