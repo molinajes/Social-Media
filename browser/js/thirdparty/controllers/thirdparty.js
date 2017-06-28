@@ -80,24 +80,67 @@ app.controller('thirdpartyController', function($rootScope, $state, $scope, $htt
     });
     
   }
-  refresh();
+  
+  
+
+  //getting more submisstion account part
+  $scope.loadmore = function(){
+    $scope.loadsubmission();
+  };
 
   //getting submission account 
+  $scope.submissionshowlength = 10;
   $scope.submissionaccountlisteven = [];
   $scope.submissionaccountlistadd = [];
-  $http.get('/api/thirdpartyuser/getsubmissionAccounts').then(function(res) {
-    var evenindex=0;
-    var addindex = 0;
-    for (var i = 0; i < res.data.length; i++) {
-      if ((i%2)== 0) {
-        $scope.submissionaccountlisteven[evenindex]=res.data[i];
-        evenindex ++;
+  $scope.evenindex = 0;
+  $scope.addindex = 0;
+  $scope.submissiontotallength = 0;
+  $scope.loadsubmission = function(){
+    console.log("rascal loadsubmission");
+    $http.get('/api/thirdpartyuser/getsubmissionAccounts').then(function(res) {
+      var i=0;
+      if ((res.data.length - $scope.submissiontotallength)>$scope.submissionshowlength) {
+        for ( i= $scope.submissiontotallength; i < ($scope.submissionshowlength+$scope.submissiontotallength); i++) {
+          if ((i%2)== 0) {
+            $scope.submissionaccountlisteven[$scope.evenindex]=res.data[i];
+            $scope.evenindex ++;
+          } else{
+            $scope.submissionaccountlistadd[$scope.addindex]=res.data[i];
+            $scope.addindex ++;
+          };
+        };
+        $scope.submissiontotallength = $scope.submissiontotallength +$scope.submissionshowlength;
+        re
       } else{
-        $scope.submissionaccountlistadd[addindex]=res.data[i];
-        addindex ++;
+        for (var i = $scope.submissiontotallength; i < res.data.length; i++) {
+          if ((i%2)== 0) {
+            $scope.submissionaccountlisteven[$scope.evenindex]=res.data[i];
+            $scope.evenindex ++;
+          } else{
+            $scope.submissionaccountlistadd[$scope.addindex]=res.data[i];
+            $scope.addindex ++;
+          };
+        };
       };
-    };
-  });
+    });
+  };
+  
+  /*
+  $scope.loadsubmission = function(){
+    $http.get('/api/thirdpartyuser/getsubmissionAccounts').then(function(res) {
+      var evenindex=0;
+      var addindex = 0;
+      for (var i = 0; i < res.data.length; i++) {
+        if ((i%2)== 0) {
+          $scope.submissionaccountlisteven[evenindex]=res.data[i];
+          evenindex ++;
+        } else{
+          $scope.submissionaccountlistadd[addindex]=res.data[i];
+          addindex ++;
+        };
+      };
+    });
+  };*/
 
   //Create subadminaccount part
   $scope.Createuser = function(email, password) {
@@ -198,6 +241,8 @@ app.controller('thirdpartyController', function($rootScope, $state, $scope, $htt
       });
   }
  
-  
+  //function call part
+  refresh();
+  $scope.loadsubmission();
 
 });

@@ -440,19 +440,19 @@
             </div>
           </div>
           <!-- <div class="row" ng-if="channelArr.length > 0">
-  <div class="col-md-12 col-xs-12" style="font-size: 12px;">
-    <label>Between reposts:
-      <input type="number" class="form-control input-hour" style="color: #868686;" placeholder="24" min="0" ng-model="makeEvent.hoursBetween">hours
-    </label>
-  </div>
-</div>
--->
+            <div class="col-md-12 col-xs-12" style="font-size: 12px;">
+              <label>Between reposts:
+                <input type="number" class="form-control input-hour" style="color: #868686;" placeholder="24" min="0" ng-model="makeEvent.hoursBetween">hours
+              </label>
+            </div>
+          </div>
+          -->
           <h5 class="text-pink" ng-if="(makeEvent.type!='traded')">Total Reach: {{followCounts}} followers</h5>
           <h5 class="text-pink" ng-if="(makeEvent.type=='traded') && !makeEvent.trackID">Waiting for {{makeEvent.owner.soundcloud.username}} to select a track.</h5>
           <div class="row">
             <div class="col-md-12 text-center">
               <li class="switch-btn" style="font-size: 12px;vertical-align: middle;
-    list-style: outside none none;">
+                  list-style: outside none none;">
                 <label class="switch" style="vertical-align: middle;">
                   <input checked="" type="checkbox" ng-model="unrepostEnable" ng-click="setRepostHours()" ng-disabled="isTraded">
                   <div class="slider round"></div>

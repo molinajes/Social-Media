@@ -118,6 +118,7 @@ app.config(function($stateProvider) {
 });
 
 app.controller("AdminReForReInteractionController", function($rootScope, $state, $scope, $http, AuthService, $window, SessionService, socket, $stateParams, trade, p1Events, p2Events) {
+  console.log("adminreForReInteraction");
   $scope.user = SessionService.getUser();
   if (!SessionService.getUser()) {
     $state.go('login');

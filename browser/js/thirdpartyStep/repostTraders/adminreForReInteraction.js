@@ -1,9 +1,9 @@
 app.config(function($stateProvider) {
   $stateProvider
     .state('thirdpartyreForReInteraction', {
-      url: '/admin/trade/:user1Name/:user2Name',
+      url: '/thirdparty/trade/:user1Name/:user2Name',
       templateUrl: 'js/repostTraders/_reForReInteraction.html',
-      controller: 'AdminReForReInteractionController',
+      controller: 'thirdpartyReForReInteractionController',
       resolve: {
         login: function($rootScope, $http, $stateParams, $window, SessionService, $state) {
           if (SessionService.getUser()) {
@@ -117,7 +117,7 @@ app.config(function($stateProvider) {
     })
 });
 
-app.controller("AdminReForReInteractionController", function($rootScope, $state, $scope, $http, AuthService, $window, SessionService, socket, $stateParams, trade, p1Events, p2Events) {
+app.controller("thirdpartyReForReInteractionController", function($rootScope, $state, $scope, $http, AuthService, $window, SessionService, socket, $stateParams, trade, p1Events, p2Events) {
   $scope.user = SessionService.getUser();
   if (!SessionService.getUser()) {
     $state.go('login');

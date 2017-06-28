@@ -131,7 +131,7 @@ app.controller('AdminLoginController', function($rootScope, $state, $scope, $htt
         $window.localStorage.setItem('isAdminAuthenticate', true);
         SessionService.create(userData);
         console.log("rascal admin login test");
-
+        $window.localStorage.setItem('isthirdpartyAuthenticate', true);
         $scope.getIncompleteTradesCount();
         userData.loginInfo = $scope.subadminObj;
         $window.localStorage.setItem('adminUser', JSON.stringify(userData));
