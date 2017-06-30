@@ -1066,26 +1066,19 @@ app.directive('scheduler', function($http) {
         }
         $scope.makeEvent.userID = $scope.user.soundcloud.id;
         $scope.makeEvent.like = $scope.likeEvent;
-        console.log($scope.kind + "rascal scope.kind");
         $scope.makeEvent.unrepostHours = $scope.unrepostHours;
         $scope.makeEvent.timeGap = $scope.timeGap;
         $scope.makeEvent.comment = ($scope.commentEvent == true ? $scope.eventComment : '');
-        $scope.makeEvent.type = $window.localStorage.getItem('reposttype')
-        console.log($scope.makeEvent.type + "rascal trackType");
-        /*
         if ($scope.trackType == "playlist") {
-          console.log("rascal playlist sorry");
           $.Zebra_Dialog("Sorry! We don't currently allow playlist reposting. Please enter a track url instead.");
           return;
-        } else*/
-         if ($scope.trackArtistID == $scope.user.soundcloud.id) {
+        } else if ($scope.trackArtistID == $scope.user.soundcloud.id) {
           $.Zebra_Dialog("Sorry! You cannot schedule your own track to be reposted.")
           return;
-        }
-        /* else if ($scope.findUnrepostOverlap()) {
+        } else if ($scope.findUnrepostOverlap()) {
           $.Zebra_Dialog('Issue! Please allow at least 24 hours between unreposting a track and re-reposting it and at least 48 hours between reposts of the same track.');
           return;
-        }*/
+        }
         if (!$scope.makeEvent.trackID && ($scope.makeEvent.type == "track")) {
           $.Zebra_Dialog("Pleae add a track.");
         } else {

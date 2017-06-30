@@ -16,8 +16,6 @@ app.directive('reforrelists', function($http) {
       $scope.isAdminRoute = false;
       if (path.indexOf("admin/") != -1) {
         $scope.isAdminRoute = true
-      } else if(path.indexOf("thirdparty/") != -1){
-        $scope.isthirdparty = true;
       } else {
         $scope.isAdminRoute = false;
       }
@@ -345,9 +343,7 @@ app.directive('reforrelists', function($http) {
       }
 
       $scope.goToTrade = function(trade) {
-        if ($scope.isthirdparty) {
-          window.location.href = '/thirdparty/trade/' + trade.p1.user.soundcloud.pseudoname + '/' + trade.p2.user.soundcloud.pseudoname;
-        } else if ($scope.isAdminRoute) {
+        if ($scope.isAdminRoute) {
           window.location.href = '/admin/trade/' + trade.p1.user.soundcloud.pseudoname + '/' + trade.p2.user.soundcloud.pseudoname;
         } else {
           window.location.href = '/artistTools/trade/' + trade.p1.user.soundcloud.pseudoname + '/' + trade.p2.user.soundcloud.pseudoname;
@@ -829,7 +825,7 @@ app.directive('reforrelists', function($http) {
       $scope.sortResult($scope.sortby);
       $scope.loadMoreUsers();
       $scope.setView("inbox");
-      
+
       if ($window.localStorage.getItem('inboxState')) {
         $scope.setView($window.localStorage.getItem('inboxState'));
         $window.localStorage.removeItem('inboxState');

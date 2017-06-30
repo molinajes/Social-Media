@@ -9,9 +9,7 @@ app.directive('rfrinteraction', function($http) {
       $scope.isAdminRoute = false;
       if (path.indexOf("admin/") != -1) {
         $scope.isAdminRoute = true;
-      }else if(path.indexOf("thirdparty/") != -1){
-        $scope.isthirdparty = true;
-      }  else {
+      } else {
         $scope.isAdminRoute = false;
       }
       $scope.shownotification = false;
@@ -272,9 +270,7 @@ app.directive('rfrinteraction', function($http) {
                     $window.localStorage.setItem('activetab', '2');
                     $window.localStorage.setItem('inboxState', 'sent');
                     window.localStorage.setItem("showPopup", JSON.stringify($scope.trade));
-                    if ($scope.isthirdparty) {
-                      $state.go('thirdpartyRepostTraders');
-                    }else if ($scope.isAdminRoute) {
+                    if ($scope.isAdminRoute) {
                       $state.go('adminRepostTraders');
                     } else {
                       $state.go('reForReLists');
