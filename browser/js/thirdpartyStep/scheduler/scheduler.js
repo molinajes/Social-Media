@@ -1,7 +1,7 @@
 app.config(function($stateProvider) {
-  $stateProvider.state('scheduler', {
-    url: '/admin/scheduler',
-    templateUrl: 'js/scheduler/scheduler.html',
+  $stateProvider.state('thirdpartyscheduler', {
+    url: '/thirdparty/scheduler',
+    templateUrl: 'js/thirdpartyStep/scheduler/scheduler.html',
     controller: 'adminSchedulerController',
     resolve: {
       events: function($http, $window, SessionService) {
