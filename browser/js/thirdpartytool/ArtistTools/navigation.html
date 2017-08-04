@@ -1,0 +1,44 @@
+<!-- Sidebar -->
+<div id="sidebar-wrapper">
+  <div class="left-side">
+    <div class="tropical" ng-if="user">
+      <a href="{{user.soundcloud.permalinkURL}}" target="_blank" style="color:#8a8a8a"><span>{{user.soundcloud.username}}</span><img class="img-responsive img-circle" src="{{user.soundcloud.avatarURL ? user.soundcloud.avatarURL.replace('large', 't200x200') : 'https://i1.sndcdn.com/avatars-000223599301-0ns076-t500x500.jpg'}}" style="height:100px;"><p>{{user.soundcloud.followers | number:0}} Followers</p></a>
+      <p style="color:red" ng-controller="FullstackGeneratedController" ng-init="isBlock()" ng-show="isBlock">Your reposts are blocked untill {{ user.blockRelease | date:'MMMM dd yyyy h:mma' }}</p>
+      <select class="form-control" style="width:180px; margin:0 auto;" ng-model="selectedToken" ng-show="userlinkedAccounts.length > 0" ng-change="linkedUsersChange(selectedToken)">
+        <option value="">{{user.soundcloud.username}}</option>
+        <option ng-repeat="u in userlinkedAccounts" ng-if="u._id != user._id" value="{{u.soundcloud.token}}">{{u.soundcloud.username}}</option>
+      </select>
+    </div>
+    <div class="tropical" ng-if="!user">
+      <span style="margin:10px;">Sign in to AU and access Artist Tools</span>
+      <br>
+      <br>
+      <button class="btn btn-pink b-radius-10 btn-enter" ui-sref="login">Sign In</button>
+    </div>
+    <!--tropical end-->
+    <div class="left-menus" ng-disable="!user">
+      <nav class="nav">
+        <ul class="nav nav-navabar">
+          <li ui-sref-active-eq="left-menu-active" id="profile" class="border-bottom"><a href="javascript:void(0)" ui-sref="artistToolsProfile" style="font-size:.9em; padding:12px 15px;">SETTINGS</a></li>
+          <!-- <li ui-sref-active-eq="left-menu-active" id="releaser" class="border-bottom"><a href="javascript:void(0)" ui-sref="releaser">RELEASER</a></li> -->
+          <li ui-sref-active-eq="left-menu-active" id="scheduler" class="border-bottom"><a href="javascript:void(0)" ui-sref="artistToolsScheduler" style="font-size:.9em; padding:12px 15px;">SCHEDULER</a></li>
+          <li ui-sref-active-eq="left-menu-active" id="reforrelists" class="border-bottom"><a href="javascript:void(0)" ui-sref="reForReLists" style="font-size:.9em; padding:12px 15px;">REPOST TRADER<div class="badge notification-bubble-submission-count" ng-show="inboxTrades > 0">{{inboxTrades}}</div>
+          </a></li>
+          <li ui-sref-active-eq="left-menu-active" id="downloadgateway" class="border-bottom"><a href="javascript:void(0)" ui-sref="artistToolsDownloadGatewayList" style="font-size:.9em; padding:12px 15px;">DOWNLOAD GATEWAY</a></li>
+          <!--<li ui-sref-active-eq="left-menu-active" id="analytics" class="border-bottom"><a href="javascript:void(0)" ui-sref="artistToolsAnalytics">ANALYTICS</a></li>
+          <li ui-sref-active-eq="left-menu-active" id="releaser" class="border-bottom"><a href="javascript:void(0)" ui-sref="releaser">RELEASER</a></li> -->
+        </ul>
+      </nav>
+    </div>
+    <!--left-menus end-->
+  </div>
+</div>
+<!-- /#sidebar-wrapper -->
+<script>
+$(document).ready(function() {
+  $("#menu-toggle").click(function(e) {
+    e.preventDefault();
+    $("#wrapper").toggleClass("toggled");
+  });
+});
+</script>

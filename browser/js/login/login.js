@@ -31,17 +31,18 @@ app.controller('AdminLoginController', function($rootScope, $state, $scope, $htt
       .catch(handleLoginError)
 
     function handleLoginResponse(res) {
+      console.log(res.status);
+      console.log(res.data.user);
       if (res.status === 200 && res.data.success) {
         console.log("rascal admin login test");
         var userData = res.data.user;
         userData.isAdmin = true;
-        
+        console.log(userData);
         $window.localStorage.setItem('isAdminAuthenticate', true);
         SessionService.create(userData);
         $scope.getIncompleteTradesCount();
         userData.loginInfo = $scope.loginObj;
         console.log(userData.loginInfo + "loginInfo");
-        console.log(userData + "userData");
         alert(userData.loginInfo);
         $window.localStorage.setItem('adminUser', JSON.stringify(userData));
         $window.localStorage.setItem('hasBeenAdmin', true);
@@ -90,12 +91,12 @@ app.controller('AdminLoginController', function($rootScope, $state, $scope, $htt
       .sublogin($scope.subloginObj)
       .then(handleLoginResponse)
       .catch(handleLoginError)
-      /*
+
     function handleLoginResponse(res) {
       if (res.status === 200 && res.data.success) {
         var userData = res.data.user;
         userData.isAdmin = true;
-        console.log(userData + "userData");
+        console.log(userData);
         $window.localStorage.setItem('isAdminAuthenticate', true);
         SessionService.create(userData);
         console.log("rascal admin login test");
@@ -118,46 +119,7 @@ app.controller('AdminLoginController', function($rootScope, $state, $scope, $htt
             .then(function(res) {
               $window.localStorage.setItem('prevATUser', JSON.stringify(res.data));
               SessionService.removeAccountusers();
-              window.location.href = '/admin/scheduler';
-            })
-            .then(console.debug);
-        }        
-      } else {
-        $scope.signinError = "Invalid Email or Password.";
-      }
-    }*/
-    function handleLoginResponse(res) {
-      if (res.status === 200 && res.data.success) {
-        var userData = res.data.user;
-        userData.isAdmin = true;
-        console.log(userData + "userData");
-        $window.localStorage.setItem('isAdminAuthenticate', true);
-        SessionService.create(userData);
-        console.log("rascal admin login test");
-
-        $scope.getIncompleteTradesCount();
-        userData.loginInfo = $scope.subloginObj;
-        console.log(userData.loginInfo + "loginInfo");
-        alert(userData.loginInfo);
-        $window.localStorage.setItem('adminUser', JSON.stringify(userData));
-        $window.localStorage.setItem('hasBeenAdmin', true);
-        $scope.getSubmissionCount();
-        if (userData.paypal_email == undefined || userData.paypal_email == ""){
-          console.log("basicstep1");
-          $state.go('thirdpartybasicstep1');
-        }
-        else
-        if (!userData.paidRepost[0]) {
-          console.log("channelstep1");
-          SessionService.addActionsfoAccount('Add', 'index');
-          $state.go('channelstep1');
-        } else {
-          console.log("scheduler");
-          $http.get('/api/users/byId/' + userData.paidRepost[0].userID)
-            .then(function(res) {
-              $window.localStorage.setItem('prevATUser', JSON.stringify(res.data));
-              SessionService.removeAccountusers();
-              window.location.href = '/admin/scheduler';
+              window.location.href = '/admin/submissions';
             })
             .then(console.debug);
         }        
@@ -165,6 +127,7 @@ app.controller('AdminLoginController', function($rootScope, $state, $scope, $htt
         $scope.signinError = "Invalid Email or Password.";
       }
     }
+
     function handleLoginError(res) {
       $scope.signinError = "Error in processing your request";
     }

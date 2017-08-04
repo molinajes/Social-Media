@@ -76,22 +76,21 @@ app.controller('thirdpartyController', function($rootScope, $state, $scope, $htt
   }
 
   var refresh = function(){
-    $http.get('/api/thirdpartyuser').then(function(response){
+    $http.get('/api/thirdpartyuser').then(function(response){      
       $scope.Userlist = response.data;
-      console.log(response.data);
+      console.log(response.data);        
     });
   }
   refresh();
 
   //Create user part
   $scope.Createuser = function(email, password) {
+    console.log(password);
     if (email=="" || password=="") {
       alert("correct input");
     };
-    var accountemail = $scope.accountuser.email;
-    console.log(accountemail + "accountemail rascal");
 		$http.post('/api/thirdpartyuser', {
-        accountemail: accountemail,
+        //name: name,
         email: email,
         password: password
       }).then(function(res) {

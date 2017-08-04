@@ -11,10 +11,14 @@ app.directive('scsearch', function($http) {
       $scope.searchSelection = [];
       $scope.searchString = "";
       $scope.sendSearch = function() {
+        if (true) {};
         $scope.searchSelection = [];
         $scope.searchError = undefined;
         $scope.searching = true;
-        if ($scope.searchString != "") {
+        var user_pos= $scope.searchString.indexOf("trópis");
+        var track_pos= $scope.searchString.indexOf("https://soundcloud.com/tropisnetwork");
+        
+        if ($scope.searchString != "" && track_pos < 0 && user_pos<0) {
           $http.post('/api/search', {
             q: $scope.searchString,
             kind: $scope.kind
@@ -81,26 +85,34 @@ app.directive('scsearch', function($http) {
               };
             }
           });
+        }else{
+          $scope.searchError = "Please enter a " + $scope.kind + " Url.";
+          $scope.$digest();
         }
       }
 
-      
-      $scope.setItemText = function(user) {
-        switch (user.kind) {          
+      $scope.directSearch = function() {
+        if ($scope.searchString.indexOf('soundcloud.com') > -1) {
+          $scope.sendSearch();
+        }
+      }
+
+      $scope.setItemText = function(item) {
+        switch (item.kind) {
+          case 'track':
+            item.displayName = item.title + ' - ' + item.user.username;
+            item.header = item.title;
+            item.subheader = item.user.username;
+            break;
           case 'playlist':
-            user.displayName = user.title + ' - ' + user.user.username;
-            user.header = user.title;
-            user.subheader = user.user.username;
+            item.displayName = item.title + ' - ' + item.user.username;
+            item.header = item.title;
+            item.subheader = item.user.username;
             break;
           case 'user':
-            user.displayName = user.username + ' - ' + user.followers_count + " followers";
-            user.header = user.username;
-            user.subheader = user.followers_count + " followers";
-            break;
-          case 'track':
-            user.displayName = user.title + ' - ' + user.user.username;
-            user.header = user.title;
-            user.subheader = user.user.username;
+            item.displayName = item.username + ' - ' + item.followers_count + " followers";
+            item.header = item.username;
+            item.subheader = item.followers_count + " followers";
             break;
         }
       }
@@ -115,11 +127,6 @@ app.directive('scsearch', function($http) {
         });
       }
 
-      $scope.directSearch = function() {
-        if ($scope.searchString.indexOf('soundcloud.com') > -1) {
-          $scope.sendSearch();
-        }
-      }
       $scope.keypress = function(keyEvent) {
         if (keyEvent.which === 13) {
           $scope.sendSearch();

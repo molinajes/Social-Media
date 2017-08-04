@@ -12,7 +12,9 @@ app.controller('accountsController', function($rootScope, $state, $scope, $http,
     $state.go('admin');
   }
   SessionService.removeAccountusers();
+  //$scope.user= "";
   $scope.user = SessionService.getUser();
+  //console.log($scope.user.paidRepost.user + "  rascal after");
   $scope.user.paidRepost.groups = $scope.user.paidRepost.groups ? $scope.user.paidRepost.groups : [];
   $scope.soundcloudLogin = function() {
     $scope.processing = true;
@@ -102,6 +104,7 @@ app.controller('accountsController', function($rootScope, $state, $scope, $http,
   }
   $scope.updatePaidRepostGroup = function(item, group) {
     for (var i = 0; i < $scope.user.paidRepost.length; i++) {
+            console.log("length");
       if ($scope.user.paidRepost[i].id == item.id) {
         $scope.user.paidRepost[i].groups.push(group);
       }

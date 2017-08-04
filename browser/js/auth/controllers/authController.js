@@ -141,12 +141,9 @@ app.controller('AuthController', function($rootScope, $state, $stateParams, $sco
       .catch(handleLoginError)
 
     function handleLoginResponse(res) {
-      if (res.status === 200 && res.data.success) {
-        SessionService.create(res.data.user);
+       SessionService.create(res.data.user);
         $state.go('reForReLists');
-      } else {
-        $.Zebra_Dialog("Invalid Username OR Password.");
-      }
+     
     }
 
     function handleLoginError(res) {
@@ -196,8 +193,6 @@ app.controller('AuthController', function($rootScope, $state, $stateParams, $sco
       .then(function(res) {
         $scope.processing = false;
         var userData = res.data.user;
-        console.log(userData + "rascal soundcloudLogin");
-        alert(userData);
         userData.isAdmin = false;
         SessionService.create(userData);
         $scope.user = SessionService.getUser();

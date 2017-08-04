@@ -199,7 +199,7 @@ app.directive('adminsettings', function($http) {
                           "buttonBgColor": "#592e2e"
                         }
                       }]);
-                      //rascal 3-30
+                      //rascal change 3-30
                       //$scope.activeTab.push('sce');
                       //$('.nav-tabs a[href="#sce"]').tab('show');
                       SessionService.createAdminUser($scope.AccountsStepData);
@@ -236,7 +236,7 @@ app.directive('adminsettings', function($http) {
               //    "buttonBgColor": "#592e2e"
               //  }
               // }]);
-              //rascal 3-30
+              //rascal change 3-30
               //$scope.activeTab.push('notifications');
               //$('.nav-tabs a[href="#notifications"]').tab('show');
               SessionService.createAdminUser($scope.AccountsStepData);
@@ -246,8 +246,8 @@ app.directive('adminsettings', function($http) {
                   premierCustomizeEmails: $scope.AccountsStepData.premierCustomizeEmails
                 })
                 .then(function(res) {
-                  //rascal_3-30
-                  // $scope.activeTab.push('notifications');
+                  //rascal change 3-30
+                  //$scope.activeTab.push('notifications');
                   //$('.nav-tabs a[href="#notifications"]').tab('show');
                   $scope.processing = false;
                 })
@@ -272,7 +272,7 @@ app.directive('adminsettings', function($http) {
                 $scope.AccountsStepData.paypal.varify = false;
                 $scope.AccountsStepData.paypal.processchannel = false;
               }
-              //rascal_3-30
+              //rascal change 3-30
               //$scope.activeTab.push('paypalInfo');
               //$('.nav-tabs a[href="#paypalInfo"]').tab('show');
               SessionService.createAdminUser($scope.AccountsStepData);
