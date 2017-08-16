@@ -179,7 +179,7 @@ router.get('/listEvents/:id', function(req, res, next) {
 })
 
 router.put('/repostEvents', function(req, res, next) {
-  if (!req.user || req.body.userID != req.user.soundcloud.id) {
+  if (!req.user) {
     next(new Error('Unauthorized'));
     return;
   }
@@ -280,7 +280,7 @@ router.put('/repostEvents/autofillAll', function(req, res, next) {
 });
 
 router.post('/repostEvents', function(req, res, next) {
-  if (!req.user || req.body.userID != req.user.soundcloud.id) {
+  if (!req.user) {
     next(new Error('Unauthorized'));
     return;
   }
@@ -298,7 +298,7 @@ router.post('/repostEvents', function(req, res, next) {
 });
 
 router.post('/repostEventsScheduler', function(req, res, next) {
-  if (!req.user || req.body.userID != req.user.soundcloud.id) {
+  if (!req.user) {
     next(new Error('Unauthorized'));
     return;
   }

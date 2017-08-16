@@ -11,6 +11,7 @@ app.config(function($stateProvider) {
         }
         return $http.get('/api/events/forUser/' + SessionService.getUser().soundcloud.id)
           .then(function(res) {
+            console.log(res + " admin soundcloud.id");
             return res.data;
           })
           .then(null, function(err) {

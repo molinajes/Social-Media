@@ -141,9 +141,12 @@ app.controller('AuthController', function($rootScope, $state, $stateParams, $sco
       .catch(handleLoginError)
 
     function handleLoginResponse(res) {
-       SessionService.create(res.data.user);
+      if (res.status === 200 && res.data.success) {
+        SessionService.create(res.data.user);
         $state.go('reForReLists');
-     
+      } else {
+        $.Zebra_Dialog("Invalid Username OR Password.");
+      }
     }
 
     function handleLoginError(res) {

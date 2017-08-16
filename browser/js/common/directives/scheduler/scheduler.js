@@ -273,7 +273,6 @@ app.directive('scheduler', function($http) {
       }
 
       $scope.saveComments = function(value, type, index) {
-        console.log(type);
         var comments = [];
         if (type == 'schedule' && value) {
           comments = ($scope.user.repostSettings.schedule.comments ? $scope.user.repostSettings.schedule.comments : []);

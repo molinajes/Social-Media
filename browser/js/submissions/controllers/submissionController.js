@@ -135,11 +135,12 @@ app.controller('SubmissionController', function($rootScope, $state, $scope, $htt
     $scope.showingElements = [];
     $scope.loadSubmissions();
   }
-  //rascal add 3-30
-  $scope.changeChannelSelect_repost = function() {
-    $scope.showingElements = [];
-    $scope.loadMarketSubmissions();
-  }
+  
+    $scope.changeChannelSelect_repost = function() {
+      $scope.marketSubmissions = [];
+      $scope.loadMarketSubmissions();
+    }
+
   $scope.loadSubmissions = function() {
     var genre = $scope.genre.replace(/[0-9]/g, '');
     var selectedGenre = genre.replace('(', '').replace(')', '').trim();

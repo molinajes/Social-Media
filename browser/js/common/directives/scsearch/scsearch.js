@@ -11,14 +11,10 @@ app.directive('scsearch', function($http) {
       $scope.searchSelection = [];
       $scope.searchString = "";
       $scope.sendSearch = function() {
-        if (true) {};
         $scope.searchSelection = [];
         $scope.searchError = undefined;
         $scope.searching = true;
-        var user_pos= $scope.searchString.indexOf("trópis");
-        var track_pos= $scope.searchString.indexOf("https://soundcloud.com/tropisnetwork");
-        
-        if ($scope.searchString != "" && track_pos < 0 && user_pos<0) {
+        if ($scope.searchString != "") {
           $http.post('/api/search', {
             q: $scope.searchString,
             kind: $scope.kind
@@ -85,9 +81,6 @@ app.directive('scsearch', function($http) {
               };
             }
           });
-        }else{
-          $scope.searchError = "Please enter a " + $scope.kind + " Url.";
-          $scope.$digest();
         }
       }
 

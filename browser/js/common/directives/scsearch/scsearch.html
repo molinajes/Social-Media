@@ -1,5 +1,5 @@
 <div class="search-suggestion">
-    <input class="form-control" id="searchinput" type="text" placeholder="{{kind | capitalize}}" ng-model="searchString" ng-keypress="keypress($event)" style="{{customstyle}}" ng-change="directSearch()" onfocus='this.value = ""'/>
+  <input class="form-control" id="searchinput" type="text" placeholder="{{kind | capitalize}}" ng-model="searchString" ng-keypress="keypress($event)" style="{{customstyle}}" ng-change="directSearch()" onfocus='this.value = ""'/>
   <ul class="results" ng-show="searching || searchError || searchSelection.length > 0" >
     <li ng-repeat="item in searchSelection"><a href="javascript:void(0)" ng-click="selectedItem(item)">
       <div class="pull-left result-seach-img" ><img ng-if="item.artwork_url || item.avatar_url" src="{{item.artwork_url ? item.artwork_url : item.avatar_url}} "/></div> {{item.header}}<br>{{item.subheader}}</a>
