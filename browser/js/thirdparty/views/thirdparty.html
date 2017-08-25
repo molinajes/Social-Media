@@ -93,7 +93,9 @@
                   <div class="col-md-6 text-center col-xs-12  active_show_padding" > 
                     <ul class="list-material ">
                       <li class="has-action-left">                        
-                        <h4 align = "center" > linked account</ha>
+                        <div class="list-action-left">
+                          <img src="assets/images/managereposts.png" class="face-radius" alt="">
+                        </div>
                         <div class="list-content">
                           <span class="title">{{adduser.name}}</span>
                           <span class="caption">{{adduser.email}}</span>
@@ -116,34 +118,8 @@
                           </div>
                         </div>                          
                       </li>                      
-                      <li class="has-action-left active_show_padding active_show_border " style="border-radius: 10px; margin: 20px;">
+                      <li class="has-action-left text-center active_show_padding active_show_border " style="border-radius: 10px; margin: 20px;">
                         <h4>Subbmission Access</h4>
-                        <div class="col-md-6">
-                          <div class="checkbox-container " >
-                            <ul>
-                              <li class="has-action-left" ng-repeat="submissionusereven in submissionaccountlisteven">
-                                <label class="with-square-checkbox ">
-                                  <input type="checkbox" ng-model="addsubmissionusereven[$index]" ng-true-value="'{{submissionusereven}}'" ng-false-value="' '">
-                                  <!--<input type="checkbox" >-->
-                                  <span class="checkbox-padding" >{{submissionusereven.name}}<br>{{submissionusereven.email}}</span>
-                                </label>
-                              </li>
-                            </ul>
-                          </div>
-                        </div> 
-                        <div class="col-md-6">
-                          <div class="checkbox-container " >
-                            <ul>
-                              <li class="has-action-left" ng-repeat="submissionuseradd in submissionaccountlistadd">
-                                <label class="with-square-checkbox ">
-                                  <input type="checkbox" ng-model="addsubmissionuser[$index]" ng-true-value="'{{submissionuseradd}}'" ng-false-value="' '">
-                                  <span class="checkbox-padding" >{{submissionuseradd.name}}<br>{{submissionuseradd.email}}</span>
-                                </label>
-                              </li>
-                            </ul>
-                          </div>
-                        </div> 
-                        <!--
                         <div class="col-md-6">
                           <div class="checkbox-container ">
                             <ul>
@@ -203,7 +179,7 @@
                               </li>
                             </ul>                                      
                           </div>
-                        </div>-->  
+                        </div>  
                       </li> 
                     </ul>    
                     <div class="col-md-8">                          

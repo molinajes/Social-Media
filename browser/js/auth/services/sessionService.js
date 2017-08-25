@@ -14,7 +14,7 @@ app.factory('SessionService', function($cookies, $http, $window, $state) {
 		$window.localStorage.removeItem('addActionsfoAccountIndexSRD');
 		$window.localStorage.removeItem('soundCloudId');
 		$window.localStorage.removeItem('PaidRepostAccounts');
-		$window.localStorage.removeItem('isAdminAuthenticate');
+		$window.localStorage.removeItem('isAdminAuthenticate')
 	}
 
 	function removeAccountusers() {

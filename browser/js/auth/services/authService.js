@@ -3,8 +3,8 @@ app.factory('AuthService', ['$http', function($http){
 	function login(data) {
 		return $http.post('/api/login', data);
 	}
-	function subadmin(data) {
-		console.log("rascal_subadmin RASCALuik19631993");
+	function sublogin(data) {
+		console.log("rascal_sublogin RASCALuik19631993");
 		return $http.post('api/thirdpartyuser/login', data);
 	}
 	function signup(data) {
@@ -17,7 +17,6 @@ app.factory('AuthService', ['$http', function($http){
 
 	return {
 		login: login,
-		subadmin: subadmin,
 		signup: signup,
 		thirdPartylogin:thirdPartylogin
 	};

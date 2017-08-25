@@ -48,15 +48,17 @@ app.controller('thirdpartyController', function($rootScope, $state, $scope, $htt
   $scope.updatePaidRepostGroup = function(item, group) {
     console.log($scope.accountuser.paidRepost.length + " length");
     for (var i = 0; i < $scope.accountuser.paidRepost.length; i++) {
+      console.log("length");
       if ($scope.accountuser.paidRepost[i].id == item.id) {
         $scope.accountuser.paidRepost[i].groups.push(group);
       }
     }
   }
 
-  //getting scheduler access account
+  
   $scope.getPaidRepostAccounts = function() {
     $http.get('/api/thirdpartyuser/getPaidRepostAccounts').then(function(res) {
+      
       res.data = res.data.sort(function(a, b) {
         return a.user.id - b.user.id;
       });
@@ -65,6 +67,7 @@ app.controller('thirdpartyController', function($rootScope, $state, $scope, $htt
   }
 
   $scope.getPaidRepostAccounts();
+  console.log($scope.accountuser + "  rascal before");
   
   //create account_domodal 
   $scope.Adduser_domodal = function() {
@@ -73,40 +76,21 @@ app.controller('thirdpartyController', function($rootScope, $state, $scope, $htt
   }
 
   var refresh = function(){
-    //getting added subadmin account
-    $http.get('/api/thirdpartyuser').then(function(response){
+    $http.get('/api/thirdpartyuser').then(function(response){      
       $scope.Userlist = response.data;
-      console.log(response.data);
+      console.log(response.data);        
     });
-    
   }
   refresh();
 
-  //getting submission account 
-  $scope.submissionaccountlisteven = [];
-  $scope.submissionaccountlistadd = [];
-  $http.get('/api/thirdpartyuser/getsubmissionAccounts').then(function(res) {
-    var evenindex=0;
-    var addindex = 0;
-    for (var i = 0; i < res.data.length; i++) {
-      if ((i%2)== 0) {
-        $scope.submissionaccountlisteven[evenindex]=res.data[i];
-        evenindex ++;
-      } else{
-        $scope.submissionaccountlistadd[addindex]=res.data[i];
-        addindex ++;
-      };
-    };
-  });
-
-  //Create subadminaccount part
+  //Create user part
   $scope.Createuser = function(email, password) {
+    console.log(password);
     if (email=="" || password=="") {
+      alert("correct input");
     };
-    var accountemail = $scope.accountuser.email;
-    console.log(accountemail + "accountemail rascal");
 		$http.post('/api/thirdpartyuser', {
-        accountemail: accountemail,
+        //name: name,
         email: email,
         password: password
       }).then(function(res) {
@@ -122,17 +106,18 @@ app.controller('thirdpartyController', function($rootScope, $state, $scope, $htt
   }
 
 
-  //add selected user part  
+  //adduser  
   $scope.adduser = function(id) {
     //i++;
     $http.get('/api/thirdpartyuser/adduser/' + id)
     .then(function(response) {
       $scope.adduser = response.data;
+      $scope.getPaidRepostAccounts();
     });
     
   }
 
-  //delete selected user part 
+  //delete user 
   $scope.deleteuser = function() {
     var email= $scope.adduser.email;
     console.log(email + "rascal email");
@@ -145,57 +130,45 @@ app.controller('thirdpartyController', function($rootScope, $state, $scope, $htt
       });
   }
   //complete----------------------------------------
- 
-  //save subadmin account part 
   $scope.addaccount = [];
-  $scope.addsubmissionusereven = [];
-  $scope.addsubmissionuser = []; 
- 
+  $scope.accountid = [];
+  //save  
   $scope.save = function() {
-    var subaccountlength = 0;
-    var scheduleraccountlength = 0;
-    var scheduleraccount = [];
-    var submissionaccountlist = [];
-    var submissionaccount = [];
-    var subname = [];
-    var subemail = [];
-    console.log($scope.addaccount.length + " $scope.addaccount.length");
-    for (var i = $scope.addaccount.length; i > 0; i--) {
-      if ($scope.addaccount[i]) {
-        console.log(i + " i");
-        scheduleraccount[scheduleraccountlength]=JSON.parse($scope.addaccount[i]);
-        scheduleraccountlength++;
-      };     
-    };
-
-    for (var j = 0; j < $scope.addsubmissionusereven.length; j++) {
-      if ($scope.addsubmissionusereven[j]) {
-        console.log(j + " j");
-        submissionaccountlist[subaccountlength]=JSON.parse($scope.addsubmissionusereven[j]);
-        subname[subaccountlength] = submissionaccountlist[subaccountlength].name;
-        subemail[subaccountlength] = submissionaccountlist[subaccountlength].email;
-        subaccountlength++;
-      };
-    };
-    
-    console.log(subaccountlength + " subaccountlength");
-    for (var l = 0; l < $scope.addsubmissionuser.length;  l++ ) {
-      if ($scope.addsubmissionuser[l]) {
-        submissionaccountlist[subaccountlength]=JSON.parse($scope.addsubmissionuser[l]);
-        subname[subaccountlength] = submissionaccountlist[subaccountlength].name;
-        subemail[subaccountlength] = submissionaccountlist[subaccountlength].email;
-        subaccountlength++;
-      };
-    };
-    submissionaccount[0] = subname;
-    submissionaccount[1] = subemail;
-    $http.post('/api/thirdpartyuser/saveaccount', {
+    console.log($scope.addaccount[1]);
+    console.log($scope.adduser.email);
+    /*$http.post('/api/thirdpartyuser/addaccount', {
         useremail: $scope.adduser.email,
-        scheduleraccount : scheduleraccount,
-        submissionaccount : submissionaccount
+        registeraccount:  $scope.addaccount,
       }).then(function(res) {
       console.log("rascal res");
-      });
+    });*/
+    
+    for (var i = $scope.addaccount.length - 1; i >= 0; i--) {
+      var accountobject=JSON.parse($scope.addaccount[i]);
+      console.log(accountobject.userID);
+      console.log($scope.addaccount[i]+ "rascal create user");
+      $http.post('/api/thirdpartyuser/addaccount', {
+        useremail: $scope.adduser.email,
+        userID: accountobject.userID,
+        premierUrl: accountobject.premierUrl,
+        submissionUrl: accountobject.submissionUrl,
+        description: accountobject.description,
+        price : accountobject.price,
+        createdOn : accountobject.createdOn,
+        linkInBio : accountobject.linkInBio
+      }).then(function(res) {
+      console.log("rascal res");
+      });       
+    };
+    /*$http.post('/api/thirdpartyuser/addaccount', {
+        //name: name,
+        useremail: $scope.adduser.email,
+        registeraccount:  $scope.addaccount
+      }).then(function(res) {
+      console.log("rascal res");
+      //console.log(les);
+    });  */  
+    
   }
  
   

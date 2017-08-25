@@ -110,11 +110,7 @@ app.run(function($rootScope, $window, $http, AuthService, $state, $uiViewScroll,
       if (user) {
         var isAdminAuthenticate = ($window.localStorage.getItem('isAdminAuthenticate') ? $window.localStorage.getItem('isAdminAuthenticate') : false);
         var redirectPath = (isAdminAuthenticate ? "/admin" : "/login");
-        //console.log(redirectPath + " rascal redirectPath");
-        //console.log($window.location.pathname + " $window.location.pathname");
-        //console.log(isAdminAuthenticate + " rasca  isAdminAuthenticate");
         if ($window.location.pathname.indexOf('admin') != -1 && !isAdminAuthenticate) {
-          //console.log(user + "app.js user");
           $http.post('/api/logout').then(function() {
             SessionService.deleteUser();
             $state.go('admin');
@@ -495,7 +491,6 @@ app.controller('FullstackGeneratedController', function($stateParams, $window, $
 
   $rootScope.getUserNetwork = $scope.getUserNetwork = function() {
     if ($window.location.pathname.includes('admin/')) {
-      console.log($window.location.pathname + " $window.location.pathname");
       var adminUser = JSON.parse($window.localStorage.getItem('adminUser'));
       return $http.get("/api/database/adminUserNetwork/" + adminUser._id)
         .then(function(res) {
