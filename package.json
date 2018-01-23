@@ -62,7 +62,7 @@
     "gulp-uglify": "^1.1.0",
     "id3-writer": "^1.2.2",
     "instagram-node": "^0.5.8",
-    "jquery": "^2.2.1",
+    "jquery": "^3.0.0",
     "jquery-scrollify": "^0.1.13",
     "jsonwebtoken": "^7.0.0",
     "karma": "^0.13.14",
